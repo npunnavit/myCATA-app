@@ -13,6 +13,8 @@
 		EA42D3991FBA4588008C8CBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3981FBA4588008C8CBF /* Assets.xcassets */; };
 		EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA42D39A1FBA4588008C8CBF /* LaunchScreen.storyboard */; };
 		EA42D3A71FBA4588008C8CBF /* MyCATATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3A61FBA4588008C8CBF /* MyCATATests.swift */; };
+		EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3B91FBA4901008C8CBF /* StopData.json */; };
+		EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3BA1FBA4902008C8CBF /* RouteData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		EA42D3A21FBA4588008C8CBF /* MyCATATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyCATATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA42D3A61FBA4588008C8CBF /* MyCATATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCATATests.swift; sourceTree = "<group>"; };
 		EA42D3A81FBA4588008C8CBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA42D3B91FBA4901008C8CBF /* StopData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StopData.json; sourceTree = "<group>"; };
+		EA42D3BA1FBA4902008C8CBF /* RouteData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RouteData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +81,10 @@
 		EA42D3901FBA4587008C8CBF /* MyCATA */ = {
 			isa = PBXGroup;
 			children = (
-				EA42D3911FBA4588008C8CBF /* AppDelegate.swift */,
-				EA42D3931FBA4588008C8CBF /* ViewController.swift */,
-				EA42D3951FBA4588008C8CBF /* Main.storyboard */,
-				EA42D3981FBA4588008C8CBF /* Assets.xcassets */,
-				EA42D39A1FBA4588008C8CBF /* LaunchScreen.storyboard */,
-				EA42D39D1FBA4588008C8CBF /* Info.plist */,
+				EA42D3B41FBA47B8008C8CBF /* Model */,
+				EA42D3B21FBA479D008C8CBF /* Controller */,
+				EA42D3B31FBA47A9008C8CBF /* View */,
+				EA42D3B11FBA4789008C8CBF /* Supporting Cast */,
 			);
 			path = MyCATA;
 			sourceTree = "<group>";
@@ -94,6 +96,42 @@
 				EA42D3A81FBA4588008C8CBF /* Info.plist */,
 			);
 			path = MyCATATests;
+			sourceTree = "<group>";
+		};
+		EA42D3B11FBA4789008C8CBF /* Supporting Cast */ = {
+			isa = PBXGroup;
+			children = (
+				EA42D3911FBA4588008C8CBF /* AppDelegate.swift */,
+				EA42D3981FBA4588008C8CBF /* Assets.xcassets */,
+				EA42D39A1FBA4588008C8CBF /* LaunchScreen.storyboard */,
+				EA42D39D1FBA4588008C8CBF /* Info.plist */,
+			);
+			path = "Supporting Cast";
+			sourceTree = "<group>";
+		};
+		EA42D3B21FBA479D008C8CBF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EA42D3931FBA4588008C8CBF /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EA42D3B31FBA47A9008C8CBF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA42D3951FBA4588008C8CBF /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EA42D3B41FBA47B8008C8CBF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA42D3BA1FBA4902008C8CBF /* RouteData.json */,
+				EA42D3B91FBA4901008C8CBF /* StopData.json */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,6 +218,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */,
+				EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */,
+				EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */,
 				EA42D3991FBA4588008C8CBF /* Assets.xcassets in Resources */,
 				EA42D3971FBA4588008C8CBF /* Main.storyboard in Resources */,
 			);
