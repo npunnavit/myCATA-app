@@ -21,6 +21,7 @@
 		EA42D3C61FBCF460008C8CBF /* MyCATAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */; };
 		EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C71FBE1246008C8CBF /* Constants.swift */; };
 		EA42D3CA1FBE19D6008C8CBF /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */; };
+		EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCATAModel.swift; sourceTree = "<group>"; };
 		EA42D3C71FBE1246008C8CBF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
+		EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				EA42D3931FBA4588008C8CBF /* ViewController.swift */,
+				EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -146,8 +149,8 @@
 				EA42D3BD1FBBB955008C8CBF /* RouteDetail.swift */,
 				EA42D3BF1FBBBDB1008C8CBF /* Stop.swift */,
 				EA42D3C11FBBBEDA008C8CBF /* RouteStop.swift */,
-				EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */,
 				EA42D3C71FBE1246008C8CBF /* Constants.swift */,
+				EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			files = (
 				EA42D3C61FBCF460008C8CBF /* MyCATAModel.swift in Sources */,
 				EA42D3941FBA4588008C8CBF /* ViewController.swift in Sources */,
+				EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */,
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
 				EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */,
