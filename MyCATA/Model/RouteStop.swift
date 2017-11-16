@@ -13,6 +13,7 @@ struct RouteStop : Codable {
     enum Direction : String, Codable {
         case inbound = "I"
         case outbound = "O"
+        case loop = "L"
     }
     
     let routeId : Int
