@@ -12,3 +12,7 @@ struct FileName {
     static let routeData = "RouteData"
     static let stopData = "StopData"
 }
+
+struct ReuseIdentifier {
+    static let routeCell = "RouteCell"
+}
