@@ -45,8 +45,19 @@ class MyCATAModel {
             stops = []
             print("Unresolved Error \(String(describing: error)))" )
         }
-        
     }
     
+    //Support for TableView
+    var numberOfRoutes : Int { return routeDetails.count }
+    
+    func route(forIndexPath indexPath: IndexPath) -> RouteDetail {
+        let index = indexPath.row
+        return routeDetails[index]
+    }
+    
+    func routeName(atIndexPath indexPath: IndexPath) -> String {
+        let index = indexPath.row
+        return routeNames[index]
+    }
     
 }
