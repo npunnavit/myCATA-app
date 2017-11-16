@@ -15,6 +15,12 @@
 		EA42D3A71FBA4588008C8CBF /* MyCATATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3A61FBA4588008C8CBF /* MyCATATests.swift */; };
 		EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3B91FBA4901008C8CBF /* StopData.json */; };
 		EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3BA1FBA4902008C8CBF /* RouteData.json */; };
+		EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3BD1FBBB955008C8CBF /* RouteDetail.swift */; };
+		EA42D3C01FBBBDB1008C8CBF /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3BF1FBBBDB1008C8CBF /* Stop.swift */; };
+		EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C11FBBBEDA008C8CBF /* RouteStop.swift */; };
+		EA42D3C61FBCF460008C8CBF /* MyCATAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */; };
+		EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C71FBE1246008C8CBF /* Constants.swift */; };
+		EA42D3CA1FBE19D6008C8CBF /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +46,12 @@
 		EA42D3A81FBA4588008C8CBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA42D3B91FBA4901008C8CBF /* StopData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StopData.json; sourceTree = "<group>"; };
 		EA42D3BA1FBA4902008C8CBF /* RouteData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RouteData.json; sourceTree = "<group>"; };
+		EA42D3BD1FBBB955008C8CBF /* RouteDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetail.swift; sourceTree = "<group>"; };
+		EA42D3BF1FBBBDB1008C8CBF /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
+		EA42D3C11FBBBEDA008C8CBF /* RouteStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStop.swift; sourceTree = "<group>"; };
+		EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCATAModel.swift; sourceTree = "<group>"; };
+		EA42D3C71FBE1246008C8CBF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +117,7 @@
 				EA42D3981FBA4588008C8CBF /* Assets.xcassets */,
 				EA42D39A1FBA4588008C8CBF /* LaunchScreen.storyboard */,
 				EA42D39D1FBA4588008C8CBF /* Info.plist */,
+				EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */,
 			);
 			path = "Supporting Cast";
 			sourceTree = "<group>";
@@ -130,6 +143,11 @@
 			children = (
 				EA42D3BA1FBA4902008C8CBF /* RouteData.json */,
 				EA42D3B91FBA4901008C8CBF /* StopData.json */,
+				EA42D3BD1FBBB955008C8CBF /* RouteDetail.swift */,
+				EA42D3BF1FBBBDB1008C8CBF /* Stop.swift */,
+				EA42D3C11FBBBEDA008C8CBF /* RouteStop.swift */,
+				EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */,
+				EA42D3C71FBE1246008C8CBF /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -239,8 +257,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA42D3C61FBCF460008C8CBF /* MyCATAModel.swift in Sources */,
 				EA42D3941FBA4588008C8CBF /* ViewController.swift in Sources */,
+				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
+				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
+				EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */,
 				EA42D3921FBA4588008C8CBF /* AppDelegate.swift in Sources */,
+				EA42D3C01FBBBDB1008C8CBF /* Stop.swift in Sources */,
+				EA42D3CA1FBE19D6008C8CBF /* UIColor+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,7 +419,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HWAQD98M8Y;
-				INFOPLIST_FILE = MyCATA/Info.plist;
+				INFOPLIST_FILE = "MyCATA/Supporting Cast/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.psu.cse.pva5115.MyCATA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -410,7 +434,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HWAQD98M8Y;
-				INFOPLIST_FILE = MyCATA/Info.plist;
+				INFOPLIST_FILE = "MyCATA/Supporting Cast/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.psu.cse.pva5115.MyCATA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
