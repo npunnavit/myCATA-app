@@ -10,11 +10,20 @@ import UIKit
 
 class RoutesTableViewController: UITableViewController {
     
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     let myCATAModel = MyCATAModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationItem.title = "Select up to 3 buses"
+        
+        for indexPath in myCATAModel.getFavoriteIndices() {
+            if let cell = tableView.cellForRow(at: indexPath) {
+                cell.accessoryType = .checkmark
+            }
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -43,6 +52,31 @@ class RoutesTableViewController: UITableViewController {
         cell.textLabel?.text = myCATAModel.routeName(atIndexPath: indexPath)
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            if myCATAModel.isFavorite(indexPath: indexPath) {
+                myCATAModel.removeFromFavorite(indexPath: indexPath)
+                cell.accessoryType = .none
+                
+            } else {
+                if myCATAModel.addToFavorite(indexPath: indexPath) {
+                    cell.accessoryType = .checkmark
+                }
+            }
+        }
+        
+        updateDoneButton()
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func updateDoneButton() {
+        if myCATAModel.favorites.isEmpty {
+            doneButton.isEnabled = false
+        } else {
+            doneButton.isEnabled = true
+        }
     }
 
     /*
