@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class WelcomeViewController: UIViewController {
+    
+    let model = MyCATAModel.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
