@@ -24,4 +24,8 @@ extension UIColor {
     var myCATARed : UIColor { return UIColor(rgb: 0xcd3a34) }
     var myCATAYellow : UIColor { return UIColor(rgb: 0xf5ee79) }
     var myCATADarkGray : UIColor { return UIColor(rgb: 0x5a5b5f) }
+    var myCATARausch : UIColor { return UIColor(rgb: 0xff4f55) }
+    var myCATAHof : UIColor { return UIColor(rgb: 0x4c5052) }
+    var myCATAFoggy : UIColor { return UIColor(rgb: 0xc7cbc5) }
+    var myCATAKazan : UIColor { return UIColor(rgb: 0x006f7c) }
 }
