@@ -91,9 +91,10 @@ class MyCATAModel {
     func getFavoriteIndices() -> [IndexPath] {
         var indices = [IndexPath]()
         for id in favorites {
-            let index = routeIdToIndex[id]
-            let indexPath = IndexPath(row: index, section: 1)
-            indices.append(indexPath)
+            if let index = routeIdToIndex[id] {
+                let indexPath = IndexPath(row: index, section: 1)
+                indices.append(indexPath)
+            }
         }
         return indices
     }
