@@ -17,6 +17,7 @@ class MyCATAModel {
     let routeIdToIndex : [Int: Int]
     let stops : [Stop]
     var favorites : [Int] = []
+    var stopDepartures : [Int: StopDeparture]
     
     fileprivate init() {
         let fileManager = FileManager.default
@@ -54,9 +55,11 @@ class MyCATAModel {
             stops = []
             print("Unresolved Error \(String(describing: error)))" )
         }
+        
+        getStopDeparture(at: 39)
     }
     
-    //MARK: - Support for TableView
+    //MARK: - Support for RoutesTableView
     var numberOfRoutes : Int { return routeDetails.count }
     
     func route(forIndexPath indexPath: IndexPath) -> RouteDetail {
@@ -97,5 +100,39 @@ class MyCATAModel {
             }
         }
         return indices
+    }
+    
+    //MARK: - Support for FavoritesTableVIew
+    var numberOfSections : Int { return favorites.count }
+    
+    func numberOfRow(inSection section: Int) -> Int {
+        return favorites[section].count
+    }
+    
+    
+    //MARK: - Network Request
+    func getStopDeparture(at stopId: Int) {
+        let urlString = MyCATAModel.stopDepartureURL + String(stopId)
+        let url = URL(string: urlString)!
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { (data, response, error) in
+            guard error == nil else { print(error!.localizedDescription); return }
+            self.stopDeparture = self.decodeStopDeparture(data!)
+        }
+        task.resume()
+    }
+    
+    func decodeStopDeparture(_ data: Data) -> StopDeparture? {
+        var _stopDeparture : StopDeparture?
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        do {
+            _stopDeparture = try decoder.decode(StopDeparture.self, from: data)
+        } catch let error as NSError {
+            print("Unresolved Error \(String(describing: error)))" )
+        }
+        
+        return _stopDeparture
     }
 }

@@ -19,13 +19,13 @@ extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    var myCATAGreen : UIColor { return UIColor(rgb: 0x2cb673) }
-    var myCATABlue : UIColor { return UIColor(rgb: 0x5ca8dc) }
-    var myCATARed : UIColor { return UIColor(rgb: 0xcd3a34) }
-    var myCATAYellow : UIColor { return UIColor(rgb: 0xf5ee79) }
-    var myCATADarkGray : UIColor { return UIColor(rgb: 0x5a5b5f) }
-    var myCATARausch : UIColor { return UIColor(rgb: 0xff4f55) }
-    var myCATAHof : UIColor { return UIColor(rgb: 0x4c5052) }
-    var myCATAFoggy : UIColor { return UIColor(rgb: 0xc7cbc5) }
-    var myCATAKazan : UIColor { return UIColor(rgb: 0x006f7c) }
+    static let myCATAGreen = UIColor(rgb: 0x2cb673)
+    static let myCATABlue = UIColor(rgb: 0x5ca8dc)
+    static let myCATARed = UIColor(rgb: 0xcd3a34)
+    static let myCATAYellow = UIColor(rgb: 0xf5ee79)
+    static let myCATADarkGray = UIColor(rgb: 0x5a5b5f)
+    static let myCATARausch = UIColor(rgb: 0xff4f55)
+    static let myCATAHof = UIColor(rgb: 0x4c5052)
+    static let myCATAFoggy = UIColor(rgb: 0xc7cbc5)
+    static let myCATAKazan = UIColor(rgb: 0x006f7c)
 }

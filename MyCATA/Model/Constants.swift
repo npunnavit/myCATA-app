@@ -16,3 +16,7 @@ struct FileName {
 struct ReuseIdentifier {
     static let routeCell = "RouteCell"
 }
+
+extension MyCATAModel {
+    static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
+}

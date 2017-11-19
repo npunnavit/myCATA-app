@@ -22,6 +22,11 @@
 		EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C71FBE1246008C8CBF /* Constants.swift */; };
 		EA42D3CA1FBE19D6008C8CBF /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */; };
 		EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */; };
+		EA42D3CE1FC146A3008C8CBF /* StopDeparture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3CD1FC146A3008C8CBF /* StopDeparture.swift */; };
+		EA42D3D01FC155F2008C8CBF /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3CF1FC155F2008C8CBF /* FavoritesTableViewController.swift */; };
+		EA42D3D21FC16E12008C8CBF /* DepartureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */; };
+		EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */; };
+		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +59,11 @@
 		EA42D3C71FBE1246008C8CBF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
 		EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
+		EA42D3CD1FC146A3008C8CBF /* StopDeparture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopDeparture.swift; sourceTree = "<group>"; };
+		EA42D3CF1FC155F2008C8CBF /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
+		EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableViewCell.swift; sourceTree = "<group>"; };
+		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
+		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +139,7 @@
 			children = (
 				EA42D3931FBA4588008C8CBF /* WelcomeViewController.swift */,
 				EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */,
+				EA42D3CF1FC155F2008C8CBF /* FavoritesTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -136,7 +147,10 @@
 		EA42D3B31FBA47A9008C8CBF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */,
 				EA42D3951FBA4588008C8CBF /* Main.storyboard */,
+				EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */,
+				EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -151,6 +165,7 @@
 				EA42D3C11FBBBEDA008C8CBF /* RouteStop.swift */,
 				EA42D3C71FBE1246008C8CBF /* Constants.swift */,
 				EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */,
+				EA42D3CD1FC146A3008C8CBF /* StopDeparture.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -239,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */,
+				EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */,
 				EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */,
 				EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */,
 				EA42D3991FBA4588008C8CBF /* Assets.xcassets in Resources */,
@@ -263,11 +279,15 @@
 				EA42D3C61FBCF460008C8CBF /* MyCATAModel.swift in Sources */,
 				EA42D3941FBA4588008C8CBF /* WelcomeViewController.swift in Sources */,
 				EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */,
+				EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */,
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
+				EA42D3D01FC155F2008C8CBF /* FavoritesTableViewController.swift in Sources */,
 				EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */,
 				EA42D3921FBA4588008C8CBF /* AppDelegate.swift in Sources */,
 				EA42D3C01FBBBDB1008C8CBF /* Stop.swift in Sources */,
+				EA42D3CE1FC146A3008C8CBF /* StopDeparture.swift in Sources */,
+				EA42D3D21FC16E12008C8CBF /* DepartureTableViewCell.swift in Sources */,
 				EA42D3CA1FBE19D6008C8CBF /* UIColor+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
