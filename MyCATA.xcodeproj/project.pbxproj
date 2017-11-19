@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EA42D3921FBA4588008C8CBF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3911FBA4588008C8CBF /* AppDelegate.swift */; };
-		EA42D3941FBA4588008C8CBF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3931FBA4588008C8CBF /* ViewController.swift */; };
+		EA42D3941FBA4588008C8CBF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3931FBA4588008C8CBF /* WelcomeViewController.swift */; };
 		EA42D3971FBA4588008C8CBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3951FBA4588008C8CBF /* Main.storyboard */; };
 		EA42D3991FBA4588008C8CBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3981FBA4588008C8CBF /* Assets.xcassets */; };
 		EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA42D39A1FBA4588008C8CBF /* LaunchScreen.storyboard */; };
@@ -37,7 +37,7 @@
 /* Begin PBXFileReference section */
 		EA42D38E1FBA4587008C8CBF /* MyCATA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCATA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA42D3911FBA4588008C8CBF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EA42D3931FBA4588008C8CBF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EA42D3931FBA4588008C8CBF /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		EA42D3961FBA4588008C8CBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA42D3981FBA4588008C8CBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA42D39B1FBA4588008C8CBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 		EA42D3B21FBA479D008C8CBF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EA42D3931FBA4588008C8CBF /* ViewController.swift */,
+				EA42D3931FBA4588008C8CBF /* WelcomeViewController.swift */,
 				EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */,
 			);
 			path = Controller;
@@ -261,7 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA42D3C61FBCF460008C8CBF /* MyCATAModel.swift in Sources */,
-				EA42D3941FBA4588008C8CBF /* ViewController.swift in Sources */,
+				EA42D3941FBA4588008C8CBF /* WelcomeViewController.swift in Sources */,
 				EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */,
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
