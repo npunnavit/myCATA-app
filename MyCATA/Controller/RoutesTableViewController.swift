@@ -51,6 +51,12 @@ class RoutesTableViewController: UITableViewController {
         
         cell.textLabel?.text = myCATAModel.routeName(atIndexPath: indexPath)
         
+        if myCATAModel.isFavorite(indexPath: indexPath) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
         return cell
     }
     
@@ -59,7 +65,6 @@ class RoutesTableViewController: UITableViewController {
             if myCATAModel.isFavorite(indexPath: indexPath) {
                 myCATAModel.removeFromFavorite(indexPath: indexPath)
                 cell.accessoryType = .none
-                
             } else {
                 if myCATAModel.addToFavorite(indexPath: indexPath) {
                     cell.accessoryType = .checkmark
