@@ -9,11 +9,17 @@
 import UIKit
 
 class FavoritesTableViewController: UITableViewController {
-
+    let myCATAModel = MyCATAModel.sharedInstance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "myCATA"
+        
+        myCATAModel.requestStopDeparture(at: myCATAModel.closestStop)
+        
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(FavoritesTableViewController.dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: nil)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -26,28 +32,37 @@ class FavoritesTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @objc func dataDownloaded(notification: Notification) {
+        let block = { self.tableView.reloadData() }
+        DispatchQueue.main.async(execute: block)
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return myCATAModel.numberOfSections
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return myCATAModel.titleFor(section: section)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return myCATAModel.numberOfRow(inSection: section)
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
+        let departure = myCATAModel.departure(forIndexPath: indexPath)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
+        let scheduledTime = dateFormatter.string(from: departure.scheduledDepartureTime)
+        let estimatedTime = dateFormatter.string(from: departure.estimatedDepartureTime)
+        
+        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "0 Mins")
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
