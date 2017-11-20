@@ -8,11 +8,19 @@
 
 import UIKit
 
+//Favorite table view shows the departure times of user's favorites/daily bus at the closest stop based on user's location
+//Beta App doesn't find closest stop. It gets data for Pattee Library stop
 class FavoritesTableViewController: UITableViewController {
     let myCATAModel = MyCATAModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let defaults = UserDefaults.standard
+        let firstLaunch = defaults.bool(forKey: UserDefaultsKeys.firstLaunch)
+        if firstLaunch {
+            performSegue(withIdentifier: SegueIdentifiers.welcomeSegue, sender: nil)
+        }
         
         self.navigationItem.title = "myCATA"
         
@@ -55,13 +63,17 @@ class FavoritesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
         let departure = myCATAModel.departure(forIndexPath: indexPath)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm a"
-        let scheduledTime = dateFormatter.string(from: departure.scheduledDepartureTime)
-        let estimatedTime = dateFormatter.string(from: departure.estimatedDepartureTime)
         
-        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "0 Mins")
+        //There was a problem parsing departure data from CATA API
+        //I will find a neat way to parse data
+        let departureString = myCATAModel.parseDeparture(departure: departure)
+        
+        cell.configureCell(scheduledTime: departureString["sdt"]!, estimatedTime: departureString["edt"]!, remainingTime: "- Mins")
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
 
     /*
