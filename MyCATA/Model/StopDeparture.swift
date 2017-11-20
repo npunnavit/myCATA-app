@@ -19,16 +19,16 @@ struct StopDeparture : Codable {
 }
 
 struct Departure : Codable {
-    let estimatedDepartureTime : Date
-    let scheduledDepartureTime : Date
-//    let deviation : Date
-//    let lastUpdated : Date
+    let estimatedDepartureTime : String
+    let scheduledDepartureTime : String
+    let deviation : String
+    let lastUpdated : String
     
     enum CodingKeys : String, CodingKey {
         case estimatedDepartureTime = "EDTLocalTime"
         case scheduledDepartureTime = "SDTLocalTime"
-//        case deviation = "Dev"
-//        case lastUpdated = "LastUpdatedLocalTime"
+        case deviation = "Dev"
+        case lastUpdated = "LastUpdatedLocalTime"
     }
 }
 
