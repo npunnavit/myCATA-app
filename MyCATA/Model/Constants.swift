@@ -15,8 +15,13 @@ struct FileName {
 
 struct ReuseIdentifier {
     static let routeCell = "RouteCell"
+    static let departureCell = "DepartureCell"
 }
 
 extension MyCATAModel {
     static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
+}
+
+extension Notification.Name {
+    static let StopDepartureDataDownloaded = NSNotification.Name("StopDepartureDataDownlaodedNotification")
 }
