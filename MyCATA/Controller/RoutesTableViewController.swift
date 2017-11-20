@@ -24,6 +24,8 @@ class RoutesTableViewController: UITableViewController {
                 cell.accessoryType = .checkmark
             }
         }
+        
+        updateDoneButton()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
