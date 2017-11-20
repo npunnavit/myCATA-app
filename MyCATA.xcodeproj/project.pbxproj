@@ -27,6 +27,7 @@
 		EA42D3D21FC16E12008C8CBF /* DepartureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */; };
 		EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */; };
 		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
+		EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
+		EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = MyCATA/Controller/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 			children = (
 				EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */,
 				EA42D3951FBA4588008C8CBF /* Main.storyboard */,
+				EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */,
 				EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */,
 				EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */,
 			);
@@ -282,6 +285,7 @@
 				EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */,
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
+				EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */,
 				EA42D3D01FC155F2008C8CBF /* FavoritesTableViewController.swift in Sources */,
 				EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */,
 				EA42D3921FBA4588008C8CBF /* AppDelegate.swift in Sources */,
