@@ -17,7 +17,8 @@ class MyCATAModel {
     let routeIdToIndex : [Int: Int]
     let stops : [Stop]
     var favorites : [Int] = []
-    var stopDepartures : [Int: StopDeparture]
+    var stopDepartures = [Int: StopDeparture]()
+    var closestStop : Int = 39 /////////////////////For Testing////////////////////
     
     fileprivate init() {
         let fileManager = FileManager.default
@@ -55,8 +56,6 @@ class MyCATAModel {
             stops = []
             print("Unresolved Error \(String(describing: error)))" )
         }
-        
-        getStopDeparture(at: 39)
     }
     
     //MARK: - Support for RoutesTableView
@@ -106,33 +105,99 @@ class MyCATAModel {
     var numberOfSections : Int { return favorites.count }
     
     func numberOfRow(inSection section: Int) -> Int {
-        return favorites[section].count
+        let routeId = favorites[section]
+        return getDepartures(forRoute: routeId, atStop: closestStop).count
+    }
+    
+    func departure(forIndexPath indexPath: IndexPath) -> Departure {
+        let section = indexPath.section
+        let row = indexPath.row
+        let routeId = favorites[section]
+        let departures = getDepartures(forRoute: routeId, atStop: closestStop)
+        return departures[row]
+    }
+    
+    func titleFor(section: Int) -> String {
+        let routeId = favorites[section]
+        let index = routeIdToIndex[routeId]!
+        return routeDetails[index].longName
+    }
+    
+    func getDepartures(forRoute routeId: Int, atStop stopId: Int) -> [Departure] {
+        if let routeDirection = getRouteStopDeparture(forRoute: routeId, atStop: stopId) {
+            if routeDirection.isDone {
+                return []
+            } else {
+                return routeDirection.departures
+            }
+        } else {
+            return []
+        }
+    }
+    
+    func getRouteStopDeparture(forRoute routeId: Int, atStop stopId: Int) -> RouteDirection? {
+        if let stopDeparture = getStopDeparture(atStop: stopId) {
+            for routeDirection in stopDeparture.routeDirections {
+                if routeDirection.routeId == routeId {
+                    return routeDirection
+                }
+            }
+        }
+        return nil
+    }
+    
+    func getStopDeparture(atStop stopId: Int) -> StopDeparture? {
+        return stopDepartures[stopId]
+//        if let stopDeparture = stopDepartures[stopId] {
+//            return stopDeparture
+//        } else {
+//            requestStopDeparture(at: stopId)
+//            return nil
+//        }
     }
     
     
     //MARK: - Network Request
-    func getStopDeparture(at stopId: Int) {
+    func requestStopDeparture(at stopId: Int) {
         let urlString = MyCATAModel.stopDepartureURL + String(stopId)
         let url = URL(string: urlString)!
         let session = URLSession.shared
         let task = session.dataTask(with: url) { (data, response, error) in
             guard error == nil else { print(error!.localizedDescription); return }
-            self.stopDeparture = self.decodeStopDeparture(data!)
+            self.stopDepartures[stopId] = self.decodeStopDeparture(data!)
+            
+            let center = NotificationCenter.default
+            let userInfo : [AnyHashable:Any] = ["StopId": stopId]
+            center.post(name: Notification.Name.StopDepartureDataDownloaded, object: self, userInfo: userInfo)
         }
         task.resume()
     }
     
     func decodeStopDeparture(_ data: Data) -> StopDeparture? {
-        var _stopDeparture : StopDeparture?
+        var _stopDeparture : [StopDeparture]?
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "America/New_York")
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        
+        return nil
         
         do {
-            _stopDeparture = try decoder.decode(StopDeparture.self, from: data)
+            _stopDeparture = try decoder.decode([StopDeparture].self, from: data)
+            return _stopDeparture![0]
         } catch let error as NSError {
             print("Unresolved Error \(String(describing: error)))" )
+            print(String(data: data, encoding: String.Encoding.utf8) ?? "Data could not be printed")
         }
         
-        return _stopDeparture
+        return nil
+    }
+    
+    //MARK: - Micellanous Methods
+    func getRouteDetail(forRoute routeId: Int) -> RouteDetail {
+        let index = routeIdToIndex[routeId]!
+        return routeDetails[index]
     }
 }
