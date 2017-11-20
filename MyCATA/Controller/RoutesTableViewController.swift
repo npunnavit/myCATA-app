@@ -78,6 +78,7 @@ class RoutesTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    //enable when user select at least one favorites
     func updateDoneButton() {
         if myCATAModel.favorites.isEmpty {
             doneButton.isEnabled = false

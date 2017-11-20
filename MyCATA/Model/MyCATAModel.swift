@@ -14,10 +14,12 @@ class MyCATAModel {
     //MARK: - Properties
     let routeDetails : [RouteDetail]
     let routeNames : [String]
-    let routeIdToIndex : [Int: Int]
+    let routeIdToIndex : [Int: Int] //map routeId to index in routeDetails array
     let stops : [Stop]
-    var favorites : [Int]
+    var favorites : [Int] //store user's daily buses by routeId
     var stopDepartures = [Int: StopDeparture]()
+    
+    //App doesn't find closest stop right now. Use Pattee stop (stopId: 4) for testing
     var closestStop : Int = 4 /////////////////////For Testing////////////////////
     
     fileprivate init() {
@@ -95,12 +97,14 @@ class MyCATAModel {
         updateUserDefaultsFavorites()
     }
     
+    //update favorites in UserDefaults for persistance
     func updateUserDefaultsFavorites() {
         let defaults = UserDefaults.standard
         defaults.set(favorites, forKey: UserDefaultsKeys.favorites)
         defaults.synchronize()
     }
     
+    //return the indexPaths of favorite routes in RoutesTableView
     func getFavoriteIndices() -> [IndexPath] {
         var indices = [IndexPath]()
         for id in favorites {
@@ -159,12 +163,6 @@ class MyCATAModel {
     
     func getStopDeparture(atStop stopId: Int) -> StopDeparture? {
         return stopDepartures[stopId]
-//        if let stopDeparture = stopDepartures[stopId] {
-//            return stopDeparture
-//        } else {
-//            requestStopDeparture(at: stopId)
-//            return nil
-//        }
     }
     
     
@@ -199,6 +197,9 @@ class MyCATAModel {
         return nil
     }
     
+    //network request returns all the departures at a stop
+    //there was a problem parsing the departure times
+    //this is a temporary remedy
     func parseDeparture(departure: Departure) -> [String: String] {
         var departureString = [String: String]()
         

@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Route information such as direction at a particular stop
 struct RouteStop : Codable {
     
     enum Direction : String, Codable {
