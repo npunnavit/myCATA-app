@@ -25,3 +25,12 @@ extension MyCATAModel {
 extension Notification.Name {
     static let StopDepartureDataDownloaded = NSNotification.Name("StopDepartureDataDownlaodedNotification")
 }
+
+struct UserDefaultsKeys {
+    static let firstLaunch = "FirstLaunch"
+    static let favorites = "Favorites"
+}
+
+struct SegueIdentifiers {
+    static let welcomeSegue = "WelcomeSegue"
+}
