@@ -16,11 +16,14 @@ class MyCATAModel {
     let routeNames : [String]
     let routeIdToIndex : [Int: Int]
     let stops : [Stop]
-    var favorites : [Int] = []
+    var favorites : [Int]
     var stopDepartures = [Int: StopDeparture]()
-    var closestStop : Int = 39 /////////////////////For Testing////////////////////
+    var closestStop : Int = 4 /////////////////////For Testing////////////////////
     
     fileprivate init() {
+        let defaults = UserDefaults.standard
+        favorites = defaults.array(forKey: UserDefaultsKeys.favorites) as? [Int] ?? []
+        
         let fileManager = FileManager.default
         let bundle = Bundle.main
         let decoder = JSONDecoder()
@@ -80,6 +83,7 @@ class MyCATAModel {
         guard favorites.count < 3 else { return false }
         let id = route(forIndexPath: indexPath).routeId
         favorites.append(id)
+        updateUserDefaultsFavorites()
         return true
     }
     
@@ -88,6 +92,13 @@ class MyCATAModel {
         if let index = favorites.index(of: id) {
             favorites.remove(at: index)
         }
+        updateUserDefaultsFavorites()
+    }
+    
+    func updateUserDefaultsFavorites() {
+        let defaults = UserDefaults.standard
+        defaults.set(favorites, forKey: UserDefaultsKeys.favorites)
+        defaults.synchronize()
     }
     
     func getFavoriteIndices() -> [IndexPath] {
@@ -177,13 +188,6 @@ class MyCATAModel {
         var _stopDeparture : [StopDeparture]?
         let decoder = JSONDecoder()
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(identifier: "America/New_York")
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
-        return nil
-        
         do {
             _stopDeparture = try decoder.decode([StopDeparture].self, from: data)
             return _stopDeparture![0]
@@ -193,6 +197,28 @@ class MyCATAModel {
         }
         
         return nil
+    }
+    
+    func parseDeparture(departure: Departure) -> [String: String] {
+        var departureString = [String: String]()
+        
+        let sdtDateTimeString = departure.scheduledDepartureTime.split(separator: "T")
+        let sdtTimeString = String(sdtDateTimeString[1])
+        
+        let edtDateTimeString = departure.estimatedDepartureTime.split(separator: "T")
+        let edtTimeString = String(edtDateTimeString[1])
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm:ss"
+        
+        let edtTime = dateFormatter.date(from: edtTimeString)!
+        let sdtTime = dateFormatter.date(from: sdtTimeString)!
+    
+        
+        dateFormatter.dateFormat = "hh:mm"
+        departureString["edt"] = dateFormatter.string(from: edtTime)
+        departureString["sdt"] = dateFormatter.string(from: sdtTime)
+        return departureString
     }
     
     //MARK: - Micellanous Methods
