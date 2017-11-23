@@ -34,3 +34,7 @@ struct UserDefaultsKeys {
 struct SegueIdentifiers {
     static let welcomeSegue = "WelcomeSegue"
 }
+
+struct Constants {
+    static let secondsInMinute = 60.0
+}
