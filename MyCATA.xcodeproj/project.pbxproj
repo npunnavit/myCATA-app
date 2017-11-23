@@ -27,6 +27,8 @@
 		EA42D3D21FC16E12008C8CBF /* DepartureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */; };
 		EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */; };
 		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
+		EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0D72A1FC6433100615053 /* Date+extension.swift */; };
+		EAE0D7311FC6962F00615053 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EAE0D7301FC6962F00615053 /* data.json */; };
 		EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,8 @@
 		EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
+		EAE0D72A1FC6433100615053 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
+		EAE0D7301FC6962F00615053 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = MyCATA/Controller/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -132,6 +136,7 @@
 				EA42D39A1FBA4588008C8CBF /* LaunchScreen.storyboard */,
 				EA42D39D1FBA4588008C8CBF /* Info.plist */,
 				EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */,
+				EAE0D72A1FC6433100615053 /* Date+extension.swift */,
 			);
 			path = "Supporting Cast";
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 			children = (
 				EA42D3BA1FBA4902008C8CBF /* RouteData.json */,
 				EA42D3B91FBA4901008C8CBF /* StopData.json */,
+				EAE0D7301FC6962F00615053 /* data.json */,
 				EA42D3BD1FBBB955008C8CBF /* RouteDetail.swift */,
 				EA42D3BF1FBBBDB1008C8CBF /* Stop.swift */,
 				EA42D3C11FBBBEDA008C8CBF /* RouteStop.swift */,
@@ -257,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */,
+				EAE0D7311FC6962F00615053 /* data.json in Resources */,
 				EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */,
 				EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */,
 				EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */,
@@ -286,6 +293,7 @@
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
 				EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */,
+				EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */,
 				EA42D3D01FC155F2008C8CBF /* FavoritesTableViewController.swift in Sources */,
 				EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */,
 				EA42D3921FBA4588008C8CBF /* AppDelegate.swift in Sources */,
