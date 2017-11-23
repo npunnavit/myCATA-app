@@ -140,11 +140,7 @@ class MyCATAModel {
     
     func getDepartures(forRoute routeId: Int, atStop stopId: Int) -> [Departure] {
         if let routeDirection = getRouteStopDeparture(forRoute: routeId, atStop: stopId) {
-            if routeDirection.isDone {
-                return []
-            } else {
-                return routeDirection.departures
-            }
+            return routeDirection.departures!
         } else {
             return []
         }
@@ -153,7 +149,7 @@ class MyCATAModel {
     func getRouteStopDeparture(forRoute routeId: Int, atStop stopId: Int) -> RouteDirection? {
         if let stopDeparture = getStopDeparture(atStop: stopId) {
             for routeDirection in stopDeparture.routeDirections {
-                if routeDirection.routeId == routeId {
+                if routeDirection.routeId == routeId && routeDirection.isDone == false {
                     return routeDirection
                 }
             }
@@ -186,40 +182,23 @@ class MyCATAModel {
         var _stopDeparture : [StopDeparture]?
         let decoder = JSONDecoder()
         
+        ////////////////////////////TEST/////////////////////////////
+        let bundle = Bundle.main
+        let fileManager = FileManager.default
+        let path = bundle.path(forResource: "data", ofType: "json")!
+        let testData = fileManager.contents(atPath: path)!
+        ////////////////////////////TEST/////////////////////////////
+        
         do {
-            _stopDeparture = try decoder.decode([StopDeparture].self, from: data)
+            //_stopDeparture = try decoder.decode([StopDeparture].self, from: data)
+            _stopDeparture = try decoder.decode([StopDeparture].self, from: testData)
             return _stopDeparture![0]
         } catch let error as NSError {
             print("Unresolved Error \(String(describing: error)))" )
-            print(String(data: data, encoding: String.Encoding.utf8) ?? "Data could not be printed")
+//            print(String(data: data, encoding: String.Encoding.utf8) ?? "Data could not be printed")
         }
         
         return nil
-    }
-    
-    //network request returns all the departures at a stop
-    //there was a problem parsing the departure times
-    //this is a temporary remedy
-    func parseDeparture(departure: Departure) -> [String: String] {
-        var departureString = [String: String]()
-        
-        let sdtDateTimeString = departure.scheduledDepartureTime.split(separator: "T")
-        let sdtTimeString = String(sdtDateTimeString[1])
-        
-        let edtDateTimeString = departure.estimatedDepartureTime.split(separator: "T")
-        let edtTimeString = String(edtDateTimeString[1])
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm:ss"
-        
-        let edtTime = dateFormatter.date(from: edtTimeString)!
-        let sdtTime = dateFormatter.date(from: sdtTimeString)!
-    
-        
-        dateFormatter.dateFormat = "hh:mm"
-        departureString["edt"] = dateFormatter.string(from: edtTime)
-        departureString["sdt"] = dateFormatter.string(from: sdtTime)
-        return departureString
     }
     
     //MARK: - Micellanous Methods
