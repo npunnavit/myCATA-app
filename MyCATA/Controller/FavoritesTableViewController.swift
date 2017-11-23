@@ -64,11 +64,15 @@ class FavoritesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
         let departure = myCATAModel.departure(forIndexPath: indexPath)
         
-        //There was a problem parsing departure data from CATA API
-        //I will find a neat way to parse data
-        let departureString = myCATAModel.parseDeparture(departure: departure)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
         
-        cell.configureCell(scheduledTime: departureString["sdt"]!, estimatedTime: departureString["edt"]!, remainingTime: "- Mins")
+        let scheduledTime = dateFormatter.string(from: departure.scheduledDepartureTime!)
+        let estimatedTime = dateFormatter.string(from: departure.estimatedDepartureTime!)
+        let timeInterval = departure.estimatedDepartureTime!.timeIntervalSinceNow
+        let remainingTime = Int(timeInterval / Constants.secondsInMinute)
+        
+        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins")
         return cell
     }
     
