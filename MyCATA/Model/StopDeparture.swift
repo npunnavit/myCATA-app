@@ -19,22 +19,25 @@ struct StopDeparture : Codable {
 }
 
 struct Departure : Codable {
-    let estimatedDepartureTime : String
-    let scheduledDepartureTime : String
-    let deviation : String
-    let lastUpdated : String
+    let estimatedDepartureTimeRawData : String
+    let scheduledDepartureTimeRawData : String
+    let deviationRawData : String
+    let lastUpdatedRawData : String
     
     enum CodingKeys : String, CodingKey {
-        case estimatedDepartureTime = "EDTLocalTime"
-        case scheduledDepartureTime = "SDTLocalTime"
-        case deviation = "Dev"
-        case lastUpdated = "LastUpdatedLocalTime"
+        case estimatedDepartureTimeRawData = "EDT"
+        case scheduledDepartureTimeRawData = "SDT"
+        case deviationRawData = "Dev"
+        case lastUpdatedRawData = "LastUpdated"
     }
+    
+    var estimatedDepartureTime : Date? { return Date(jsonDate: estimatedDepartureTimeRawData) }
+    var scheduledDepartureTime : Date? { return Date(jsonDate: scheduledDepartureTimeRawData) }
 }
 
 struct RouteDirection : Codable {
     let routeId : Int
-    let departures : [Departure]
+    let departures : [Departure]?
     let direction : Direction
     let isDone : Bool
     
