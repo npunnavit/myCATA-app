@@ -7,6 +7,19 @@
 //
 
 import Foundation
+import UIKit
+
+extension MyCATAModel {
+    static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
+}
+
+extension FavoritesTableViewController {
+    static let departureCellAlpha : CGFloat = 0.1
+}
+
+extension Notification.Name {
+    static let StopDepartureDataDownloaded = NSNotification.Name("StopDepartureDataDownlaodedNotification")
+}
 
 struct FileName {
     static let routeData = "RouteData"
@@ -16,14 +29,6 @@ struct FileName {
 struct ReuseIdentifier {
     static let routeCell = "RouteCell"
     static let departureCell = "DepartureCell"
-}
-
-extension MyCATAModel {
-    static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
-}
-
-extension Notification.Name {
-    static let StopDepartureDataDownloaded = NSNotification.Name("StopDepartureDataDownlaodedNotification")
 }
 
 struct UserDefaultsKeys {
