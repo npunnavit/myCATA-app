@@ -26,10 +26,12 @@ class DepartureTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(scheduledTime: String, estimatedTime: String, remainingTime: String) {
+    func configureCell(scheduledTime: String, estimatedTime: String, remainingTime: String, isLate: Bool, backgroundColor: UIColor = UIColor.clear) {
         scheduledTimeLabel.text = scheduledTime
         estimatedTimeLabel.text = estimatedTime
         remainingTimeLabel.text = remainingTime
+        
+        self.backgroundColor = backgroundColor
+        estimatedTimeLabel.textColor = isLate ? UIColor.myCATARed : UIColor.myCATAGreen
     }
-
 }
