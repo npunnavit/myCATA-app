@@ -63,16 +63,23 @@ class FavoritesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
         let departure = myCATAModel.departure(forIndexPath: indexPath)
+        let sdt = departure.scheduledDepartureTime!
+        let edt = departure.estimatedDepartureTime!
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"
         
-        let scheduledTime = dateFormatter.string(from: departure.scheduledDepartureTime!)
-        let estimatedTime = dateFormatter.string(from: departure.estimatedDepartureTime!)
-        let timeInterval = departure.estimatedDepartureTime!.timeIntervalSinceNow
+        let scheduledTime = dateFormatter.string(from: sdt)
+        let estimatedTime = dateFormatter.string(from: edt)
+        let timeInterval = edt.timeIntervalSinceNow
         let remainingTime = Int(timeInterval / Constants.secondsInMinute)
         
-        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins")
+        let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
+        
+        let section = indexPath.section
+        let backgroundColor = myCATAModel.routeDetailFor(section: section).color.withAlphaComponent(FavoritesTableViewController.departureCellAlpha)
+        
+        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
         return cell
     }
     
