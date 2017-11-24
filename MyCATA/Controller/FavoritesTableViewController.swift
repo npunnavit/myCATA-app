@@ -35,6 +35,8 @@ class FavoritesTableViewController: UITableViewController {
             myCATAModel.usersLocation = locationManager.location
             locationManager.startUpdatingLocation()
         }
+        
+        tableView.register(UINib(nibName: "DepartureTableViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: ReuseIdentifier.departureHeaderView)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -58,8 +60,19 @@ class FavoritesTableViewController: UITableViewController {
         return myCATAModel.numberOfSections
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return myCATAModel.titleFor(section: section)
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ReuseIdentifier.departureHeaderView) as! DepartureTableHeaderView
+        let title = myCATAModel.titleFor(section: section)
+        
+        headerView.configureHeader(routeName: title.routeTitle, stopName: title.stopTitle)
+        let backgroundView = UIView(frame: headerView.frame)
+        backgroundView.backgroundColor = UIColor.white
+        headerView.backgroundView = backgroundView
+        return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return FavoritesTableViewController.departureHeaderViewHeight
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,7 +103,7 @@ class FavoritesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+        return FavoritesTableViewController.departureCellHeight
     }
 
     /*

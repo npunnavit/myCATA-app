@@ -15,6 +15,8 @@ extension MyCATAModel {
 
 extension FavoritesTableViewController {
     static let departureCellAlpha : CGFloat = 0.1
+    static let departureCellHeight : CGFloat = 70
+    static let departureHeaderViewHeight : CGFloat = 50
 }
 
 extension Notification.Name {
@@ -29,6 +31,7 @@ struct FileName {
 struct ReuseIdentifier {
     static let routeCell = "RouteCell"
     static let departureCell = "DepartureCell"
+    static let departureHeaderView = "DepartureHeaderView"
 }
 
 struct UserDefaultsKeys {

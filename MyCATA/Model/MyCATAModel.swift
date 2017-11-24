@@ -162,10 +162,17 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
         return getRouteDetail(forRoute: routeId)
     }
     
-    func titleFor(section: Int) -> String {
+    func titleFor(section: Int) -> (routeTitle: String, stopTitle: String) {
         let routeId = favorites[section]
-        let index = routeIdToIndex[routeId]!
-        return routeDetails[index].longName
+        let routeDetail = getRouteDetail(forRoute: routeId)
+        let routeTitle = routeDetail.longName
+        
+        if let stopId = closestStopForRoute[routeId] {
+            let stopTitle = getStop(forStop: stopId).name
+            return (routeTitle, stopTitle)
+        } else {
+            return (routeTitle, "N/A")
+        }
     }
     
     func getDepartures(forRoute routeId: RouteID, atStop stopId: StopID) -> [Departure] {

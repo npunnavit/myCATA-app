@@ -19,5 +19,10 @@ class DepartureTableHeaderView: UITableViewHeaderFooterView {
         // Drawing code
     }
     */
+    
+    func configureHeader(routeName: String, stopName: String) {
+        routeLabel.text = routeName
+        stopLabel.text = stopName
+    }
 
 }
