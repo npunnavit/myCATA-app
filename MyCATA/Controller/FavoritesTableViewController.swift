@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import MapKit
 
 //Favorite table view shows the departure times of user's favorites/daily bus at the closest stop based on user's location
 //Beta App doesn't find closest stop. It gets data for Pattee Library stop
 class FavoritesTableViewController: UITableViewController {
     let myCATAModel = MyCATAModel.sharedInstance
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +30,12 @@ class FavoritesTableViewController: UITableViewController {
         
         let center = NotificationCenter.default
         center.addObserver(self, selector: #selector(FavoritesTableViewController.dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: nil)
-
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = myCATAModel
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

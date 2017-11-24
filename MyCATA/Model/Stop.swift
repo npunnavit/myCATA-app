@@ -10,10 +10,11 @@ import Foundation
 import MapKit
 
 struct Stop : Codable {
-    let stopId : Int
+    let stopId : StopID
     let name : String
     let latitude : CLLocationDegrees
     let longtitude : CLLocationDegrees
+    var location : CLLocation { return CLLocation(latitude: latitude, longitude: longtitude) }
     
     enum CodingKeys : String, CodingKey {
         case stopId = "StopId"

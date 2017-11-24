@@ -7,22 +7,25 @@
 //
 
 import Foundation
+import MapKit
 
-class MyCATAModel {
+class MyCATAModel : NSObject, CLLocationManagerDelegate {
     static let sharedInstance = MyCATAModel()
     
     //MARK: - Properties
     let routeDetails : [RouteDetail]
     let routeNames : [String]
-    let routeIdToIndex : [Int: Int] //map routeId to index in routeDetails array
+    let routeIdToIndex : [RouteID: Int] //map routeId to index in routeDetails array
     let stops : [Stop]
-    var favorites : [Int] //store user's daily buses by routeId
-    var stopDepartures = [Int: StopDeparture]()
+    var favorites : [RouteID] //store user's daily buses by routeId
+    var stopDepartures = [StopID: StopDeparture]() //stopId to StopDeparture
+    var usersLocation : CLLocation!
+
     
     //App doesn't find closest stop right now. Use Pattee stop (stopId: 4) for testing
-    var closestStop : Int = 4 /////////////////////For Testing////////////////////
+    var closestStopForRoute : [RouteID: StopID] //RouteID to closest stop
     
-    fileprivate init() {
+    fileprivate override init() {
         let defaults = UserDefaults.standard
         favorites = defaults.array(forKey: UserDefaultsKeys.favorites) as? [Int] ?? []
         
@@ -61,6 +64,8 @@ class MyCATAModel {
             stops = []
             print("Unresolved Error \(String(describing: error)))" )
         }
+        
+        super.init()
     }
     
     //MARK: - Support for RoutesTableView
@@ -121,6 +126,7 @@ class MyCATAModel {
     
     func numberOfRow(inSection section: Int) -> Int {
         let routeId = favorites[section]
+        let closestStop = closestStopForRoute[routeId]!
         return getDepartures(forRoute: routeId, atStop: closestStop).count
     }
     
@@ -128,8 +134,14 @@ class MyCATAModel {
         let section = indexPath.section
         let row = indexPath.row
         let routeId = favorites[section]
+        let closestStop = closestStopForRoute[routeId]!
         let departures = getDepartures(forRoute: routeId, atStop: closestStop)
         return departures[row]
+    }
+    
+    func routeDetailFor(section: Int) -> RouteDetail {
+        let routeId = favorites[section]
+        return getRouteDetail(forRoute: routeId)
     }
     
     func titleFor(section: Int) -> String {
@@ -138,7 +150,7 @@ class MyCATAModel {
         return routeDetails[index].longName
     }
     
-    func getDepartures(forRoute routeId: Int, atStop stopId: Int) -> [Departure] {
+    func getDepartures(forRoute routeId: RouteID, atStop stopId: StopID) -> [Departure] {
         if let routeDirection = getRouteStopDeparture(forRoute: routeId, atStop: stopId) {
             return routeDirection.departures!
         } else {
@@ -146,7 +158,7 @@ class MyCATAModel {
         }
     }
     
-    func getRouteStopDeparture(forRoute routeId: Int, atStop stopId: Int) -> RouteDirection? {
+    func getRouteStopDeparture(forRoute routeId: RouteID, atStop stopId: StopID) -> RouteDirection? {
         if let stopDeparture = getStopDeparture(atStop: stopId) {
             for routeDirection in stopDeparture.routeDirections {
                 if routeDirection.routeId == routeId && routeDirection.isDone == false {
@@ -157,13 +169,13 @@ class MyCATAModel {
         return nil
     }
     
-    func getStopDeparture(atStop stopId: Int) -> StopDeparture? {
+    func getStopDeparture(atStop stopId: StopID) -> StopDeparture? {
         return stopDepartures[stopId]
     }
     
     
     //MARK: - Network Request
-    func requestStopDeparture(at stopId: Int) {
+    func requestStopDeparture(at stopId: StopID) {
         let urlString = MyCATAModel.stopDepartureURL + String(stopId)
         let url = URL(string: urlString)!
         let session = URLSession.shared
@@ -201,8 +213,39 @@ class MyCATAModel {
         return nil
     }
     
+    //MARK: - Find closestStop
+    func updateClosestStop(forRoute routeId: RouteID, atUserLocation location: CLLocation) {
+        var minDistance = CLLocationDistance.infinity
+        var closestStop : StopID?
+        let routeDetail = getRouteDetail(forRoute: routeId)
+        let stops = routeDetail.stops
+        for stop in stops {
+            let stopLocation = stop.location
+            let distance = stopLocation.distance(from: location)
+            print(distance)
+            if distance < minDistance {
+                minDistance = distance
+                closestStop = stop.stopId
+            }
+        }
+        closestStopForRoute[routeId] = closestStop
+    }
+    
+    func updateClosestStopForFavoriteRoutes() {
+        favorites.forEach { routeID in
+            updateClosestStop(forRoute: routeID, atUserLocation: usersLocation)
+        }
+    }
+    
+    //MARK: - CLLocationManagerDelegate Methods
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue : CLLocation = manager.location!
+        usersLocation = locValue
+        updateClosestStopForFavoriteRoutes()
+    }
+    
     //MARK: - Micellanous Methods
-    func getRouteDetail(forRoute routeId: Int) -> RouteDetail {
+    func getRouteDetail(forRoute routeId: RouteID) -> RouteDetail {
         let index = routeIdToIndex[routeId]!
         return routeDetails[index]
     }

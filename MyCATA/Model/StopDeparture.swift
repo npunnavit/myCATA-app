@@ -9,7 +9,7 @@
 import Foundation
 
 struct StopDeparture : Codable {
-    let stopId : Int
+    let stopId : StopID
     let routeDirections : [RouteDirection]
     
     enum CodingKeys : String, CodingKey {
@@ -36,7 +36,7 @@ struct Departure : Codable {
 }
 
 struct RouteDirection : Codable {
-    let routeId : Int
+    let routeId : RouteID
     let departures : [Departure]?
     let direction : Direction
     let isDone : Bool

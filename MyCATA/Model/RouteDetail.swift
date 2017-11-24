@@ -9,8 +9,11 @@
 import Foundation
 import UIKit
 
+typealias RouteID = Int
+typealias StopID = Int
+
 struct RouteDetail : Decodable {
-    let routeId : Int
+    let routeId : RouteID
     let shortName : String
     let longName : String
     let routeAbbreviation : String

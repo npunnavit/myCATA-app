@@ -17,8 +17,8 @@ struct RouteStop : Codable {
         case loop = "L"
     }
     
-    let routeId : Int
-    let stopId : Int
+    let routeId : RouteID
+    let stopId : StopID
     let sortOrder : Int
     let direction : Direction
     
