@@ -11,6 +11,7 @@ import UIKit
 
 extension MyCATAModel {
     static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
+    static let departureResultsCount = 3
 }
 
 extension FavoritesTableViewController {

@@ -177,7 +177,7 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
     
     func getDepartures(forRoute routeId: RouteID, atStop stopId: StopID) -> [Departure] {
         if let routeDirection = getRouteStopDeparture(forRoute: routeId, atStop: stopId) {
-            return routeDirection.departures!
+            return Array(routeDirection.departures!.prefix(MyCATAModel.departureResultsCount))
         } else {
             return []
         }
