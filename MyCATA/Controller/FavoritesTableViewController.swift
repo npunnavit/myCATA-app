@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import MapKit
 
 //Favorite table view shows the departure times of user's favorites/daily bus at the closest stop based on user's location
 //Beta App doesn't find closest stop. It gets data for Pattee Library stop
 class FavoritesTableViewController: UITableViewController {
     let myCATAModel = MyCATAModel.sharedInstance
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +30,12 @@ class FavoritesTableViewController: UITableViewController {
         
         let center = NotificationCenter.default
         center.addObserver(self, selector: #selector(FavoritesTableViewController.dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: nil)
-
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = myCATAModel
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -63,16 +70,23 @@ class FavoritesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
         let departure = myCATAModel.departure(forIndexPath: indexPath)
+        let sdt = departure.scheduledDepartureTime!
+        let edt = departure.estimatedDepartureTime!
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"
         
-        let scheduledTime = dateFormatter.string(from: departure.scheduledDepartureTime!)
-        let estimatedTime = dateFormatter.string(from: departure.estimatedDepartureTime!)
-        let timeInterval = departure.estimatedDepartureTime!.timeIntervalSinceNow
+        let scheduledTime = dateFormatter.string(from: sdt)
+        let estimatedTime = dateFormatter.string(from: edt)
+        let timeInterval = edt.timeIntervalSinceNow
         let remainingTime = Int(timeInterval / Constants.secondsInMinute)
         
-        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins")
+        let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
+        
+        let section = indexPath.section
+        let backgroundColor = myCATAModel.routeDetailFor(section: section).color.withAlphaComponent(FavoritesTableViewController.departureCellAlpha)
+        
+        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
         return cell
     }
     
