@@ -26,14 +26,13 @@ class FavoritesTableViewController: UITableViewController {
         
         self.navigationItem.title = "myCATA"
         
-        myCATAModel.requestStopDeparture(at: myCATAModel.closestStop)
-        
         let center = NotificationCenter.default
         center.addObserver(self, selector: #selector(FavoritesTableViewController.dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: nil)
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = myCATAModel
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            myCATAModel.usersLocation = locationManager.location
             locationManager.startUpdatingLocation()
         }
         // Uncomment the following line to preserve selection between presentations
