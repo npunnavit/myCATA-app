@@ -13,6 +13,7 @@ extension MyCATAModel {
     static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
     static let kmlURL = "http://realtime.catabus.com/InfoPoint/Resources/Traces/"
     static let departureResultsCount = 3
+    static let useTestData = false
 }
 
 extension RouteMapModel {
@@ -48,6 +49,7 @@ struct UserDefaultsKeys {
 struct SegueIdentifiers {
     static let welcomeSegue = "WelcomeSegue"
     static let routeMapSegue = "RouteMapSegue"
+    static let settingsSegue = "SettingsSegue"
 }
 
 struct Constants {

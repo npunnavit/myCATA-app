@@ -142,7 +142,7 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
     func numberOfRow(inSection section: Int) -> Int {
         let routeId = favorites[section]
         if let closestStop = closestStopForRoute[routeId] {
-            return getDepartures(forRoute: routeId, atStop: closestStop).count
+            return departuresFor(route: routeId, atStop: closestStop).count
         } else {
             return 0
         }
@@ -153,38 +153,38 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
         let row = indexPath.row
         let routeId = favorites[section]
         let closestStop = closestStopForRoute[routeId]!
-        let departures = getDepartures(forRoute: routeId, atStop: closestStop)
+        let departures = departuresFor(route: routeId, atStop: closestStop)
         return departures[row]
     }
     
     func routeDetailFor(section: Int) -> RouteDetail {
         let routeId = favorites[section]
-        return getRouteDetail(forRoute: routeId)
+        return routeDetailFor(route: routeId)
     }
     
     func titleFor(section: Int) -> (routeTitle: String, stopTitle: String) {
         let routeId = favorites[section]
-        let routeDetail = getRouteDetail(forRoute: routeId)
+        let routeDetail = routeDetailFor(route: routeId)
         let routeTitle = routeDetail.longName
         
         if let stopId = closestStopForRoute[routeId] {
-            let stopTitle = getStop(forStop: stopId).name
+            let stopTitle = stopFor(stop: stopId).name
             return (routeTitle, stopTitle)
         } else {
             return (routeTitle, "N/A")
         }
     }
     
-    func getDepartures(forRoute routeId: RouteID, atStop stopId: StopID) -> [Departure] {
-        if let routeDirection = getRouteStopDeparture(forRoute: routeId, atStop: stopId) {
+    func departuresFor(route routeId: RouteID, atStop stopId: StopID) -> [Departure] {
+        if let routeDirection = routeStopDepartureFor(route: routeId, atStop: stopId) {
             return Array(routeDirection.departures!.prefix(MyCATAModel.departureResultsCount))
         } else {
             return []
         }
     }
     
-    func getRouteStopDeparture(forRoute routeId: RouteID, atStop stopId: StopID) -> RouteDirection? {
-        if let stopDeparture = getStopDeparture(atStop: stopId) {
+    func routeStopDepartureFor(route routeId: RouteID, atStop stopId: StopID) -> RouteDirection? {
+        if let stopDeparture = stopDepartureAt(stop: stopId) {
             for routeDirection in stopDeparture.routeDirections {
                 if routeDirection.routeId == routeId && routeDirection.isDone == false {
                     return routeDirection
@@ -194,7 +194,7 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
         return nil
     }
     
-    func getStopDeparture(atStop stopId: StopID) -> StopDeparture? {
+    func stopDepartureAt(stop stopId: StopID) -> StopDeparture? {
         return stopDepartures[stopId]
     }
     
@@ -227,8 +227,11 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
         ////////////////////////////TEST/////////////////////////////
         
         do {
-            //_stopDeparture = try decoder.decode([StopDeparture].self, from: data)
-            _stopDeparture = try decoder.decode([StopDeparture].self, from: testData)
+            if !MyCATAModel.useTestData {
+                _stopDeparture = try decoder.decode([StopDeparture].self, from: data)
+            } else {
+                _stopDeparture = try decoder.decode([StopDeparture].self, from: testData)
+            }
             return _stopDeparture![0]
         } catch let error as NSError {
             print("Unresolved Error \(String(describing: error)))" )
@@ -242,7 +245,7 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
     func updateClosestStop(forRoute routeId: RouteID, atUserLocation location: CLLocation) {
         var minDistance = CLLocationDistance.infinity
         var closestStop : StopID?
-        let routeDetail = getRouteDetail(forRoute: routeId)
+        let routeDetail = routeDetailFor(route: routeId)
         let stops = routeDetail.stops
         for stop in stops {
             let stopLocation = stop.location
@@ -252,7 +255,7 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
                 closestStop = stop.stopId
             }
         }
-        print(getStop(forStop: closestStop!).name)
+        print(stopFor(stop: closestStop!).name)
         let oldStop = closestStopForRoute.updateValue(closestStop!, forKey: routeId)
         if oldStop != closestStop {
             requestStopDeparture(at: closestStop!)
@@ -265,6 +268,10 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
         }
     }
     
+    func updateUsersLocation(to newLocation: CLLocation) {
+        
+    }
+    
     //MARK: - CLLocationManagerDelegate Methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue : CLLocation = manager.location!
@@ -272,12 +279,12 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
     }
     
     //MARK: - Micellanous Methods
-    private func getRouteDetail(forRoute routeId: RouteID) -> RouteDetail {
+    private func routeDetailFor(route routeId: RouteID) -> RouteDetail {
         let index = routeIdToIndex[routeId]!
         return routeDetails[index]
     }
     
-    private func getStop(forStop stopId: StopID) -> Stop {
+    private func stopFor(stop stopId: StopID) -> Stop {
         let index = stopIdToIndex[stopId]!
         return stops[index]
     }
