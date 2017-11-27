@@ -14,7 +14,6 @@ class DepartureTableViewCell: UITableViewCell {
     @IBOutlet weak var estimatedTimeLabel: UILabel!
     @IBOutlet weak var remainingTimeLabel: UILabel!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

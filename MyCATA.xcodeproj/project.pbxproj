@@ -27,6 +27,8 @@
 		EA42D3D21FC16E12008C8CBF /* DepartureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */; };
 		EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */; };
 		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
+		EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */; };
+		EA94F3EC1FCBF93700FB7F2C /* RouteMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */; };
 		EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0D72A1FC6433100615053 /* Date+extension.swift */; };
 		EAE0D7311FC6962F00615053 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EAE0D7301FC6962F00615053 /* data.json */; };
 		EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */; };
@@ -67,6 +69,8 @@
 		EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
+		EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewController.swift; sourceTree = "<group>"; };
+		EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapModel.swift; sourceTree = "<group>"; };
 		EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Pattee Location.gpx"; sourceTree = "<group>"; };
 		EAE0D72A1FC6433100615053 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		EAE0D7301FC6962F00615053 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 				EA42D3931FBA4588008C8CBF /* WelcomeViewController.swift */,
 				EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */,
 				EA42D3CF1FC155F2008C8CBF /* FavoritesTableViewController.swift */,
+				EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -168,17 +173,34 @@
 		EA42D3B41FBA47B8008C8CBF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EA42D3BA1FBA4902008C8CBF /* RouteData.json */,
-				EA42D3B91FBA4901008C8CBF /* StopData.json */,
-				EAE0D7301FC6962F00615053 /* data.json */,
+				EA94F3EA1FCBF91300FB7F2C /* JSON Data */,
+				EA94F3E91FCBF8FD00FB7F2C /* Class and Struct */,
+				EA42D3C71FBE1246008C8CBF /* Constants.swift */,
+				EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */,
+				EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EA94F3E91FCBF8FD00FB7F2C /* Class and Struct */ = {
+			isa = PBXGroup;
+			children = (
 				EA42D3BD1FBBB955008C8CBF /* RouteDetail.swift */,
 				EA42D3BF1FBBBDB1008C8CBF /* Stop.swift */,
 				EA42D3C11FBBBEDA008C8CBF /* RouteStop.swift */,
-				EA42D3C71FBE1246008C8CBF /* Constants.swift */,
-				EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */,
 				EA42D3CD1FC146A3008C8CBF /* StopDeparture.swift */,
 			);
-			path = Model;
+			path = "Class and Struct";
+			sourceTree = "<group>";
+		};
+		EA94F3EA1FCBF91300FB7F2C /* JSON Data */ = {
+			isa = PBXGroup;
+			children = (
+				EA42D3BA1FBA4902008C8CBF /* RouteData.json */,
+				EA42D3B91FBA4901008C8CBF /* StopData.json */,
+				EAE0D7301FC6962F00615053 /* data.json */,
+			);
+			path = "JSON Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,7 +313,9 @@
 				EA42D3C61FBCF460008C8CBF /* MyCATAModel.swift in Sources */,
 				EA42D3941FBA4588008C8CBF /* WelcomeViewController.swift in Sources */,
 				EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */,
+				EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */,
 				EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */,
+				EA94F3EC1FCBF93700FB7F2C /* RouteMapModel.swift in Sources */,
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
 				EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */,

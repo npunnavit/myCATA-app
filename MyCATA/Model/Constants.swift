@@ -11,7 +11,12 @@ import UIKit
 
 extension MyCATAModel {
     static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
+    static let kmlURL = "http://realtime.catabus.com/InfoPoint/Resources/Traces/"
     static let departureResultsCount = 3
+}
+
+extension RouteMapModel {
+    static let defaultSpanDelta = 0.1
 }
 
 extension FavoritesTableViewController {
@@ -42,6 +47,7 @@ struct UserDefaultsKeys {
 
 struct SegueIdentifiers {
     static let welcomeSegue = "WelcomeSegue"
+    static let routeMapSegue = "RouteMapSegue"
 }
 
 struct Constants {

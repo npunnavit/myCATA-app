@@ -11,7 +11,7 @@ import MapKit
 
 //Favorite table view shows the departure times of user's favorites/daily bus at the closest stop based on user's location
 //Beta App doesn't find closest stop. It gets data for Pattee Library stop
-class FavoritesTableViewController: UITableViewController {
+class FavoritesTableViewController: UITableViewController, DepartureTableHeaderViewDelegate {
     let myCATAModel = MyCATAModel.sharedInstance
     let locationManager = CLLocationManager()
     
@@ -64,7 +64,9 @@ class FavoritesTableViewController: UITableViewController {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ReuseIdentifier.departureHeaderView) as! DepartureTableHeaderView
         let title = myCATAModel.titleFor(section: section)
         
-        headerView.configureHeader(routeName: title.routeTitle, stopName: title.stopTitle)
+        headerView.configureHeader(routeName: title.routeTitle, stopName: title.stopTitle, section: section)
+        headerView.delegate = self
+        
         let backgroundView = UIView(frame: headerView.frame)
         backgroundView.backgroundColor = UIColor.white
         headerView.backgroundView = backgroundView
@@ -105,6 +107,12 @@ class FavoritesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return FavoritesTableViewController.departureCellHeight
     }
+    
+    //MARK: - DepartureTableHeaderViewDelegate Method
+    func performRouteMapSegue(forSection section: Int) {
+        let routeId = myCATAModel.routeDetailFor(section: section).routeId
+        performSegue(withIdentifier: SegueIdentifiers.routeMapSegue, sender: routeId)
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -141,14 +149,20 @@ class FavoritesTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier! {
+        case SegueIdentifiers.routeMapSegue:
+            let routeMapViewController = segue.destination as! RouteMapViewController
+            let routeId = sender as! RouteID
+            routeMapViewController.configure(route: routeId)
+        default:
+            assert(false, "Unhandled Segue")
+        }
     }
-    */
+    
 
 }

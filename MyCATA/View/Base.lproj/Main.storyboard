@@ -215,12 +215,13 @@
                         <barButtonItem key="leftBarButtonItem" title="Search" id="SUn-DY-Veq"/>
                         <barButtonItem key="rightBarButtonItem" title="Setting" id="HB6-cm-J2x">
                             <connections>
-                                <segue destination="KbL-QT-Jjh" kind="show" id="rMe-58-KCC"/>
+                                <segue destination="KbL-QT-Jjh" kind="show" identifier="SettingsSegue" id="rMe-58-KCC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="WelcomeSegue" id="fmL-Ox-uYz"/>
+                        <segue destination="hFh-qk-Ls5" kind="show" identifier="RouteMapSegue" id="Rom-ky-06U"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0n2-M7-Wv1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -271,6 +272,37 @@
             </objects>
             <point key="canvasLocation" x="2921" y="844"/>
         </scene>
+        <!--Route Map View Controller-->
+        <scene sceneID="sWL-Fg-8xy">
+            <objects>
+                <viewController id="hFh-qk-Ls5" customClass="RouteMapViewController" customModule="MyCATA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ThL-wI-UKv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mSt-Ag-wYG">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mSt-Ag-wYG" firstAttribute="top" secondItem="NO5-j6-UdW" secondAttribute="top" id="1AO-il-FWe"/>
+                            <constraint firstItem="NO5-j6-UdW" firstAttribute="bottom" secondItem="mSt-Ag-wYG" secondAttribute="bottom" id="8v1-m2-DmP"/>
+                            <constraint firstItem="NO5-j6-UdW" firstAttribute="trailing" secondItem="mSt-Ag-wYG" secondAttribute="trailing" id="Pjv-Bx-eHL"/>
+                            <constraint firstItem="mSt-Ag-wYG" firstAttribute="top" secondItem="NO5-j6-UdW" secondAttribute="top" id="WBO-5r-uTl"/>
+                            <constraint firstItem="mSt-Ag-wYG" firstAttribute="leading" secondItem="NO5-j6-UdW" secondAttribute="leading" id="ftA-x7-Xod"/>
+                            <constraint firstItem="NO5-j6-UdW" firstAttribute="bottom" secondItem="mSt-Ag-wYG" secondAttribute="bottom" id="lgx-iY-7VN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="NO5-j6-UdW"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="mSt-Ag-wYG" id="6en-dx-3H6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xt6-57-LnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2126" y="1737"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="07B-qt-M7W">
             <objects>
@@ -312,6 +344,6 @@
         <image name="myCATAlogo" width="647" height="660"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="p7N-5x-h52"/>
+        <segue reference="Ya8-7r-Bvt"/>
     </inferredMetricsTieBreakers>
 </document>
