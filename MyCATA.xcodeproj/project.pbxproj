@@ -69,6 +69,7 @@
 		EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
+		EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Westgate Location.gpx"; sourceTree = "<group>"; };
 		EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewController.swift; sourceTree = "<group>"; };
 		EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapModel.swift; sourceTree = "<group>"; };
 		EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Pattee Location.gpx"; sourceTree = "<group>"; };
@@ -143,6 +144,7 @@
 				EA42D3C91FBE19D6008C8CBF /* UIColor+extension.swift */,
 				EAE0D72A1FC6433100615053 /* Date+extension.swift */,
 				EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */,
+				EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */,
 			);
 			path = "Supporting Cast";
 			sourceTree = "<group>";
