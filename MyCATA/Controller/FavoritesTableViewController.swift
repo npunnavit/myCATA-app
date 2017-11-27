@@ -159,6 +159,10 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
             let routeMapViewController = segue.destination as! RouteMapViewController
             let routeId = sender as! RouteID
             routeMapViewController.configure(route: routeId)
+        case SegueIdentifiers.settingsSegue:
+            break
+        case SegueIdentifiers.welcomeSegue:
+            break
         default:
             assert(false, "Unhandled Segue")
         }
