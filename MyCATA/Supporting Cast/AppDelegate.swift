@@ -21,6 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.register(defaults: [UserDefaultsKeys.firstLaunch:true])
         defaults.register(defaults: [UserDefaultsKeys.favorites:[]])
         
+        //Customize Appearance
+        let barButtonProxy = UIBarButtonItem.appearance()
+        barButtonProxy.tintColor = UIColor.myCATARausch
+        let navBarProxy = UINavigationBar.appearance()
+        navBarProxy.tintColor = UIColor.myCATARausch
+        
         return true
     }
 

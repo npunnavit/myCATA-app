@@ -11,13 +11,13 @@ import UIKit
 
 extension MyCATAModel {
     static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
-    static let kmlURL = "http://realtime.catabus.com/InfoPoint/Resources/Traces/"
     static let departureResultsCount = 3
     static let useTestData = false
 }
 
 extension RouteMapModel {
     static let defaultSpanDelta = 0.1
+    static let kmlURL = "http://realtime.catabus.com/InfoPoint/Resources/Traces/"
 }
 
 extension FavoritesTableViewController {
