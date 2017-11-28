@@ -27,9 +27,10 @@
 		EA42D3D21FC16E12008C8CBF /* DepartureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */; };
 		EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */; };
 		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
+		EA6536DA1FCDE64800562117 /* LocationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6536D91FCDE64800562117 /* LocationServices.swift */; };
 		EA82CCC91FCCD71C00105E6A /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EA82CCC81FCCD71C00105E6A /* data.json */; };
 		EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */; };
-		EA94F3EC1FCBF93700FB7F2C /* RouteMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */; };
+		EA94F3EC1FCBF93700FB7F2C /* RouteMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */; };
 		EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0D72A1FC6433100615053 /* Date+extension.swift */; };
 		EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -69,10 +70,12 @@
 		EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
+		EA6536D91FCDE64800562117 /* LocationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServices.swift; sourceTree = "<group>"; };
+		EA6536DB1FCDF01400562117 /* Kunkle Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Kunkle Location.gpx"; sourceTree = "<group>"; };
 		EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Westgate Location.gpx"; sourceTree = "<group>"; };
 		EA82CCC81FCCD71C00105E6A /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewController.swift; sourceTree = "<group>"; };
-		EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapModel.swift; sourceTree = "<group>"; };
+		EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewModel.swift; sourceTree = "<group>"; };
 		EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Pattee Location.gpx"; sourceTree = "<group>"; };
 		EAE0D72A1FC6433100615053 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = MyCATA/Controller/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -145,6 +148,7 @@
 				EAE0D72A1FC6433100615053 /* Date+extension.swift */,
 				EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */,
 				EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */,
+				EA6536DB1FCDF01400562117 /* Kunkle Location.gpx */,
 			);
 			path = "Supporting Cast";
 			sourceTree = "<group>";
@@ -179,7 +183,8 @@
 				EA94F3E91FCBF8FD00FB7F2C /* Class and Struct */,
 				EA42D3C71FBE1246008C8CBF /* Constants.swift */,
 				EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */,
-				EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */,
+				EA6536D91FCDE64800562117 /* LocationServices.swift */,
+				EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -317,11 +322,12 @@
 				EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */,
 				EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */,
 				EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */,
-				EA94F3EC1FCBF93700FB7F2C /* RouteMapModel.swift in Sources */,
+				EA94F3EC1FCBF93700FB7F2C /* RouteMapViewModel.swift in Sources */,
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
 				EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */,
 				EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */,
+				EA6536DA1FCDE64800562117 /* LocationServices.swift in Sources */,
 				EA42D3D01FC155F2008C8CBF /* FavoritesTableViewController.swift in Sources */,
 				EA42D3C81FBE1246008C8CBF /* Constants.swift in Sources */,
 				EA42D3921FBA4588008C8CBF /* AppDelegate.swift in Sources */,
