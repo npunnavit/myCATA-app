@@ -14,6 +14,7 @@ import MapKit
 class FavoritesTableViewController: UITableViewController, DepartureTableHeaderViewDelegate {
     let myCATAModel = MyCATAModel.sharedInstance
     let locationManager = CLLocationManager()
+    let locationServices = LocationServices()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +31,18 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         center.addObserver(self, selector: #selector(FavoritesTableViewController.dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: nil)
         
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = myCATAModel
+            locationServices.delegate = myCATAModel
+            
+            locationManager.delegate = locationServices
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             myCATAModel.usersLocation = locationManager.location
             locationManager.startUpdatingLocation()
         }
         
         tableView.register(UINib(nibName: "DepartureTableViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: ReuseIdentifier.departureHeaderView)
+        
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Now Refreshing!")
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -49,8 +55,19 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func refreshData(_ sender: UIRefreshControl) {
+        if !myCATAModel.updateClosestStopForFavoriteRoutes() {
+            self.refreshControl?.endRefreshing()
+        }
+    }
+    
     @objc func dataDownloaded(notification: Notification) {
-        let block = { self.tableView.reloadData() }
+        let block = {
+            self.tableView.reloadData()
+            if self.refreshControl?.isRefreshing == true {
+                self.refreshControl?.endRefreshing()
+            }
+        }
         DispatchQueue.main.async(execute: block)
     }
 

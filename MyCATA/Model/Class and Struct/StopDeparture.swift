@@ -11,11 +11,15 @@ import Foundation
 struct StopDeparture : Codable {
     let stopId : StopID
     let routeDirections : [RouteDirection]
+    let lastUpdatedRawData : String
     
     enum CodingKeys : String, CodingKey {
         case stopId = "StopId"
         case routeDirections = "RouteDirections"
+        case lastUpdatedRawData = "LastUpdated"
     }
+    
+    var lastUpdatedTime : Date? { return Date(jsonDate: lastUpdatedRawData) }
 }
 
 struct Departure : Codable {
@@ -33,6 +37,7 @@ struct Departure : Codable {
     
     var estimatedDepartureTime : Date? { return Date(jsonDate: estimatedDepartureTimeRawData) }
     var scheduledDepartureTime : Date? { return Date(jsonDate: scheduledDepartureTimeRawData) }
+    var lastUpdatedTime : Date? { return Date(jsonDate: lastUpdatedRawData) }
 }
 
 struct RouteDirection : Codable {

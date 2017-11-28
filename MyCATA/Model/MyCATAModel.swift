@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class MyCATAModel : NSObject, CLLocationManagerDelegate {
+class MyCATAModel : LocationServicesDelegate {
     static let sharedInstance = MyCATAModel()
     
     //MARK: - Properties
@@ -30,7 +30,7 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
     //App doesn't find closest stop right now. Use Pattee stop (stopId: 4) for testing
     var closestStopForRoute : [RouteID: StopID] //RouteID to closest stop
     
-    fileprivate override init() {
+    fileprivate init() {
         let defaults = UserDefaults.standard
         favorites = defaults.array(forKey: UserDefaultsKeys.favorites) as? [Int] ?? []
         
@@ -79,8 +79,6 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
         }
         
         closestStopForRoute = [:]
-        
-        super.init()
     }
     
     //MARK: - Support for RoutesTableView
@@ -242,7 +240,8 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
     }
     
     //MARK: - Find closestStop
-    func updateClosestStop(forRoute routeId: RouteID, atUserLocation location: CLLocation) {
+    //return true if network request was made
+    func updateClosestStop(forRoute routeId: RouteID, atUserLocation location: CLLocation) -> Bool {
         var minDistance = CLLocationDistance.infinity
         var closestStop : StopID?
         let routeDetail = routeDetailFor(route: routeId)
@@ -256,26 +255,37 @@ class MyCATAModel : NSObject, CLLocationManagerDelegate {
             }
         }
         print(stopFor(stop: closestStop!).name)
-        let oldStop = closestStopForRoute.updateValue(closestStop!, forKey: routeId)
-        if oldStop != closestStop {
+        let oldClosestStop = closestStopForRoute.updateValue(closestStop!, forKey: routeId)
+        
+        if (oldClosestStop != closestStop) {
+            //if closestStop changes, request for new data
             requestStopDeparture(at: closestStop!)
+            return true
+        } else {
+            //if data was updated more than a minute ago, request for new data
+            if let stopDeparture = stopDepartureAt(stop: closestStop!), let lastUpdatedTime = stopDeparture.lastUpdatedTime {
+                if lastUpdatedTime.timeIntervalSinceNow.magnitude > Constants.secondsInMinute {
+                    requestStopDeparture(at: closestStop!)
+                    return true
+                }
+            }
         }
+        
+        return false
     }
     
-    func updateClosestStopForFavoriteRoutes() {
-        favorites.forEach { routeID in
-            updateClosestStop(forRoute: routeID, atUserLocation: usersLocation)
+    //return true if network request was made
+    func updateClosestStopForFavoriteRoutes() -> Bool{
+        var networkRequestMade = false
+        for routeID in favorites {
+            let result = updateClosestStop(forRoute: routeID, atUserLocation: usersLocation)
+            networkRequestMade = networkRequestMade || result
         }
+        return networkRequestMade
     }
     
     func updateUsersLocation(to newLocation: CLLocation) {
-        
-    }
-    
-    //MARK: - CLLocationManagerDelegate Methods
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue : CLLocation = manager.location!
-        usersLocation = locValue
+        usersLocation = newLocation
     }
     
     //MARK: - Micellanous Methods
