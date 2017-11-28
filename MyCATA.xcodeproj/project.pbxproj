@@ -27,10 +27,10 @@
 		EA42D3D21FC16E12008C8CBF /* DepartureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */; };
 		EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */; };
 		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
+		EA82CCC91FCCD71C00105E6A /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EA82CCC81FCCD71C00105E6A /* data.json */; };
 		EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */; };
 		EA94F3EC1FCBF93700FB7F2C /* RouteMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */; };
 		EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0D72A1FC6433100615053 /* Date+extension.swift */; };
-		EAE0D7311FC6962F00615053 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EAE0D7301FC6962F00615053 /* data.json */; };
 		EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -70,11 +70,11 @@
 		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
 		EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Westgate Location.gpx"; sourceTree = "<group>"; };
+		EA82CCC81FCCD71C00105E6A /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewController.swift; sourceTree = "<group>"; };
 		EA94F3EB1FCBF93700FB7F2C /* RouteMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapModel.swift; sourceTree = "<group>"; };
 		EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Pattee Location.gpx"; sourceTree = "<group>"; };
 		EAE0D72A1FC6433100615053 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
-		EAE0D7301FC6962F00615053 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = MyCATA/Controller/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -200,7 +200,7 @@
 			children = (
 				EA42D3BA1FBA4902008C8CBF /* RouteData.json */,
 				EA42D3B91FBA4901008C8CBF /* StopData.json */,
-				EAE0D7301FC6962F00615053 /* data.json */,
+				EA82CCC81FCCD71C00105E6A /* data.json */,
 			);
 			path = "JSON Data";
 			sourceTree = "<group>";
@@ -289,7 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */,
-				EAE0D7311FC6962F00615053 /* data.json in Resources */,
+				EA82CCC91FCCD71C00105E6A /* data.json in Resources */,
 				EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */,
 				EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */,
 				EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */,
@@ -484,6 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HWAQD98M8Y;
 				INFOPLIST_FILE = "MyCATA/Supporting Cast/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.psu.cse.pva5115.MyCATA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -499,6 +500,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HWAQD98M8Y;
 				INFOPLIST_FILE = "MyCATA/Supporting Cast/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.psu.cse.pva5115.MyCATA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
