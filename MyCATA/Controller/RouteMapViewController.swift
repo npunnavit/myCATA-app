@@ -14,7 +14,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     
-    let routeMapModel = RouteMapModel.sharedInstance
+    let routeMapModel = RouteMapViewModel.sharedInstance
     let locationManager = CLLocationManager()
     
     var route : RouteID?
@@ -28,7 +28,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate {
         let testLocation = CLLocation(latitude: 40.801127, longitude: -77.861394)
         //////////////////////////////////////////////////////////
         
-        centerMapAt(location: testLocation, withSpanDelta: RouteMapModel.defaultSpanDelta)
+        centerMapAt(location: testLocation, withSpanDelta: RouteMapViewModel.defaultSpanDelta)
         mapView.mapType = .standard
     }
     

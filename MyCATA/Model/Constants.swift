@@ -15,7 +15,7 @@ extension MyCATAModel {
     static let useTestData = false
 }
 
-extension RouteMapModel {
+extension RouteMapViewModel {
     static let defaultSpanDelta = 0.1
     static let kmlURL = "http://realtime.catabus.com/InfoPoint/Resources/Traces/"
 }
