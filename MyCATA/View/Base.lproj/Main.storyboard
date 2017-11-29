@@ -219,12 +219,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Lbs-1n-h66">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <connections>
-                            <action selector="refreshData:" destination="7UG-cV-SFK" eventType="valueChanged" id="4AC-nz-nJr"/>
-                        </connections>
-                    </refreshControl>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="WelcomeSegue" id="fmL-Ox-uYz"/>
                         <segue destination="hFh-qk-Ls5" kind="show" identifier="RouteMapSegue" id="Rom-ky-06U"/>
