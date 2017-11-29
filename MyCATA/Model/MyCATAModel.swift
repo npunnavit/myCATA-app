@@ -240,8 +240,7 @@ class MyCATAModel : LocationServicesDelegate {
     }
     
     //MARK: - Find closestStop
-    //return true if network request was made
-    func updateClosestStop(forRoute routeId: RouteID, atUserLocation location: CLLocation) -> Bool {
+    func updateClosestStop(forRoute routeId: RouteID, atUserLocation location: CLLocation, forceUpdate: Bool = false) {
         var minDistance = CLLocationDistance.infinity
         var closestStop : StopID?
         let routeDetail = routeDetailFor(route: routeId)
@@ -257,31 +256,32 @@ class MyCATAModel : LocationServicesDelegate {
         print(stopFor(stop: closestStop!).name)
         let oldClosestStop = closestStopForRoute.updateValue(closestStop!, forKey: routeId)
         
-        if (oldClosestStop != closestStop) {
+        if forceUpdate {
+            requestStopDeparture(at: closestStop!)
+        } else if (oldClosestStop != closestStop) {
             //if closestStop changes, request for new data
             requestStopDeparture(at: closestStop!)
-            return true
         } else {
             //if data was updated more than a minute ago, request for new data
             if let stopDeparture = stopDepartureAt(stop: closestStop!), let lastUpdatedTime = stopDeparture.lastUpdatedTime {
                 if lastUpdatedTime.timeIntervalSinceNow.magnitude > Constants.secondsInMinute {
                     requestStopDeparture(at: closestStop!)
-                    return true
                 }
             }
         }
-        
-        return false
     }
     
     //return true if network request was made
-    func updateClosestStopForFavoriteRoutes() -> Bool{
-        var networkRequestMade = false
+    func updateClosestStopForFavoriteRoutes() {
         for routeID in favorites {
-            let result = updateClosestStop(forRoute: routeID, atUserLocation: usersLocation)
-            networkRequestMade = networkRequestMade || result
+            updateClosestStop(forRoute: routeID, atUserLocation: usersLocation)
         }
-        return networkRequestMade
+    }
+    
+    func forceUpdateClosestStopForFavoriteRoutes() {
+        for routeID in favorites {
+            updateClosestStop(forRoute: routeID, atUserLocation: usersLocation, forceUpdate: true)
+        }
     }
     
     func updateUsersLocation(to newLocation: CLLocation) {

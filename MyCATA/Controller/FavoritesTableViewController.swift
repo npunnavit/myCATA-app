@@ -34,7 +34,7 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
             locationServices.delegate = myCATAModel
             
             locationManager.delegate = locationServices
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             myCATAModel.usersLocation = locationManager.location
             locationManager.startUpdatingLocation()
         }
@@ -56,9 +56,7 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     }
     
     @IBAction func refreshData(_ sender: UIRefreshControl) {
-        if !myCATAModel.updateClosestStopForFavoriteRoutes() {
-            self.refreshControl?.endRefreshing()
-        }
+        myCATAModel.forceUpdateClosestStopForFavoriteRoutes()
     }
     
     @objc func dataDownloaded(notification: Notification) {
