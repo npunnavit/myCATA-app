@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class RouteMapViewController: UIViewController, MKMapViewDelegate {
+class RouteMapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -59,4 +59,8 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate {
     }
     */
 
+}
+
+extension RouteMapViewModel : MKMapViewDelegate {
+    
 }
