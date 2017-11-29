@@ -15,6 +15,7 @@ class RouteMapViewController: UIViewController {
     
     
     let routeMapModel = RouteMapViewModel.sharedInstance
+    let myCATAModel = MyCATAModel.sharedInstance
     let locationManager = CLLocationManager()
     
     var route : RouteID?
@@ -23,7 +24,13 @@ class RouteMapViewController: UIViewController {
         super.viewDidLoad()
         
         mapView.delegate = self
-        
+        if let routeId = route {
+            if let routeTraceFilename = myCATAModel.routeDetailFor(route: routeId).routeTraceFilename {
+                let urlString = RouteMapViewModel.kmlURL + routeTraceFilename
+                //            loadKml(urlString)
+            }
+            
+        }
         //TEST///////////////////////////////////////////////////////////
         let testLocation = CLLocation(latitude: 40.801127, longitude: -77.861394)
         //////////////////////////////////////////////////////////
@@ -31,6 +38,16 @@ class RouteMapViewController: UIViewController {
         centerMapAt(location: testLocation, withSpanDelta: RouteMapViewModel.defaultSpanDelta)
         mapView.mapType = .standard
     }
+    
+//    fileprivate func loadKml(_ path: String) {
+//        let url = Bundle.main.url(forResource: path, withExtension: "kml")
+//        KMLDocument.parse(url!, callback:
+//            { [unowned self] (kml) in
+//                // Add and Zoom to annotations.
+//                self.mapView.showAnnotations(kml.annotations, animated: true)
+//            }
+//        )
+//    }
     
     func centerMapAt(location: CLLocation, withSpanDelta spanDelta: CLLocationDegrees) {
         let center = location.coordinate
@@ -61,6 +78,6 @@ class RouteMapViewController: UIViewController {
 
 }
 
-extension RouteMapViewModel : MKMapViewDelegate {
+extension RouteMapViewController : MKMapViewDelegate {
     
 }

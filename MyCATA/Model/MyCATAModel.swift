@@ -289,12 +289,12 @@ class MyCATAModel : LocationServicesDelegate {
     }
     
     //MARK: - Micellanous Methods
-    private func routeDetailFor(route routeId: RouteID) -> RouteDetail {
+    func routeDetailFor(route routeId: RouteID) -> RouteDetail {
         let index = routeIdToIndex[routeId]!
         return routeDetails[index]
     }
     
-    private func stopFor(stop stopId: StopID) -> Stop {
+    func stopFor(stop stopId: StopID) -> Stop {
         let index = stopIdToIndex[stopId]!
         return stops[index]
     }

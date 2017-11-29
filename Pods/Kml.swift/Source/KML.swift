@@ -210,9 +210,13 @@ open class KMLPolyStyle: KMLColorStyleGroup, KMLApplyStyle {
         for child: AEXMLElement in element.children {
             switch child.name {
             case "fill":
-                fill = child.bool
+                if let bool = child.bool {
+                    fill = bool
+                }
             case "outline":
-                outline = child.bool
+                if let bool = child.bool {
+                    outline = bool
+                }
             default:
                 break
             }
@@ -232,7 +236,9 @@ open class KMLLineStyle: KMLColorStyleGroup, KMLApplyStyle {
         for child: AEXMLElement in element.children {
             switch child.name {
             case "width":
-                width = child.double
+                if let double = child.double {
+                    width = double
+                }
             default:
                 break
             }
@@ -256,9 +262,13 @@ open class KMLIconStyle: KMLColorStyleGroup {
         for child: AEXMLElement in element.children {
             switch child.name {
             case "scale":
-                scale = child.double
+                if let double = child.double {
+                    scale = double
+                }
             case "heading":
-                heading = child.double
+                if let double = child.double {
+                    heading = double
+                }
             default:
                 break
             }

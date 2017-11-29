@@ -22,6 +22,7 @@ struct RouteDetail : Decodable {
     let sortOrder : Int
     let stops : [Stop]
     let routeStops : [RouteStop]
+    let routeTraceFilename : String?
     var color : UIColor { return hexToColor(hex: colorString) }
     var textColor : UIColor { return hexToColor(hex: textColorString) }
     
@@ -35,6 +36,7 @@ struct RouteDetail : Decodable {
         case sortOrder = "SortOrder"
         case stops = "Stops"
         case routeStops = "RouteStops"
+        case routeTraceFilename = "RouteTraceFilename"
     }
     
     func hexToColor(hex: String) -> UIColor {

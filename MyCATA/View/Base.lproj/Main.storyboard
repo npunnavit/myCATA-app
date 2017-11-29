@@ -213,7 +213,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="nbI-QA-0N6">
                         <barButtonItem key="leftBarButtonItem" title="Search" id="SUn-DY-Veq"/>
-                        <barButtonItem key="rightBarButtonItem" title="Setting" id="HB6-cm-J2x">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="HB6-cm-J2x">
                             <connections>
                                 <segue destination="KbL-QT-Jjh" kind="show" identifier="SettingsSegue" id="rMe-58-KCC"/>
                             </connections>
