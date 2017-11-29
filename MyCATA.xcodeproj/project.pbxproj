@@ -28,6 +28,7 @@
 		EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */; };
 		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
 		EA6536DA1FCDE64800562117 /* LocationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6536D91FCDE64800562117 /* LocationServices.swift */; };
+		EA6536DD1FCE89AB00562117 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = EA6536DC1FCE89AB00562117 /* Podfile */; };
 		EA82CCC91FCCD71C00105E6A /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EA82CCC81FCCD71C00105E6A /* data.json */; };
 		EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */; };
 		EA94F3EC1FCBF93700FB7F2C /* RouteMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */; };
@@ -72,6 +73,7 @@
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
 		EA6536D91FCDE64800562117 /* LocationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServices.swift; sourceTree = "<group>"; };
 		EA6536DB1FCDF01400562117 /* Kunkle Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Kunkle Location.gpx"; sourceTree = "<group>"; };
+		EA6536DC1FCE89AB00562117 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Westgate Location.gpx"; sourceTree = "<group>"; };
 		EA82CCC81FCCD71C00105E6A /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */,
 				EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */,
 				EA6536DB1FCDF01400562117 /* Kunkle Location.gpx */,
+				EA6536DC1FCE89AB00562117 /* Podfile */,
 			);
 			path = "Supporting Cast";
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 			files = (
 				EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */,
 				EA82CCC91FCCD71C00105E6A /* data.json in Resources */,
+				EA6536DD1FCE89AB00562117 /* Podfile in Resources */,
 				EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */,
 				EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */,
 				EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */,
