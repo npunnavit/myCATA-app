@@ -15,7 +15,16 @@ protocol LocationServicesDelegate {
 
 class LocationServices : NSObject, CLLocationManagerDelegate {
     
+    static let sharedInstance = LocationServices()
+    
+    private let locationManager = CLLocationManager()
     var delegate : LocationServicesDelegate?
+    var location : CLLocation? { return locationManager.location }
+    
+    fileprivate override init() {
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+    }
     
     //MARK: - CLLocationManagerDelegate Method
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

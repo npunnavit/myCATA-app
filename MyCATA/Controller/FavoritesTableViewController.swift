@@ -14,7 +14,7 @@ import MapKit
 class FavoritesTableViewController: UITableViewController, DepartureTableHeaderViewDelegate {
     let myCATAModel = MyCATAModel.sharedInstance
     let locationManager = CLLocationManager()
-    let locationServices = LocationServices()
+    let locationServices = LocationServices.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +32,7 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         
         if CLLocationManager.locationServicesEnabled() {
             locationServices.delegate = myCATAModel
-            
-            locationManager.delegate = locationServices
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            myCATAModel.usersLocation = locationManager.location
-            locationManager.startUpdatingLocation()
+            myCATAModel.usersLocation = locationServices.location
         }
         
         tableView.register(UINib(nibName: "DepartureTableViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: ReuseIdentifier.departureHeaderView)

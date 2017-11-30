@@ -16,7 +16,6 @@ extension MyCATAModel {
 }
 
 extension RouteMapViewModel {
-    static let defaultSpanDelta = 0.1
     static let kmlURL = "http://realtime.catabus.com/InfoPoint/Resources/Traces/"
 }
 
@@ -24,6 +23,11 @@ extension FavoritesTableViewController {
     static let departureCellAlpha : CGFloat = 0.1
     static let departureCellHeight : CGFloat = 70
     static let departureHeaderViewHeight : CGFloat = 50
+}
+
+extension RouteMapViewController {
+    static let defaultSpanDelta = 0.1
+    static let zoomedSpanDelta = 0.01
 }
 
 extension Notification.Name {
@@ -50,6 +54,11 @@ struct SegueIdentifiers {
     static let welcomeSegue = "WelcomeSegue"
     static let routeMapSegue = "RouteMapSegue"
     static let settingsSegue = "SettingsSegue"
+    static let searchSegue = "SearchSegue"
+}
+
+struct AnnotationIdentifiers {
+    static let stopPin = "StopPin"
 }
 
 struct Constants {

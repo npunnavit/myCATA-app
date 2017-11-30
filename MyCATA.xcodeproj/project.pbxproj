@@ -30,6 +30,7 @@
 		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
 		EA6536DA1FCDE64800562117 /* LocationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6536D91FCDE64800562117 /* LocationServices.swift */; };
 		EA82CCC91FCCD71C00105E6A /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EA82CCC81FCCD71C00105E6A /* data.json */; };
+		EA9244991FD0907E00DE02B4 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9244981FD0907E00DE02B4 /* SearchTableViewController.swift */; };
 		EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */; };
 		EA94F3EC1FCBF93700FB7F2C /* RouteMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */; };
 		EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0D72A1FC6433100615053 /* Date+extension.swift */; };
@@ -78,6 +79,7 @@
 		EA6536DB1FCDF01400562117 /* Kunkle Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Kunkle Location.gpx"; sourceTree = "<group>"; };
 		EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Westgate Location.gpx"; sourceTree = "<group>"; };
 		EA82CCC81FCCD71C00105E6A /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
+		EA9244981FD0907E00DE02B4 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewController.swift; sourceTree = "<group>"; };
 		EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewModel.swift; sourceTree = "<group>"; };
 		EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Pattee Location.gpx"; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				EA42D3CB1FBE1D96008C8CBF /* RoutesTableViewController.swift */,
 				EA42D3CF1FC155F2008C8CBF /* FavoritesTableViewController.swift */,
 				EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */,
+				EA9244981FD0907E00DE02B4 /* SearchTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */,
 				EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */,
 				EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */,
+				EA9244991FD0907E00DE02B4 /* SearchTableViewController.swift in Sources */,
 				EA94F3EC1FCBF93700FB7F2C /* RouteMapViewModel.swift in Sources */,
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,

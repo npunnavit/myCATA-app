@@ -15,6 +15,7 @@ struct Stop : Codable {
     let latitude : CLLocationDegrees
     let longtitude : CLLocationDegrees
     var location : CLLocation { return CLLocation(latitude: latitude, longitude: longtitude) }
+    var location2D : CLLocationCoordinate2D { return CLLocationCoordinate2DMake(latitude, longtitude) }
     
     enum CodingKeys : String, CodingKey {
         case stopId = "StopId"
