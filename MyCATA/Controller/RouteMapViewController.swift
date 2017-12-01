@@ -24,6 +24,20 @@ class StopPin : NSObject, MKAnnotation {
     }
 }
 
+class BusAnnotation : MKPointAnnotation {
+    let routeId : RouteID
+    let vehicleId : VehicleID
+    
+    init(routeId: RouteID) {
+        self.routeId = routeId
+    }
+    
+    init(routeId: StopID, coordinate: CLLocationCoordinate2D) {
+        self.coordinate = coordinate
+        self.init(routeId: routeId)
+    }
+}
+
 class RouteMapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
@@ -35,6 +49,7 @@ class RouteMapViewController: UIViewController {
     
     var routes : [RouteID]?
     var stopPins = [StopPin]()
+    var busAnnotations = [BusAnnotation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +84,12 @@ class RouteMapViewController: UIViewController {
             self.navigationItem.title = String(title.dropFirst()) // Drop leading space
             
             addAnnotation(forRoutes: routesId)
+        }
+    }
+    
+    fileprivate func configureBusLocation() {
+        if let routesId = routes {
+            
         }
     }
     

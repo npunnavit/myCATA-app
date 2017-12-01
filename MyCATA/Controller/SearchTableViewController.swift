@@ -15,7 +15,7 @@ class SearchTableViewController: UITableViewController {
     
     let myCATAModel = MyCATAModel.sharedInstance
     
-    var selectedRoutes = [RouteID]()
+    var selectedCells = Set<IndexPath>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +38,12 @@ class SearchTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return myCATAModel.numberOfSections
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return myCATAModel.numberOfRow(inSection: section)
+        return myCATAModel.numberOfRoutes
     }
 
     
@@ -52,16 +52,42 @@ class SearchTableViewController: UITableViewController {
         
         cell.textLabel?.text = myCATAModel.routeName(atIndexPath: indexPath)
         
+        if selectedCells.contains(indexPath) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+        if let cell = tableView.cellForRow(at: indexPath) {
+            if selectedCells.contains(indexPath) {
+                selectedCells.remove(indexPath)
+                cell.accessoryType = .none
+            } else {
+                selectedCells.insert(indexPath)
+                cell.accessoryType = .checkmark
+            }
+        }
+        
+        updateDoneButton()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //MARK: - IB Actions
     @IBAction func cancelSelection(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    //enable when user select at least one favorites
+    func updateDoneButton() {
+        if selectedCells.isEmpty {
+            doneButton.isEnabled = false
+        } else {
+            doneButton.isEnabled = true
+        }
     }
     
     
@@ -100,14 +126,25 @@ class SearchTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier! {
+        case SegueIdentifiers.routeMapSegue:
+            var routesId = [RouteID]()
+            for indexPath in selectedCells {
+                let routeId = myCATAModel.route(forIndexPath: indexPath).routeId
+                routesId.append(routeId)
+            }
+            
+            let routeMapViewController = segue.destination as! RouteMapViewController
+            routeMapViewController.configure(routes: routesId)
+        default:
+            assert(false, "Unhandled segue")
+        }
     }
-    */
+    
 
 }

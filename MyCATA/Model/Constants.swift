@@ -17,6 +17,7 @@ extension MyCATAModel {
 
 extension RouteMapViewModel {
     static let kmlURL = "http://realtime.catabus.com/InfoPoint/Resources/Traces/"
+    static let vehicleLocationURL = "http://realtime.catabus.com/InfoPoint/rest/vehicles/getallvehiclesforroute?routeID="
 }
 
 extension FavoritesTableViewController {
@@ -31,7 +32,8 @@ extension RouteMapViewController {
 }
 
 extension Notification.Name {
-    static let StopDepartureDataDownloaded = NSNotification.Name("StopDepartureDataDownlaodedNotification")
+    static let StopDepartureDataDownloaded = NSNotification.Name("StopDepartureDataDownloadedNotification")
+    static let VehicleLocationDataDownloaded = NSNotification.Name("VehicleLocationDataDownloadedNotification")
 }
 
 struct FileName {

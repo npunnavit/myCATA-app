@@ -174,6 +174,8 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
             break
         case SegueIdentifiers.welcomeSegue:
             break
+        case SegueIdentifiers.searchSegue:
+            break
         default:
             assert(false, "Unhandled Segue")
         }

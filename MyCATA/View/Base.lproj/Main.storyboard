@@ -328,7 +328,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="6uC-Os-Heg">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RouteCell" id="6uC-Os-Heg">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6uC-Os-Heg" id="E0i-1C-Ed8">
@@ -348,7 +348,11 @@
                                 <action selector="cancelSelection:" destination="kH5-ud-dP4" id="p48-tQ-TfE"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="RYn-RI-9f1"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="RYn-RI-9f1">
+                            <connections>
+                                <segue destination="hFh-qk-Ls5" kind="show" identifier="RouteMapSegue" id="KDu-2W-PG2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="doneButton" destination="RYn-RI-9f1" id="6Kb-lh-deg"/>
@@ -417,6 +421,7 @@
         <image name="myCATAlogo" width="647" height="660"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="KDu-2W-PG2"/>
         <segue reference="p7N-5x-h52"/>
     </inferredMetricsTieBreakers>
 </document>

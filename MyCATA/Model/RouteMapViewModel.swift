@@ -13,6 +13,8 @@ class RouteMapViewModel {
     static let sharedInstance = RouteMapViewModel()
     let myCATAModel = MyCATAModel.sharedInstance
     
+    var vehicles = [RouteID: [VehicleLocation]]()
+    
     fileprivate init() {
         
     }
@@ -37,4 +39,48 @@ class RouteMapViewModel {
         return stops
     }
     
+    func vehiclesFor(route routeId: RouteID) -> [VehicleLocation]? {
+        return vehicles[routeId]
+    }
+    
+    func routeIconNameFor(route routeId: RouteID) {
+        let routeShortName = routeShortNameFor(route: routeId)
+        let iconName = "\(routeShortName)-RouteIcon"
+        return iconName
+    }
+    
+    func requestVehicles(forRoute routeId: RouteID) {
+        let urlString = RouteMapViewModel.vehicleLocationURL + String(routeId)
+        let url = URL(string: urlString)!
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { (data, response, error) in
+            guard error == nil else { print(error!.localizedDescription); return }
+            
+            self.vehicles[routeId] = self.decodeVehicleLocation(data!)
+            
+            let center = NotificationCenter.default
+            let userInfo : [AnyHashable:Any] = ["RouteId": routeId]
+            center.post(name: Notification.Name.VehicleLocationDataDownloaded, object: self, userInfo: userInfo)
+        }
+        task.resume()
+    }
+    
+    func decodeVehicleLocation(_ data: Data) -> [VehicleLocation]? {
+        var vehiclesLocations : [VehicleLocation]?
+        let decoder = JSONDecoder()
+        
+        do {
+            vehiclesLocations = try decoder.decode([VehicleLocation].self, from: data)
+            return vehiclesLocations
+        } catch let error as NSError {
+            print("Unresolved Error \(String(describing: error))")
+        }
+        
+        return nil
+    }
+    
+    //MARK: - Micellaneous function
+    func routeShortNameFor(route routeId: RouteID) -> String {
+        return myCATAModel.routeDetailFor(route: routeId).shortName
+    }
 }
