@@ -28,13 +28,21 @@ class BusAnnotation : MKPointAnnotation {
     let routeId : RouteID
     let vehicleId : VehicleID
     
-    init(routeId: RouteID) {
+    init(routeId: RouteID, vehicleId: VehicleID) {
         self.routeId = routeId
+        self.vehicleId = vehicleId
     }
     
-    init(routeId: StopID, coordinate: CLLocationCoordinate2D) {
+    init(vehicle: VehicleLocation) {
+        self.routeId = vehicle.routeId
+        self.vehicleId = vehicle.vehicleId
+        super.init()
+        self.coordinate = vehicle.location
+    }
+    
+    convenience init(routeId: RouteID, vehicleId: VehicleID, coordinate: CLLocationCoordinate2D) {
+        self.init(routeId: routeId, vehicleId: vehicleId)
         self.coordinate = coordinate
-        self.init(routeId: routeId)
     }
 }
 
@@ -43,13 +51,14 @@ class RouteMapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     
-    let routeMapViewModel = RouteMapViewModel.sharedInstance
+    let routeMapViewModel = RouteMapViewModel()
     let myCATAModel = MyCATAModel.sharedInstance
     let locationServices = LocationServices.sharedInstance
+    var timer = Timer()
     
     var routes : [RouteID]?
     var stopPins = [StopPin]()
-    var busAnnotations = [BusAnnotation]()
+    var busAnnotations = [RouteID: [VehicleID: BusAnnotation]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +74,13 @@ class RouteMapViewController: UIViewController {
         }
         
         configureRoute()
+        
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(RouteMapViewController.busDataDownloaded(notification:)), name: Notification.Name.VehicleLocationDataDownloaded, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        timer.invalidate()
     }
     
     fileprivate func configureRoute() {
@@ -84,12 +100,8 @@ class RouteMapViewController: UIViewController {
             self.navigationItem.title = String(title.dropFirst()) // Drop leading space
             
             addAnnotation(forRoutes: routesId)
-        }
-    }
-    
-    fileprivate func configureBusLocation() {
-        if let routesId = routes {
-            
+            routeMapViewModel.requestVehicles(forRoutes: routesId)
+            scheduleBusLocationUpdate()
         }
     }
     
@@ -100,6 +112,42 @@ class RouteMapViewController: UIViewController {
                 self.mapView.addOverlays(kml.overlays)
             }
         )
+    }
+    
+    @objc func busDataDownloaded(notification: Notification) {
+        let block = {
+            let userInfo = notification.userInfo
+            if let routeId = userInfo!["RouteId"] as? RouteID {
+                let vehicles = self.routeMapViewModel.vehiclesFor(route: routeId)!
+                if self.busAnnotations[routeId] != nil {
+                    //update annotation coordinate
+                    for vehicle in vehicles {
+                        let vehicleId = vehicle.vehicleId
+                        let location = vehicle.location
+                        UIView.animate(withDuration: 1, animations: {
+                            self.busAnnotations[routeId]?[vehicleId]?.coordinate = location
+                        }, completion:  { success in
+                            if success {
+                                // handle a successfully ended animation
+                            } else {
+                                // handle a canceled animation, i.e move to destination immediately
+                                self.busAnnotations[routeId]?[vehicleId]?.coordinate = location
+                            }
+                        })
+                    }
+                } else {
+                    //create new annotation
+                    for vehicle in vehicles {
+                        let vehicleId = vehicle.vehicleId
+                        let busAnnotation = BusAnnotation(vehicle: vehicle)
+                        self.mapView.addAnnotation(busAnnotation)
+                        self.busAnnotations[routeId] = [vehicleId: busAnnotation]
+                    }
+                }
+            }
+            
+        }
+        DispatchQueue.main.async(execute: block)
     }
     
     func centerMapAt(location: CLLocation, withSpanDelta spanDelta: CLLocationDegrees) {
@@ -141,6 +189,41 @@ class RouteMapViewController: UIViewController {
         return view
     }
     
+    func annotationView(forBusAnnotation busAnnotation: BusAnnotation) -> MKAnnotationView {
+        var view : MKAnnotationView
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: AnnotationIdentifiers.busAnnotation) {
+            dequeuedView.annotation = busAnnotation
+            view = dequeuedView
+        } else {
+            view = MKAnnotationView(annotation: busAnnotation, reuseIdentifier: AnnotationIdentifiers.busAnnotation)
+        }
+        
+        let routeId = busAnnotation.routeId
+        view.image = myCATAModel.routeIconFor(route: routeId)
+        
+        let size = CGSize(width: RouteMapViewController.busIconSize, height: RouteMapViewController.busIconSize)
+        view.frame.size = size
+        
+        return view
+    }
+    
+    //MARK: - bring bus annotion to front/back
+    func bringAllBusAnnotationsToFront() {
+//        for aBusAnnotation in allBusAnnotations() {
+//            if let anAnnotationView = mapView.view(for: aBusAnnotation) {
+//                anAnnotationView.superview?.bringSubview(toFront: anAnnotationView)
+//            }
+//        }
+    }
+    
+    func sendAllBusAnnotationsToBack() {
+//        for aBusAnnotation in allBusAnnotations() {
+//            if let anAnnotationView = mapView.view(for: aBusAnnotation) {
+//                anAnnotationView.superview?.sendSubview(toBack: anAnnotationView)
+//            }
+//        }
+    }
+    
     //MARK: IBActions
     
     @IBAction func changeZoomRegion(_ sender: UISegmentedControl) {
@@ -148,9 +231,11 @@ class RouteMapViewController: UIViewController {
         case 0:
             if let userLocation = locationServices.location {
                 centerMapAt(location: userLocation, withSpanDelta: RouteMapViewController.zoomedSpanDelta)
+                sendAllBusAnnotationsToBack()
             }
         case 1:
             mapView.showAnnotations(stopPins, animated: true)
+            bringAllBusAnnotationsToFront()
         default:
             assert(false, "Unhandled zoom segmented control case")
         }
@@ -159,6 +244,27 @@ class RouteMapViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Micellaneous functions
+    func allBusAnnotations() -> [BusAnnotation] {
+        var allAnnotations = [BusAnnotation]()
+        for (_, annotationByVehicle) in busAnnotations {
+            for (_, anAnnotation) in annotationByVehicle {
+                allAnnotations.append(anAnnotation)
+            }
+        }
+        return allAnnotations
+    }
+    
+    func scheduleBusLocationUpdate() {
+        timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(updateBusLocation), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateBusLocation() {
+        if let routesId = routes {
+            routeMapViewModel.requestVehicles(forRoutes: routesId)
+        }
     }
     
 
@@ -179,6 +285,8 @@ extension RouteMapViewController : MKMapViewDelegate {
         switch annotation {
         case is StopPin:
             return annotationView(forPin: annotation as! StopPin)
+        case is BusAnnotation:
+            return annotationView(forBusAnnotation: annotation as! BusAnnotation)
         default:
             return nil
         }

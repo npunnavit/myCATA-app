@@ -29,6 +29,7 @@ extension FavoritesTableViewController {
 extension RouteMapViewController {
     static let defaultSpanDelta = 0.1
     static let zoomedSpanDelta = 0.01
+    static let busIconSize = 40.0
 }
 
 extension Notification.Name {
@@ -61,8 +62,13 @@ struct SegueIdentifiers {
 
 struct AnnotationIdentifiers {
     static let stopPin = "StopPin"
+    static let busAnnotation = "BusAnnotation"
 }
 
 struct Constants {
     static let secondsInMinute = 60.0
+    struct TimeInterval {
+        static let aMinute = 60.0
+        static let halfMinute = 30.0
+    }
 }

@@ -15,7 +15,7 @@ class RouteMapViewModel {
     
     var vehicles = [RouteID: [VehicleLocation]]()
     
-    fileprivate init() {
+    init() {
         
     }
     
@@ -43,12 +43,6 @@ class RouteMapViewModel {
         return vehicles[routeId]
     }
     
-    func routeIconNameFor(route routeId: RouteID) {
-        let routeShortName = routeShortNameFor(route: routeId)
-        let iconName = "\(routeShortName)-RouteIcon"
-        return iconName
-    }
-    
     func requestVehicles(forRoute routeId: RouteID) {
         let urlString = RouteMapViewModel.vehicleLocationURL + String(routeId)
         let url = URL(string: urlString)!
@@ -63,6 +57,12 @@ class RouteMapViewModel {
             center.post(name: Notification.Name.VehicleLocationDataDownloaded, object: self, userInfo: userInfo)
         }
         task.resume()
+    }
+    
+    func requestVehicles(forRoutes routesId: [RouteID]) {
+        for routeId in routesId {
+            requestVehicles(forRoute: routeId)
+        }
     }
     
     func decodeVehicleLocation(_ data: Data) -> [VehicleLocation]? {
@@ -80,7 +80,4 @@ class RouteMapViewModel {
     }
     
     //MARK: - Micellaneous function
-    func routeShortNameFor(route routeId: RouteID) -> String {
-        return myCATAModel.routeDetailFor(route: routeId).shortName
-    }
 }

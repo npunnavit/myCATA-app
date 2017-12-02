@@ -76,7 +76,7 @@
       <AdditionalOptions>
       </AdditionalOptions>
       <LocationScenarioReference
-         identifier = "../../MyCATA/Supporting Cast/Pattee Location.gpx"
+         identifier = "../MyCATA/Supporting Cast/Pattee Location.gpx"
          referenceType = "0">
       </LocationScenarioReference>
    </LaunchAction>

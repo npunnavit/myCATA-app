@@ -22,6 +22,8 @@ class LocationServices : NSObject, CLLocationManagerDelegate {
     var location : CLLocation? { return locationManager.location }
     
     fileprivate override init() {
+        super.init()
+        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }

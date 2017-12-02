@@ -8308,39 +8308,6 @@
       ]
    },
    {
-      "RouteId":26,
-      "RouteRecordId":9,
-      "ShortName":"P",
-      "LongName":"P - Medical Ctr  Scenery Pk",
-      "RouteAbbreviation":"P",
-      "IvrDescription":"P Route",
-      "Color":"2BFF24",
-      "TextColor":"000000",
-      "IsVisible":false,
-      "Group":null,
-      "SortOrder":40,
-      "RouteTraceFilename":null,
-      "RouteTraceHash64":null,
-      "IsHeadway":false,
-      "IncludeInGoogle":false,
-      "GoogleDescription":null,
-      "Stops":[
-
-      ],
-      "RouteStops":[
-
-      ],
-      "Directions":[
-
-      ],
-      "Vehicles":[
-
-      ],
-      "Messages":[
-
-      ]
-   },
-   {
       "RouteId":43,
       "RouteRecordId":10,
       "ShortName":"V",
@@ -17304,72 +17271,6 @@
             "DirectionIconFileName":null,
             "DirectionDesc":null
          }
-      ],
-      "Vehicles":[
-
-      ],
-      "Messages":[
-
-      ]
-   },
-   {
-      "RouteId":14,
-      "RouteRecordId":66,
-      "ShortName":"AP",
-      "LongName":"AP - University Park Airport",
-      "RouteAbbreviation":"AP",
-      "IvrDescription":"AP",
-      "Color":"FFFFFF",
-      "TextColor":"000000",
-      "IsVisible":false,
-      "Group":null,
-      "SortOrder":44,
-      "RouteTraceFilename":null,
-      "RouteTraceHash64":null,
-      "IsHeadway":false,
-      "IncludeInGoogle":false,
-      "GoogleDescription":null,
-      "Stops":[
-
-      ],
-      "RouteStops":[
-
-      ],
-      "Directions":[
-
-      ],
-      "Vehicles":[
-
-      ],
-      "Messages":[
-
-      ]
-   },
-   {
-      "RouteId":56,
-      "RouteRecordId":67,
-      "ShortName":"Z",
-      "LongName":"Z - Stormstown",
-      "RouteAbbreviation":"Z",
-      "IvrDescription":"Z Route",
-      "Color":"C9FBFF",
-      "TextColor":"000000",
-      "IsVisible":false,
-      "Group":null,
-      "SortOrder":45,
-      "RouteTraceFilename":null,
-      "RouteTraceHash64":null,
-      "IsHeadway":false,
-      "IncludeInGoogle":false,
-      "GoogleDescription":null,
-      "Stops":[
-
-      ],
-      "RouteStops":[
-
-      ],
-      "Directions":[
-
       ],
       "Vehicles":[
 

@@ -13,7 +13,6 @@ import MapKit
 //Beta App doesn't find closest stop. It gets data for Pattee Library stop
 class FavoritesTableViewController: UITableViewController, DepartureTableHeaderViewDelegate {
     let myCATAModel = MyCATAModel.sharedInstance
-    let locationManager = CLLocationManager()
     let locationServices = LocationServices.sharedInstance
     
     override func viewDidLoad() {

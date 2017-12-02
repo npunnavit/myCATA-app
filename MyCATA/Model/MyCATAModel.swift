@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class MyCATAModel : LocationServicesDelegate {
+class MyCATAModel {
     static let sharedInstance = MyCATAModel()
     
     //MARK: - Properties
@@ -284,10 +284,6 @@ class MyCATAModel : LocationServicesDelegate {
         }
     }
     
-    func updateUsersLocation(to newLocation: CLLocation) {
-        usersLocation = newLocation
-    }
-    
     //MARK: - Micellanous Methods
     func routeDetailFor(route routeId: RouteID) -> RouteDetail {
         let index = routeIdToIndex[routeId]!
@@ -297,5 +293,30 @@ class MyCATAModel : LocationServicesDelegate {
     func stopFor(stop stopId: StopID) -> Stop {
         let index = stopIdToIndex[stopId]!
         return stops[index]
+    }
+    
+    func routeShortNameFor(route routeId: RouteID) -> String {
+        return routeDetailFor(route: routeId).shortName
+    }
+    
+    private func routeIconNameFor(route routeId: RouteID) -> String {
+        let routeShortName = routeShortNameFor(route: routeId)
+        let iconName = "\(routeShortName)-RouteIcon"
+        return iconName
+    }
+    
+    func routeIconFor(route routeId: RouteID) -> UIImage {
+        let iconName = routeIconNameFor(route: routeId)
+        if let icon = UIImage(named: iconName) {
+            return icon
+        } else {
+            return UIImage(named: "Default-RouteIcon")!
+        }
+    }
+}
+
+extension MyCATAModel : LocationServicesDelegate {
+    func updateUsersLocation(to newLocation: CLLocation) {
+        usersLocation = newLocation
     }
 }
