@@ -297,22 +297,32 @@
                                     <action selector="changeZoomRegion:" destination="hFh-qk-Ls5" eventType="valueChanged" id="eGz-f2-yzG"/>
                                 </connections>
                             </segmentedControl>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cdD-kR-056">
+                                <rect key="frame" x="308" y="615" width="51" height="31"/>
+                                <connections>
+                                    <action selector="toggleShowStopPins:" destination="hFh-qk-Ls5" eventType="valueChanged" id="DAt-Nm-DvI"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mSt-Ag-wYG" firstAttribute="top" secondItem="NO5-j6-UdW" secondAttribute="top" id="1AO-il-FWe"/>
                             <constraint firstItem="aRz-je-cbq" firstAttribute="leading" secondItem="NO5-j6-UdW" secondAttribute="leading" constant="16" id="6CZ-1H-s6K"/>
                             <constraint firstItem="NO5-j6-UdW" firstAttribute="bottom" secondItem="mSt-Ag-wYG" secondAttribute="bottom" id="8v1-m2-DmP"/>
+                            <constraint firstItem="NO5-j6-UdW" firstAttribute="trailing" secondItem="cdD-kR-056" secondAttribute="trailing" constant="18" id="9tD-Dl-ukW"/>
                             <constraint firstItem="NO5-j6-UdW" firstAttribute="trailing" secondItem="mSt-Ag-wYG" secondAttribute="trailing" id="Pjv-Bx-eHL"/>
                             <constraint firstItem="mSt-Ag-wYG" firstAttribute="top" secondItem="NO5-j6-UdW" secondAttribute="top" id="WBO-5r-uTl"/>
                             <constraint firstItem="NO5-j6-UdW" firstAttribute="bottom" secondItem="aRz-je-cbq" secondAttribute="bottom" constant="21" id="a78-oO-JZI"/>
                             <constraint firstItem="mSt-Ag-wYG" firstAttribute="leading" secondItem="NO5-j6-UdW" secondAttribute="leading" id="ftA-x7-Xod"/>
                             <constraint firstItem="NO5-j6-UdW" firstAttribute="bottom" secondItem="mSt-Ag-wYG" secondAttribute="bottom" id="lgx-iY-7VN"/>
+                            <constraint firstItem="NO5-j6-UdW" firstAttribute="bottom" secondItem="cdD-kR-056" secondAttribute="bottom" constant="21" id="ljV-yt-lvM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NO5-j6-UdW"/>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="mSt-Ag-wYG" id="6en-dx-3H6"/>
+                        <outlet property="showStopPinsSwitch" destination="cdD-kR-056" id="kC0-8p-zo8"/>
+                        <outlet property="zoomSegmentedControl" destination="aRz-je-cbq" id="F13-YL-lqD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xt6-57-LnG" userLabel="First Responder" sceneMemberID="firstResponder"/>

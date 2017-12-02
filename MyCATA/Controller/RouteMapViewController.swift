@@ -49,7 +49,8 @@ class BusAnnotation : MKPointAnnotation {
 class RouteMapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
-    
+    @IBOutlet weak var showStopPinsSwitch: UISwitch!
+    @IBOutlet weak var zoomSegmentedControl: UISegmentedControl!
     
     let routeMapViewModel = RouteMapViewModel()
     let myCATAModel = MyCATAModel.sharedInstance
@@ -224,8 +225,20 @@ class RouteMapViewController: UIViewController {
 //        }
     }
     
-    //MARK: IBActions
+    //MARK: - show/hide stops
+    func showStopPins() {
+        for aStopPin in stopPins {
+            mapView.view(for: aStopPin)?.isHidden = false
+        }
+    }
     
+    func hideStopPins() {
+        for aStopPin in stopPins {
+            mapView.view(for: aStopPin)?.isHidden = true
+        }
+    }
+    
+    //MARK: IBActions
     @IBAction func changeZoomRegion(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -238,6 +251,14 @@ class RouteMapViewController: UIViewController {
             bringAllBusAnnotationsToFront()
         default:
             assert(false, "Unhandled zoom segmented control case")
+        }
+    }
+    
+    @IBAction func toggleShowStopPins(_ sender: UISwitch) {
+        if sender.isOn {
+            showStopPins()
+        } else {
+            hideStopPins()
         }
     }
     
@@ -280,6 +301,7 @@ class RouteMapViewController: UIViewController {
 
 }
 
+//MARK: - MKMapViewDelegate Methods
 extension RouteMapViewController : MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         switch annotation {
@@ -299,8 +321,18 @@ extension RouteMapViewController : MKMapViewDelegate {
         }
         return MKOverlayRenderer(overlay: overlay)
     }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if showStopPinsSwitch.isOn {
+            showStopPins()
+        } else {
+            hideStopPins()
+        }
+        zoomSegmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
+    }
 }
 
+//MARK: - LocationServicesDelegate Methods
 extension RouteMapViewController : LocationServicesDelegate {
     func updateUsersLocation(to newLocation: CLLocation) {
         return
