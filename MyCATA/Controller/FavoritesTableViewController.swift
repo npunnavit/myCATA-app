@@ -14,6 +14,7 @@ import MapKit
 class FavoritesTableViewController: UITableViewController, DepartureTableHeaderViewDelegate {
     let myCATAModel = MyCATAModel.sharedInstance
     let locationServices = LocationServices.sharedInstance
+    var timer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +39,17 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Now Refreshing!")
         
+        timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(forceUpdateDeparturesData), userInfo: nil, repeats: true)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        timer.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,6 +58,10 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     }
     
     @IBAction func refreshData(_ sender: UIRefreshControl) {
+        myCATAModel.forceUpdateClosestStopForFavoriteRoutes()
+    }
+    
+    @objc func forceUpdateDeparturesData() {
         myCATAModel.forceUpdateClosestStopForFavoriteRoutes()
     }
     
