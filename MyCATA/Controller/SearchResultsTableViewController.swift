@@ -30,15 +30,20 @@ class SearchResultsTableViewController: UITableViewController {
         let center = NotificationCenter.default
         center.addObserver(self, selector: #selector(dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: searchResultsModel)
         
-        //request data
-        updateDepartureData()
-        timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(updateDepartureData), userInfo: nil, repeats: true)
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateDepartureData()
+        timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(updateDepartureData), userInfo: nil, repeats: true)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        timer.invalidate()
     }
     
     @objc func dataDownloaded(notification: Notification) {

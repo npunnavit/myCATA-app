@@ -41,8 +41,6 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Now Refreshing!")
         
-        timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(forceUpdateDeparturesData), userInfo: nil, repeats: true)
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -50,7 +48,9 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        forceUpdateDeparturesData()
+        timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(forceUpdateDeparturesData), userInfo: nil, repeats: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

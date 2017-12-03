@@ -43,6 +43,7 @@ class RouteMapViewModel {
         return vehicles[routeId]
     }
     
+    //MARK: - Network request
     func requestVehicles(forRoute routeId: RouteID) {
         let urlString = RouteMapViewModel.vehicleLocationURL + String(routeId)
         let url = URL(string: urlString)!
