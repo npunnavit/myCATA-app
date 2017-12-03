@@ -1,46 +1,39 @@
 //
-//  FavoritesTableViewController.swift
+//  SearchResultsTableViewController.swift
 //  MyCATA
 //
-//  Created by Punnavit Akkarapitakchai on 11/19/17.
+//  Created by Punnavit Akkarapitakchai on 12/2/17.
 //  Copyright © 2017 Punnavit Akkarapitakchai. All rights reserved.
 //
 
 import UIKit
-import MapKit
 
-//Favorite table view shows the departure times of user's favorites/daily bus at the closest stop based on user's location
-//Beta App doesn't find closest stop. It gets data for Pattee Library stop
-class FavoritesTableViewController: UITableViewController, DepartureTableHeaderViewDelegate {
+class SearchResultsTableViewController: UITableViewController {
+    
     let myCATAModel = MyCATAModel.sharedInstance
-    let locationServices = LocationServices.sharedInstance
+    let searchResultsModel = SearchResultsViewModel()
+    var routes : [RouteID]?
+    var stop : StopID?
     var timer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = UserDefaults.standard
-        let firstLaunch = defaults.bool(forKey: UserDefaultsKeys.firstLaunch)
-        if firstLaunch {
-            performSegue(withIdentifier: SegueIdentifiers.welcomeSegue, sender: nil)
+        if let routes = routes, let stop = stop {
+            searchResultsModel.configure(routes: routes, stop: stop)
         }
         
-        self.navigationItem.title = "myCATA"
+        //register nib
+        tableView.register(UINib(nibName: "DepartureTableViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: ReuseIdentifier.departureHeaderView)
+        tableView.register(UINib(nibName: "DepartureTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.departureCell)
         
         let center = NotificationCenter.default
-        center.addObserver(self, selector: #selector(FavoritesTableViewController.dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: myCATAModel)
+        center.addObserver(self, selector: #selector(dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: searchResultsModel)
         
-        if CLLocationManager.locationServicesEnabled() {
-            locationServices.delegate = myCATAModel
-            myCATAModel.usersLocation = locationServices.location
-        }
-        
-        tableView.register(UINib(nibName: "DepartureTableViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: ReuseIdentifier.departureHeaderView)
-        
-        self.refreshControl?.attributedTitle = NSAttributedString(string: "Now Refreshing!")
-        
-        timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(forceUpdateDeparturesData), userInfo: nil, repeats: true)
-        
+        //request data
+        updateDepartureData()
+        timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(updateDepartureData), userInfo: nil, repeats: true)
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -48,45 +41,42 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        timer.invalidate()
+    @objc func dataDownloaded(notification: Notification) {
+        let block = {
+            self.tableView.reloadData()
+        }
+        DispatchQueue.main.async(execute: block)
+    }
+    
+    @objc func updateDepartureData() {
+        if let stop = stop {
+            searchResultsModel.requestStopDeparture(at: stop)
+        }
+    }
+    
+    //MARK: - Configure View Controller
+    func configure(routes: [RouteID], stop: StopID) {
+        self.routes = routes
+        self.stop = stop
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func refreshData(_ sender: UIRefreshControl) {
-        myCATAModel.forceUpdateClosestStopForFavoriteRoutes()
-    }
-    
-    @objc func forceUpdateDeparturesData() {
-        myCATAModel.forceUpdateClosestStopForFavoriteRoutes()
-    }
-    
-    @objc func dataDownloaded(notification: Notification) {
-        let block = {
-            self.tableView.reloadData()
-            if self.refreshControl?.isRefreshing == true {
-                self.refreshControl?.endRefreshing()
-            }
-        }
-        DispatchQueue.main.async(execute: block)
-    }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return myCATAModel.numberOfSections
+        // #warning Incomplete implementation, return the number of sections
+        return searchResultsModel.numberOfSections
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ReuseIdentifier.departureHeaderView) as! DepartureTableHeaderView
-        let title = myCATAModel.titleFor(section: section)
+        let title = searchResultsModel.titleFor(section: section)
         
         headerView.configureHeader(routeName: title.routeTitle, stopName: title.stopTitle, section: section)
-        headerView.delegate = self
         
         let backgroundView = UIView(frame: headerView.frame)
         backgroundView.backgroundColor = UIColor.white
@@ -98,13 +88,15 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         return FavoritesTableViewController.departureHeaderViewHeight
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myCATAModel.numberOfRow(inSection: section)
-    }
 
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return searchResultsModel.numberOfRow(inSection: section)
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
-        let departure = myCATAModel.departure(forIndexPath: indexPath)
+        let departure = searchResultsModel.departure(forIndexPath: indexPath)
         let sdt = departure.scheduledDepartureTime!
         let edt = departure.estimatedDepartureTime!
         
@@ -119,7 +111,7 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
         
         let section = indexPath.section
-        let backgroundColor = myCATAModel.routeDetailFor(section: section).color.withAlphaComponent(FavoritesTableViewController.departureCellAlpha)
+        let backgroundColor = searchResultsModel.routeDetailFor(section: section).color.withAlphaComponent(FavoritesTableViewController.departureCellAlpha)
         
         cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
         return cell
@@ -128,12 +120,16 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return FavoritesTableViewController.departureCellHeight
     }
-    
-    //MARK: - DepartureTableHeaderViewDelegate Method
-    func performRouteMapSegue(forSection section: Int) {
-        let routeId = myCATAModel.routeDetailFor(section: section).routeId
-        performSegue(withIdentifier: SegueIdentifiers.routeMapSegue, sender: routeId)
+
+    /*
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+
+        // Configure the cell...
+
+        return cell
     }
+    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -170,26 +166,14 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     }
     */
 
-    
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier! {
-        case SegueIdentifiers.routeMapSegue:
-            let routeMapViewController = segue.destination as! RouteMapViewController
-            let routeId = sender as! RouteID
-            routeMapViewController.configure(route: routeId)
-        case SegueIdentifiers.settingsSegue:
-            break
-        case SegueIdentifiers.welcomeSegue:
-            break
-        case SegueIdentifiers.searchSegue:
-            break
-        default:
-            assert(false, "Unhandled Segue")
-        }
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
-    
+    */
 
 }

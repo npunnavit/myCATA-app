@@ -32,6 +32,9 @@
 		EA82CCC91FCCD71C00105E6A /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EA82CCC81FCCD71C00105E6A /* data.json */; };
 		EA9244991FD0907E00DE02B4 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9244981FD0907E00DE02B4 /* SearchTableViewController.swift */; };
 		EA92449B1FD10AC700DE02B4 /* VehicleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92449A1FD10AC700DE02B4 /* VehicleLocation.swift */; };
+		EA92449D1FD354BB00DE02B4 /* DepartureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA92449C1FD354BB00DE02B4 /* DepartureTableViewCell.xib */; };
+		EA92449F1FD3B41D00DE02B4 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92449E1FD3B41D00DE02B4 /* SearchResultsTableViewController.swift */; };
+		EA9244A11FD3B79A00DE02B4 /* SearchResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9244A01FD3B79A00DE02B4 /* SearchResultsViewModel.swift */; };
 		EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */; };
 		EA94F3EC1FCBF93700FB7F2C /* RouteMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */; };
 		EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0D72A1FC6433100615053 /* Date+extension.swift */; };
@@ -82,6 +85,9 @@
 		EA82CCC81FCCD71C00105E6A /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		EA9244981FD0907E00DE02B4 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		EA92449A1FD10AC700DE02B4 /* VehicleLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleLocation.swift; sourceTree = "<group>"; };
+		EA92449C1FD354BB00DE02B4 /* DepartureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewCell.xib; sourceTree = "<group>"; };
+		EA92449E1FD3B41D00DE02B4 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
+		EA9244A01FD3B79A00DE02B4 /* SearchResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModel.swift; sourceTree = "<group>"; };
 		EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewController.swift; sourceTree = "<group>"; };
 		EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapViewModel.swift; sourceTree = "<group>"; };
 		EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Pattee Location.gpx"; sourceTree = "<group>"; };
@@ -189,6 +195,7 @@
 				EA42D3CF1FC155F2008C8CBF /* FavoritesTableViewController.swift */,
 				EA94F3E71FCBF82700FB7F2C /* RouteMapViewController.swift */,
 				EA9244981FD0907E00DE02B4 /* SearchTableViewController.swift */,
+				EA92449E1FD3B41D00DE02B4 /* SearchResultsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -198,6 +205,7 @@
 			children = (
 				EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */,
 				EA42D3951FBA4588008C8CBF /* Main.storyboard */,
+				EA92449C1FD354BB00DE02B4 /* DepartureTableViewCell.xib */,
 				EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */,
 				EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */,
 				EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */,
@@ -214,6 +222,7 @@
 				EA42D3C51FBCF460008C8CBF /* MyCATAModel.swift */,
 				EA6536D91FCDE64800562117 /* LocationServices.swift */,
 				EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */,
+				EA9244A01FD3B79A00DE02B4 /* SearchResultsViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -328,6 +337,7 @@
 			files = (
 				EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */,
 				EA82CCC91FCCD71C00105E6A /* data.json in Resources */,
+				EA92449D1FD354BB00DE02B4 /* DepartureTableViewCell.xib in Resources */,
 				EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */,
 				EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */,
 				EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */,
@@ -407,10 +417,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA42D3C61FBCF460008C8CBF /* MyCATAModel.swift in Sources */,
+				EA9244A11FD3B79A00DE02B4 /* SearchResultsViewModel.swift in Sources */,
 				EA42D3941FBA4588008C8CBF /* WelcomeViewController.swift in Sources */,
 				EA42D3CC1FBE1D96008C8CBF /* RoutesTableViewController.swift in Sources */,
 				EA94F3E81FCBF82700FB7F2C /* RouteMapViewController.swift in Sources */,
 				EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */,
+				EA92449F1FD3B41D00DE02B4 /* SearchResultsTableViewController.swift in Sources */,
 				EA9244991FD0907E00DE02B4 /* SearchTableViewController.swift in Sources */,
 				EA94F3EC1FCBF93700FB7F2C /* RouteMapViewModel.swift in Sources */,
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,

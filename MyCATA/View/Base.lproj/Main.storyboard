@@ -230,7 +230,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0n2-M7-Wv1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2126" y="842"/>
+            <point key="canvasLocation" x="2068" y="843"/>
         </scene>
         <!--Settings-->
         <scene sceneID="gl7-yc-vrN">
@@ -323,11 +323,40 @@
                         <outlet property="mapView" destination="mSt-Ag-wYG" id="6en-dx-3H6"/>
                         <outlet property="showStopPinsSwitch" destination="cdD-kR-056" id="kC0-8p-zo8"/>
                         <outlet property="zoomSegmentedControl" destination="aRz-je-cbq" id="F13-YL-lqD"/>
+                        <segue destination="Bm1-gR-hqJ" kind="show" identifier="SearchResultsSegue" id="dda-l1-m4G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xt6-57-LnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2464.8000000000002" y="1736.5817091454273"/>
+        </scene>
+        <!--Search Results Table View Controller-->
+        <scene sceneID="TB7-qd-cCC">
+            <objects>
+                <tableViewController id="Bm1-gR-hqJ" customClass="SearchResultsTableViewController" customModule="MyCATA" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="pMy-vs-Qv5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="xrJ-ch-hY1">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xrJ-ch-hY1" id="PSN-Es-FTX">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Bm1-gR-hqJ" id="coQ-7K-PPO"/>
+                            <outlet property="delegate" destination="Bm1-gR-hqJ" id="2iw-SM-W3p"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8XY-lb-sfn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3564" y="1740"/>
         </scene>
         <!--Search Table View Controller-->
         <scene sceneID="glY-W2-0XP">
@@ -431,7 +460,7 @@
         <image name="myCATAlogo" width="647" height="660"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KDu-2W-PG2"/>
+        <segue reference="Rom-ky-06U"/>
         <segue reference="p7N-5x-h52"/>
     </inferredMetricsTieBreakers>
 </document>

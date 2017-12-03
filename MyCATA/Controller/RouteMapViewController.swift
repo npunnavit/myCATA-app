@@ -197,6 +197,7 @@ class RouteMapViewController: UIViewController {
             view = dequeuedView
         } else {
             view = MKAnnotationView(annotation: busAnnotation, reuseIdentifier: AnnotationIdentifiers.busAnnotation)
+            view.isUserInteractionEnabled = false
         }
         
         let routeId = busAnnotation.routeId
@@ -289,15 +290,25 @@ class RouteMapViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier! {
+        case SegueIdentifiers.searchResultsSegue:
+            let searchResultsViewController = segue.destination as! SearchResultsTableViewController
+            let routeStop = sender as! (routesId: [RouteID], stopId: StopID)
+            searchResultsViewController.configure(routes: routeStop.routesId, stop: routeStop.stopId)
+        default:
+            assert(false, "Unhandled Segue")
+        }
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = "Map"
+        navigationItem.backBarButtonItem = backItem
     }
-    */
+    
 
 }
 
@@ -329,6 +340,18 @@ extension RouteMapViewController : MKMapViewDelegate {
             hideStopPins()
         }
         zoomSegmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        switch view.annotation {
+        case is StopPin:
+            let stopPin = view.annotation as! StopPin
+            let stopId = stopPin.stopId
+            let routesId = routes
+            performSegue(withIdentifier: SegueIdentifiers.searchResultsSegue, sender: (routesId, stopId))
+        default:
+            break
+        }
     }
 }
 

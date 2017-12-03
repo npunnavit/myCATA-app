@@ -58,6 +58,7 @@ struct SegueIdentifiers {
     static let routeMapSegue = "RouteMapSegue"
     static let settingsSegue = "SettingsSegue"
     static let searchSegue = "SearchSegue"
+    static let searchResultsSegue = "SearchResultsSegue"
 }
 
 struct AnnotationIdentifiers {
