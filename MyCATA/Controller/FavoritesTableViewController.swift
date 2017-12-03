@@ -12,6 +12,8 @@ import MapKit
 //Favorite table view shows the departure times of user's favorites/daily bus at the closest stop based on user's location
 //Beta App doesn't find closest stop. It gets data for Pattee Library stop
 class FavoritesTableViewController: UITableViewController, DepartureTableHeaderViewDelegate {
+    @IBOutlet weak var settingsBarButtonItem: UIBarButtonItem!
+    
     let myCATAModel = MyCATAModel.sharedInstance
     let locationServices = LocationServices.sharedInstance
     var timer = Timer()
@@ -46,6 +48,9 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
     
     override func viewDidDisappear(_ animated: Bool) {

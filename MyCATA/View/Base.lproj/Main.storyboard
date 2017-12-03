@@ -212,18 +212,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="nbI-QA-0N6">
-                        <barButtonItem key="leftBarButtonItem" title="Search" id="SUn-DY-Veq">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="SUn-DY-Veq">
                             <connections>
                                 <segue destination="2Qk-i8-vgi" kind="presentation" identifier="SearchSegue" id="mCz-Kk-G5K"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="HB6-cm-J2x">
+                        <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="HB6-cm-J2x">
+                            <inset key="largeContentSizeImageInsets" minX="0.0" minY="-1" maxX="0.0" maxY="0.0"/>
                             <connections>
                                 <segue destination="KbL-QT-Jjh" kind="show" identifier="SettingsSegue" id="rMe-58-KCC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="settingsBarButtonItem" destination="HB6-cm-J2x" id="wkl-RM-wcX"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="WelcomeSegue" id="fmL-Ox-uYz"/>
                         <segue destination="hFh-qk-Ls5" kind="show" identifier="RouteMapSegue" id="Rom-ky-06U"/>
                     </connections>
@@ -458,6 +460,7 @@
     </scenes>
     <resources>
         <image name="myCATAlogo" width="647" height="660"/>
+        <image name="settingsIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Rom-ky-06U"/>
