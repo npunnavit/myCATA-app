@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Controller/RouteMapViewController.swift"
-            timestampString = "534019653.657893"
+            timestampString = "534495519.286295"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Controller/RouteMapViewController.swift"
-            timestampString = "534019653.65882"
+            timestampString = "534495519.286678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "123"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Controller/RouteMapViewController.swift"
-            timestampString = "534019653.659462"
+            timestampString = "534495519.286917"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "129"
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Model/RouteMapViewModel.swift"
-            timestampString = "534019653.660067"
+            timestampString = "534495385.547519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "58"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Controller/RouteMapViewController.swift"
-            timestampString = "534019653.660361"
+            timestampString = "534495519.287169"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
@@ -90,12 +90,12 @@
                   moduleName = "MyCATA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/NPunn/Documents/Fall%2017/CMPSC%20475/Final%20Project/final-project-npunnavit/MyCATA/Controller/RouteMapViewController.swift"
-                  timestampString = "534019473.641563"
+                  timestampString = "534496531.990846"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "249"
                   endingLineNumber = "249"
-                  offsetFromSymbolStart = "372">
+                  offsetFromSymbolStart = "349">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -105,12 +105,12 @@
                   moduleName = "MyCATA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/NPunn/Documents/Fall%2017/CMPSC%20475/Final%20Project/final-project-npunnavit/MyCATA/Controller/RouteMapViewController.swift"
-                  timestampString = "534019473.644698"
+                  timestampString = "534496531.992914"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "249"
                   endingLineNumber = "249"
-                  offsetFromSymbolStart = "384">
+                  offsetFromSymbolStart = "365">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Controller/RouteMapViewController.swift"
-            timestampString = "534019653.660986"
+            timestampString = "534495519.287421"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "253"
@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Controller/SearchResultsTableViewController.swift"
-            timestampString = "534019653.66162"
+            timestampString = "534498912.503501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "45"
@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Controller/FavoritesTableViewController.swift"
-            timestampString = "534019653.662167"
+            timestampString = "534498912.503579"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
@@ -170,12 +170,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Controller/FavoritesTableViewController.swift"
-            timestampString = "534019653.662484"
+            timestampString = "534498912.504098"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
             landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyCATA/Model/MyCATAModel.swift"
+            timestampString = "534498912.504384"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
+            landmarkName = "forceUpdateClosestStopForFavoriteRoutes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

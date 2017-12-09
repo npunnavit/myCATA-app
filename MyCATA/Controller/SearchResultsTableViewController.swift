@@ -80,8 +80,9 @@ class SearchResultsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ReuseIdentifier.departureHeaderView) as! DepartureTableHeaderView
         let title = searchResultsModel.titleFor(section: section)
+        let routeIcon = myCATAModel.routeIconFor(route: title.routeId)
         
-        headerView.configureHeader(routeName: title.routeTitle, stopName: title.stopTitle, section: section)
+        headerView.configureHeader(routeName: title.routeTitle, stopName: title.stopTitle, section: section, routeIcon: routeIcon)
         
         let backgroundView = UIView(frame: headerView.frame)
         backgroundView.backgroundColor = UIColor.white

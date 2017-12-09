@@ -89,8 +89,9 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ReuseIdentifier.departureHeaderView) as! DepartureTableHeaderView
         let title = myCATAModel.titleFor(section: section)
+        let routeIcon = myCATAModel.routeIconFor(route: title.routeId)
         
-        headerView.configureHeader(routeName: title.routeTitle, stopName: title.stopTitle, section: section)
+        headerView.configureHeader(routeName: title.routeTitle, stopName: title.stopTitle, section: section, routeIcon: routeIcon)
         headerView.delegate = self
         
         let backgroundView = UIView(frame: headerView.frame)

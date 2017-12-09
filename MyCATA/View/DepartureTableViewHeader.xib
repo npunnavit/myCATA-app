@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,8 +24,22 @@
                         <constraint firstAttribute="height" constant="1" id="rQ0-jF-H1I"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YMU-Kl-N58">
+                    <rect key="frame" x="0.0" y="49" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.33675879240036011" green="0.3528788685798645" blue="0.36123085021972656" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="21n-Eo-VpX"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k9c-Kr-Lhk">
+                    <rect key="frame" x="16" y="9" width="33" height="33"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="33" id="T8k-gm-nLy"/>
+                        <constraint firstAttribute="width" secondItem="k9c-Kr-Lhk" secondAttribute="height" multiplier="1:1" id="TVb-6o-o3u"/>
+                    </constraints>
+                </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Icn-eA-4u7">
-                    <rect key="frame" x="16" y="6" width="52.5" height="36.5"/>
+                    <rect key="frame" x="57" y="7" width="52.5" height="36.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4v-C7-MrT">
                             <rect key="frame" x="0.0" y="0.0" width="52.5" height="20.5"/>
@@ -55,20 +70,15 @@
                         </stackView>
                     </subviews>
                 </stackView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YMU-Kl-N58">
-                    <rect key="frame" x="0.0" y="49" width="375" height="1"/>
-                    <color key="backgroundColor" red="0.33675879240036011" green="0.3528788685798645" blue="0.36123085021972656" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="21n-Eo-VpX"/>
-                    </constraints>
-                </view>
             </subviews>
             <constraints>
                 <constraint firstItem="YMU-Kl-N58" firstAttribute="leading" secondItem="r7a-gO-5pI" secondAttribute="leading" id="5gR-e1-hjJ"/>
                 <constraint firstItem="Icn-eA-4u7" firstAttribute="centerY" secondItem="r7a-gO-5pI" secondAttribute="centerY" id="8pc-b7-3G2"/>
+                <constraint firstItem="k9c-Kr-Lhk" firstAttribute="centerY" secondItem="r7a-gO-5pI" secondAttribute="centerY" id="OEd-1C-64W"/>
                 <constraint firstAttribute="trailing" secondItem="YMU-Kl-N58" secondAttribute="trailing" id="RJv-aF-K2U"/>
-                <constraint firstItem="Icn-eA-4u7" firstAttribute="leading" secondItem="xcT-eH-Tgx" secondAttribute="leading" constant="16" id="WoH-as-UfJ"/>
+                <constraint firstItem="k9c-Kr-Lhk" firstAttribute="leading" secondItem="xcT-eH-Tgx" secondAttribute="leading" constant="16" id="ZbM-DI-MpD"/>
                 <constraint firstItem="xcT-eH-Tgx" firstAttribute="bottom" secondItem="YMU-Kl-N58" secondAttribute="bottom" id="fzJ-5r-pWu"/>
+                <constraint firstItem="Icn-eA-4u7" firstAttribute="leading" secondItem="k9c-Kr-Lhk" secondAttribute="trailing" constant="8" id="i3o-N1-mBl"/>
                 <constraint firstAttribute="trailing" secondItem="ZIg-vg-zc4" secondAttribute="trailing" id="kfv-nR-Nc7"/>
                 <constraint firstItem="ZIg-vg-zc4" firstAttribute="leading" secondItem="r7a-gO-5pI" secondAttribute="leading" id="p9H-18-A0y"/>
                 <constraint firstItem="ZIg-vg-zc4" firstAttribute="top" secondItem="xcT-eH-Tgx" secondAttribute="top" id="vG7-o8-GAb"/>
@@ -76,6 +86,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="xcT-eH-Tgx"/>
             <connections>
+                <outlet property="routeIconImageView" destination="k9c-Kr-Lhk" id="aEA-wa-gru"/>
                 <outlet property="routeLabel" destination="C4v-C7-MrT" id="PLn-vW-Afe"/>
                 <outlet property="stopLabel" destination="jjV-AI-rkJ" id="w29-fG-woD"/>
             </connections>

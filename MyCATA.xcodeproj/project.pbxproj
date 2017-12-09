@@ -39,6 +39,8 @@
 		EA94F3EC1FCBF93700FB7F2C /* RouteMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94F3EB1FCBF93700FB7F2C /* RouteMapViewModel.swift */; };
 		EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0D72A1FC6433100615053 /* Date+extension.swift */; };
 		EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */; };
+		EAFD37C71FDBC1B90022B8C9 /* RouteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFD37C61FDBC1B90022B8C9 /* RouteTableViewCell.xib */; };
+		EAFD37C91FDBC2A30022B8C9 /* RouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD37C81FDBC2A30022B8C9 /* RouteTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,8 @@
 		EA9EDEAE1FC74E2700048626 /* Pattee Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Pattee Location.gpx"; sourceTree = "<group>"; };
 		EAE0D72A1FC6433100615053 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = MyCATA/Controller/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		EAFD37C61FDBC1B90022B8C9 /* RouteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RouteTableViewCell.xib; sourceTree = "<group>"; };
+		EAFD37C81FDBC2A30022B8C9 /* RouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,8 @@
 				EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */,
 				EA42D3951FBA4588008C8CBF /* Main.storyboard */,
 				EA92449C1FD354BB00DE02B4 /* DepartureTableViewCell.xib */,
+				EAFD37C61FDBC1B90022B8C9 /* RouteTableViewCell.xib */,
+				EAFD37C81FDBC2A30022B8C9 /* RouteTableViewCell.swift */,
 				EAF06C141FC273AC00E1FE86 /* SettingsTableViewController.swift */,
 				EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */,
 				EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */,
@@ -341,6 +347,7 @@
 				EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */,
 				EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */,
 				EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */,
+				EAFD37C71FDBC1B90022B8C9 /* RouteTableViewCell.xib in Resources */,
 				EA42D3991FBA4588008C8CBF /* Assets.xcassets in Resources */,
 				EA42D3971FBA4588008C8CBF /* Main.storyboard in Resources */,
 			);
@@ -428,6 +435,7 @@
 				EA42D3BE1FBBB955008C8CBF /* RouteDetail.swift in Sources */,
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
 				EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */,
+				EAFD37C91FDBC2A30022B8C9 /* RouteTableViewCell.swift in Sources */,
 				EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */,
 				EA6536DA1FCDE64800562117 /* LocationServices.swift in Sources */,
 				EA42D3D01FC155F2008C8CBF /* FavoritesTableViewController.swift in Sources */,

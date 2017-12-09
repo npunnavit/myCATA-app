@@ -17,13 +17,17 @@ class RoutesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Select up to 3 buses"
+        self.navigationItem.title = "Route"
+        self.navigationItem.prompt = "Select up to 3 routes"
         
         for indexPath in myCATAModel.getFavoriteIndices() {
             if let cell = tableView.cellForRow(at: indexPath) {
                 cell.accessoryType = .checkmark
             }
         }
+        
+        //register nib
+        tableView.register(UINib(nibName: "RouteTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.routeCell)
         
         updateDoneButton()
         // Uncomment the following line to preserve selection between presentations
@@ -49,9 +53,13 @@ class RoutesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.routeCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.routeCell, for: indexPath) as! RouteTableViewCell
         
-        cell.textLabel?.text = myCATAModel.routeName(atIndexPath: indexPath)
+        //configure cell
+        let routeDetail = myCATAModel.route(forIndexPath: indexPath)
+        let routeName = routeDetail.longName
+        let routeIcon = myCATAModel.routeIconFor(route: routeDetail.routeId)
+        cell.configureCell(routeName: routeName, routeIcon: routeIcon)
         
         if myCATAModel.isFavorite(indexPath: indexPath) {
             cell.accessoryType = .checkmark
@@ -60,6 +68,10 @@ class RoutesTableViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return SearchTableViewController.routeCellHeight
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

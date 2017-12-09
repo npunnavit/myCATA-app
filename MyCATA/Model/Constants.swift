@@ -32,6 +32,10 @@ extension RouteMapViewController {
     static let busIconSize = 40.0
 }
 
+extension SearchTableViewController {
+    static let routeCellHeight : CGFloat = 50
+}
+
 extension Notification.Name {
     static let StopDepartureDataDownloaded = NSNotification.Name("StopDepartureDataDownloadedNotification")
     static let VehicleLocationDataDownloaded = NSNotification.Name("VehicleLocationDataDownloadedNotification")

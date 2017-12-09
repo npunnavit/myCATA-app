@@ -160,16 +160,16 @@ class MyCATAModel {
         return routeDetailFor(route: routeId)
     }
     
-    func titleFor(section: Int) -> (routeTitle: String, stopTitle: String) {
+    func titleFor(section: Int) -> (routeTitle: String, stopTitle: String, routeId: RouteID) {
         let routeId = favorites[section]
         let routeDetail = routeDetailFor(route: routeId)
         let routeTitle = routeDetail.longName
         
         if let stopId = closestStopForRoute[routeId] {
             let stopTitle = stopFor(stop: stopId).name
-            return (routeTitle, stopTitle)
+            return (routeTitle, stopTitle, routeId)
         } else {
-            return (routeTitle, "N/A")
+            return (routeTitle, "N/A", routeId)
         }
     }
     
@@ -279,8 +279,10 @@ class MyCATAModel {
     }
     
     func forceUpdateClosestStopForFavoriteRoutes() {
-        for routeID in favorites {
-            updateClosestStop(forRoute: routeID, atUserLocation: usersLocation, forceUpdate: true)
+        if usersLocation != nil {
+            for routeID in favorites {
+                updateClosestStop(forRoute: routeID, atUserLocation: usersLocation, forceUpdate: true)
+            }
         }
     }
     

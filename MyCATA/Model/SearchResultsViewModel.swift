@@ -52,12 +52,13 @@ class SearchResultsViewModel {
         return myCATAModel.routeDetailFor(route: routeId)
     }
     
-    func titleFor(section: Int) -> (routeTitle: String, stopTitle: String) {
+    func titleFor(section: Int) -> (routeTitle: String, stopTitle: String, routeId: RouteID) {
         var routeTitle = "N/A"
         var stopTitle = "N/A"
+        var routeId = 0
         
         if let routes = routes {
-            let routeId = routes[section]
+            routeId = routes[section]
             let routeDetail = myCATAModel.routeDetailFor(route: routeId)
             routeTitle = routeDetail.longName
         }
@@ -65,7 +66,7 @@ class SearchResultsViewModel {
         if let stopId = stop {
             stopTitle = myCATAModel.stopFor(stop: stopId).name
         }
-        return (routeTitle, stopTitle)
+        return (routeTitle, stopTitle, routeId)
     }
     
     func departuresFor(route routeId: RouteID) -> [Departure] {

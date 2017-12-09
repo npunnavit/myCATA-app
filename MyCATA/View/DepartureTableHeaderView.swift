@@ -16,6 +16,7 @@ class DepartureTableHeaderView: UITableViewHeaderFooterView {
 
     @IBOutlet weak var routeLabel: UILabel!
     @IBOutlet weak var stopLabel: UILabel!
+    @IBOutlet weak var routeIconImageView: UIImageView!
     
     var section : Int!
     var delegate : DepartureTableHeaderViewDelegate?
@@ -26,9 +27,10 @@ class DepartureTableHeaderView: UITableViewHeaderFooterView {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapHeader)))
     }
     
-    func configureHeader(routeName: String, stopName: String, section: Int) {
+    func configureHeader(routeName: String, stopName: String, section: Int, routeIcon: UIImage) {
         routeLabel.text = routeName
         stopLabel.text = stopName
+        routeIconImageView.image = routeIcon
         self.section = section
     }
     
