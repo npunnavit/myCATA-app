@@ -12,7 +12,7 @@ import UIKit
 extension MyCATAModel {
     static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
     static let departureResultsCount = 3
-    static let useTestData = false
+    static let useTestData = true
 }
 
 extension RouteMapViewModel {
@@ -39,6 +39,7 @@ extension SearchTableViewController {
 extension Notification.Name {
     static let StopDepartureDataDownloaded = NSNotification.Name("StopDepartureDataDownloadedNotification")
     static let VehicleLocationDataDownloaded = NSNotification.Name("VehicleLocationDataDownloadedNotification")
+    static let ArrivalNotificationScheduled = NSNotification.Name("ArrivalNotificationScheduled")
 }
 
 struct FileName {

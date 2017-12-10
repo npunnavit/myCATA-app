@@ -226,7 +226,7 @@ class MyCATAModel : NSObject {
     }
     
     //MARK: - Compute Travel Time
-    func expectedWalkingTime(from sourceLocation: CLLocationCoordinate2D, to destinationLocation: CLLocationCoordinate2D) {
+    func calculateWalkingTime(from sourceLocation: CLLocationCoordinate2D, to destinationLocation: CLLocationCoordinate2D, completionHandler: @escaping (TimeInterval) -> Void ) {
         let request = MKDirectionsRequest()
         
         let sourcePlaceMark = MKPlacemark(coordinate: sourceLocation)
@@ -243,7 +243,7 @@ class MyCATAModel : NSObject {
             guard error == nil else { print(error?.localizedDescription ?? "Error"); return }
             
             if let route = response?.routes[0] {
-                
+                completionHandler(route.expectedTravelTime)
             }
         }
     }
@@ -349,33 +349,68 @@ extension MyCATAModel {
     }
     
     // Create Alert
-    func createArrivalAlert(forRoute routeId: RouteID, atStop stopId: StopID, withRemainingTime remainingTime: TimeInterval) {
+    func createArrivalAlert(forIndexPath indexPath: IndexPath) {
+        let section = indexPath.section
+        
+        let routeId = favorites[section]
+        let stopId = closestStopForRoute[routeId]!
+        let aDeparture = departure(forIndexPath: indexPath)
+        let scheduledTime = aDeparture.scheduledDepartureTime!
+        
+        createArrivalAlert(forRoute: routeId, atStop: stopId, withDepartureTime: scheduledTime)
+    }
+    
+    func createArrivalAlert(forRoute routeId: RouteID, atStop stopId: StopID, withDepartureTime scheduledTime: Date) {
+        guard usersLocation != nil else { return }
+        
         let routeShortName = routeShortNameFor(route: routeId)
         let stop = stopFor(stop: stopId)
         let stopLocation = stop.location2D
+        let stopName = stop.name
+        
+        calculateWalkingTime(from: usersLocation.coordinate, to: stopLocation) { (expectedTravelTime) in
+            self.scheduleBusArrivalNotification(routeName: routeShortName, stopName: stopName, scheduledTime: scheduledTime, travelTime: expectedTravelTime)
+        }
     }
     
-    func scheduleBusArrivalNotification() {
+    func scheduleBusArrivalNotification(routeName: String, stopName: String, scheduledTime: Date, travelTime: TimeInterval) {
+        let triggerTimeInterval = travelTime + (5 * Constants.TimeInterval.aMinute)
+        let minuteTriggerTimeInterval = Int(triggerTimeInterval / Constants.TimeInterval.aMinute)
+        
         // Create Content
         let content = UNMutableNotificationContent()
-        content.title = NSString.localizedUserNotificationString(forKey: "Bus Arriving", arguments: nil)
-        content.body = NSString.localizedUserNotificationString(forKey: "Bus Arriving in 10 minutes dklfjak;dljfkl;sdakjfhsk;ldjkl;hdsaflkhasdkjflha", arguments: nil)
+        content.title = NSString.localizedUserNotificationString(forKey: "\(routeName) Bus Arriving", arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: "at \(stopName) in \(triggerTimeInterval) minutes", arguments: nil)
         content.sound = UNNotificationSound.default()
         
         // Configure the trigger
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+//        let trigger = UNCalendarNotificationTrigger(
         
         // Create teh request object
         let request = UNNotificationRequest(identifier: "Bus Arrival", content: content, trigger: trigger)
         
         // Schedule the request
-        let center = UNUserNotificationCenter.current()
-        center.delegate = self
-        center.add(request) { (error : Error?) in
+        let userCenter = UNUserNotificationCenter.current()
+        userCenter.delegate = self
+        userCenter.add(request) { (error : Error?) in
             if let theError = error {
                 print(theError.localizedDescription)
             }
         }
+        
+        let center = NotificationCenter.default
+        let userInfo : [AnyHashable:Any] = [
+            "title": "Reminder Set",
+            "message": "You will be notified \(minuteTriggerTimeInterval) minutes prior to bus arrival"
+        ]
+        center.post(name: Notification.Name.StopDepartureDataDownloaded, object: self, userInfo: userInfo)
+    }
+    
+    func displayAlert(withTitle title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alertController.addAction(action)
     }
 }
 

@@ -31,6 +31,7 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         
         let center = NotificationCenter.default
         center.addObserver(self, selector: #selector(FavoritesTableViewController.dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: myCATAModel)
+        center.addObserver(self, selector: #selector(FavoritesTableViewController.userNotificationScheduled(notification:)), name: NSNotification.Name.ArrivalNotificationScheduled, object: myCATAModel)
         
         if CLLocationManager.locationServicesEnabled() {
             locationServices.delegate = myCATAModel
@@ -151,7 +152,19 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     
     //MARK: - Table View Row Action Method
     func alertRowAction(action: UITableViewRowAction, indexPath: IndexPath) {
-//        myCATAModel.createArrivalAlert()
+        myCATAModel.createArrivalAlert(forIndexPath: indexPath)
+    }
+    
+    @objc func userNotificationScheduled(notification: Notification) {
+        
+    }
+    
+    func displayAlert(withTitle title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Got it!", style: .default, handler: nil)
+        
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
     }
 
     /*
