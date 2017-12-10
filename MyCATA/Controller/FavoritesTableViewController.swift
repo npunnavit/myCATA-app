@@ -135,10 +135,23 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
         return FavoritesTableViewController.departureCellHeight
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let alertAction = UITableViewRowAction(style: .default, title: "Alert", handler: { (action, indexPath) in
+            self.alertRowAction(action: action, indexPath: indexPath)
+        })
+        
+        return [alertAction]
+    }
+    
     //MARK: - DepartureTableHeaderViewDelegate Method
     func performRouteMapSegue(forSection section: Int) {
         let routeId = myCATAModel.routeDetailFor(section: section).routeId
         performSegue(withIdentifier: SegueIdentifiers.routeMapSegue, sender: routeId)
+    }
+    
+    //MARK: - Table View Row Action Method
+    func alertRowAction(action: UITableViewRowAction, indexPath: IndexPath) {
+//        myCATAModel.createArrivalAlert()
     }
 
     /*

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,9 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after appliroutecation launch.
         
+        //Set up for persistence
         let defaults = UserDefaults.standard
         defaults.register(defaults: [UserDefaultsKeys.firstLaunch:true])
         defaults.register(defaults: [UserDefaultsKeys.favorites:[]])
+        
+        //Set up notification
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            // Enable or disable features based on authorization
+        }
         
         //Customize Appearance
         let barButtonProxy = UIBarButtonItem.appearance()

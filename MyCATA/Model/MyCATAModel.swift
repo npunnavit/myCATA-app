@@ -8,8 +8,9 @@
 
 import Foundation
 import MapKit
+import UserNotifications
 
-class MyCATAModel {
+class MyCATAModel : NSObject {
     static let sharedInstance = MyCATAModel()
     
     //MARK: - Properties
@@ -30,7 +31,7 @@ class MyCATAModel {
     //App doesn't find closest stop right now. Use Pattee stop (stopId: 4) for testing
     var closestStopForRoute : [RouteID: StopID] //RouteID to closest stop
     
-    fileprivate init() {
+    fileprivate override init() {
         let defaults = UserDefaults.standard
         favorites = defaults.array(forKey: UserDefaultsKeys.favorites) as? [Int] ?? []
         
@@ -79,6 +80,8 @@ class MyCATAModel {
         }
         
         closestStopForRoute = [:]
+        
+        super.init()
     }
     
     //MARK: - Support for RoutesTableView
@@ -134,7 +137,156 @@ class MyCATAModel {
         return indices
     }
     
-    //MARK: - Support for FavoritesTableVIew
+    
+    //MARK: - Network Request
+    func requestStopDeparture(at stopId: StopID) {
+        let urlString = MyCATAModel.stopDepartureURL + String(stopId)
+        let url = URL(string: urlString)!
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { (data, response, error) in
+            guard error == nil else { print(error!.localizedDescription); return }
+            self.stopDepartures[stopId] = self.decodeStopDeparture(data!)
+            
+            let center = NotificationCenter.default
+            let userInfo : [AnyHashable:Any] = ["StopId": stopId]
+            center.post(name: Notification.Name.StopDepartureDataDownloaded, object: self, userInfo: userInfo)
+        }
+        task.resume()
+    }
+    
+    func decodeStopDeparture(_ data: Data) -> StopDeparture? {
+        var _stopDeparture : [StopDeparture]?
+        let decoder = JSONDecoder()
+        
+        ////////////////////////////TEST/////////////////////////////
+        let bundle = Bundle.main
+        let fileManager = FileManager.default
+        let path = bundle.path(forResource: "data", ofType: "json")!
+        let testData = fileManager.contents(atPath: path)!
+        ////////////////////////////TEST/////////////////////////////
+        
+        do {
+            if !MyCATAModel.useTestData {
+                _stopDeparture = try decoder.decode([StopDeparture].self, from: data)
+            } else {
+                _stopDeparture = try decoder.decode([StopDeparture].self, from: testData)
+            }
+            return _stopDeparture![0]
+        } catch let error as NSError {
+            print("Unresolved Error \(String(describing: error)))" )
+        }
+        
+        return nil
+    }
+    
+    //MARK: - Find closestStop
+    func updateClosestStop(forRoute routeId: RouteID, atUserLocation location: CLLocation, forceUpdate: Bool = false) {
+        var minDistance = CLLocationDistance.infinity
+        var closestStop : StopID?
+        let routeDetail = routeDetailFor(route: routeId)
+        let stops = routeDetail.stops
+        for stop in stops {
+            let stopLocation = stop.location
+            let distance = stopLocation.distance(from: location)
+            if distance < minDistance {
+                minDistance = distance
+                closestStop = stop.stopId
+            }
+        }
+        print(stopFor(stop: closestStop!).name)
+        let oldClosestStop = closestStopForRoute.updateValue(closestStop!, forKey: routeId)
+        
+        if forceUpdate {
+            requestStopDeparture(at: closestStop!)
+        } else if (oldClosestStop != closestStop) {
+            //if closestStop changes, request for new data
+            requestStopDeparture(at: closestStop!)
+        } else {
+            //if data was updated more than a minute ago, request for new data
+            if let stopDeparture = stopDepartureAt(stop: closestStop!), let lastUpdatedTime = stopDeparture.lastUpdatedTime {
+                if lastUpdatedTime.timeIntervalSinceNow.magnitude > Constants.secondsInMinute {
+                    requestStopDeparture(at: closestStop!)
+                }
+            }
+        }
+    }
+    
+    func updateClosestStopForFavoriteRoutes() {
+        for routeID in favorites {
+            updateClosestStop(forRoute: routeID, atUserLocation: usersLocation)
+        }
+    }
+    
+    func forceUpdateClosestStopForFavoriteRoutes() {
+        if usersLocation != nil {
+            for routeID in favorites {
+                updateClosestStop(forRoute: routeID, atUserLocation: usersLocation, forceUpdate: true)
+            }
+        }
+    }
+    
+    //MARK: - Compute Travel Time
+    func expectedWalkingTime(from sourceLocation: CLLocationCoordinate2D, to destinationLocation: CLLocationCoordinate2D) {
+        let request = MKDirectionsRequest()
+        
+        let sourcePlaceMark = MKPlacemark(coordinate: sourceLocation)
+        let sourceMapItem = MKMapItem(placemark: sourcePlaceMark)
+        let destinationPlaceMark = MKPlacemark(coordinate: destinationLocation)
+        let destinationMapItem = MKMapItem(placemark: destinationPlaceMark)
+        
+        request.source = sourceMapItem
+        request.destination = destinationMapItem
+        request.transportType = .walking
+        request.requestsAlternateRoutes = false
+        let direction = MKDirections(request: request)
+        direction.calculate { (response, error) in
+            guard error == nil else { print(error?.localizedDescription ?? "Error"); return }
+            
+            if let route = response?.routes[0] {
+                
+            }
+        }
+    }
+    
+    //MARK: - Micellanous Methods
+    func routeDetailFor(route routeId: RouteID) -> RouteDetail {
+        let index = routeIdToIndex[routeId]!
+        return routeDetails[index]
+    }
+    
+    func stopFor(stop stopId: StopID) -> Stop {
+        let index = stopIdToIndex[stopId]!
+        return stops[index]
+    }
+    
+    func routeShortNameFor(route routeId: RouteID) -> String {
+        return routeDetailFor(route: routeId).shortName
+    }
+    
+    private func routeIconNameFor(route routeId: RouteID) -> String {
+        let routeShortName = routeShortNameFor(route: routeId)
+        let iconName = "\(routeShortName)-RouteIcon"
+        return iconName
+    }
+    
+    func routeIconFor(route routeId: RouteID) -> UIImage {
+        let iconName = routeIconNameFor(route: routeId)
+        if let icon = UIImage(named: iconName) {
+            return icon
+        } else {
+            return UIImage(named: "Default-RouteIcon")!
+        }
+    }
+}
+
+extension MyCATAModel : LocationServicesDelegate {
+    func updateUsersLocation(to newLocation: CLLocation) {
+        usersLocation = newLocation
+    }
+}
+
+//MARK: - Support for FavoriteTableView
+extension MyCATAModel {
     var numberOfSections : Int { return favorites.count }
     
     func numberOfRow(inSection section: Int) -> Int {
@@ -196,129 +348,39 @@ class MyCATAModel {
         return stopDepartures[stopId]
     }
     
-    
-    //MARK: - Network Request
-    func requestStopDeparture(at stopId: StopID) {
-        let urlString = MyCATAModel.stopDepartureURL + String(stopId)
-        let url = URL(string: urlString)!
-        let session = URLSession.shared
-        let task = session.dataTask(with: url) { (data, response, error) in
-            guard error == nil else { print(error!.localizedDescription); return }
-            self.stopDepartures[stopId] = self.decodeStopDeparture(data!)
-            
-            let center = NotificationCenter.default
-            let userInfo : [AnyHashable:Any] = ["StopId": stopId]
-            center.post(name: Notification.Name.StopDepartureDataDownloaded, object: self, userInfo: userInfo)
-        }
-        task.resume()
-    }
-    
-    func decodeStopDeparture(_ data: Data) -> StopDeparture? {
-        var _stopDeparture : [StopDeparture]?
-        let decoder = JSONDecoder()
-        
-        ////////////////////////////TEST/////////////////////////////
-        let bundle = Bundle.main
-        let fileManager = FileManager.default
-        let path = bundle.path(forResource: "data", ofType: "json")!
-        let testData = fileManager.contents(atPath: path)!
-        ////////////////////////////TEST/////////////////////////////
-        
-        do {
-            if !MyCATAModel.useTestData {
-                _stopDeparture = try decoder.decode([StopDeparture].self, from: data)
-            } else {
-                _stopDeparture = try decoder.decode([StopDeparture].self, from: testData)
-            }
-            return _stopDeparture![0]
-        } catch let error as NSError {
-            print("Unresolved Error \(String(describing: error)))" )
-//            print(String(data: data, encoding: String.Encoding.utf8) ?? "Data could not be printed")
-        }
-        
-        return nil
-    }
-    
-    //MARK: - Find closestStop
-    func updateClosestStop(forRoute routeId: RouteID, atUserLocation location: CLLocation, forceUpdate: Bool = false) {
-        var minDistance = CLLocationDistance.infinity
-        var closestStop : StopID?
-        let routeDetail = routeDetailFor(route: routeId)
-        let stops = routeDetail.stops
-        for stop in stops {
-            let stopLocation = stop.location
-            let distance = stopLocation.distance(from: location)
-            if distance < minDistance {
-                minDistance = distance
-                closestStop = stop.stopId
-            }
-        }
-        print(stopFor(stop: closestStop!).name)
-        let oldClosestStop = closestStopForRoute.updateValue(closestStop!, forKey: routeId)
-        
-        if forceUpdate {
-            requestStopDeparture(at: closestStop!)
-        } else if (oldClosestStop != closestStop) {
-            //if closestStop changes, request for new data
-            requestStopDeparture(at: closestStop!)
-        } else {
-            //if data was updated more than a minute ago, request for new data
-            if let stopDeparture = stopDepartureAt(stop: closestStop!), let lastUpdatedTime = stopDeparture.lastUpdatedTime {
-                if lastUpdatedTime.timeIntervalSinceNow.magnitude > Constants.secondsInMinute {
-                    requestStopDeparture(at: closestStop!)
-                }
-            }
-        }
-    }
-    
-    //return true if network request was made
-    func updateClosestStopForFavoriteRoutes() {
-        for routeID in favorites {
-            updateClosestStop(forRoute: routeID, atUserLocation: usersLocation)
-        }
-    }
-    
-    func forceUpdateClosestStopForFavoriteRoutes() {
-        if usersLocation != nil {
-            for routeID in favorites {
-                updateClosestStop(forRoute: routeID, atUserLocation: usersLocation, forceUpdate: true)
-            }
-        }
-    }
-    
-    //MARK: - Micellanous Methods
-    func routeDetailFor(route routeId: RouteID) -> RouteDetail {
-        let index = routeIdToIndex[routeId]!
-        return routeDetails[index]
-    }
-    
-    func stopFor(stop stopId: StopID) -> Stop {
-        let index = stopIdToIndex[stopId]!
-        return stops[index]
-    }
-    
-    func routeShortNameFor(route routeId: RouteID) -> String {
-        return routeDetailFor(route: routeId).shortName
-    }
-    
-    private func routeIconNameFor(route routeId: RouteID) -> String {
+    // Create Alert
+    func createArrivalAlert(forRoute routeId: RouteID, atStop stopId: StopID, withRemainingTime remainingTime: TimeInterval) {
         let routeShortName = routeShortNameFor(route: routeId)
-        let iconName = "\(routeShortName)-RouteIcon"
-        return iconName
+        let stop = stopFor(stop: stopId)
+        let stopLocation = stop.location2D
     }
     
-    func routeIconFor(route routeId: RouteID) -> UIImage {
-        let iconName = routeIconNameFor(route: routeId)
-        if let icon = UIImage(named: iconName) {
-            return icon
-        } else {
-            return UIImage(named: "Default-RouteIcon")!
+    func scheduleBusArrivalNotification() {
+        // Create Content
+        let content = UNMutableNotificationContent()
+        content.title = NSString.localizedUserNotificationString(forKey: "Bus Arriving", arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: "Bus Arriving in 10 minutes dklfjak;dljfkl;sdakjfhsk;ldjkl;hdsaflkhasdkjflha", arguments: nil)
+        content.sound = UNNotificationSound.default()
+        
+        // Configure the trigger
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        
+        // Create teh request object
+        let request = UNNotificationRequest(identifier: "Bus Arrival", content: content, trigger: trigger)
+        
+        // Schedule the request
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        center.add(request) { (error : Error?) in
+            if let theError = error {
+                print(theError.localizedDescription)
+            }
         }
     }
 }
 
-extension MyCATAModel : LocationServicesDelegate {
-    func updateUsersLocation(to newLocation: CLLocation) {
-        usersLocation = newLocation
+extension MyCATAModel : UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
     }
 }
