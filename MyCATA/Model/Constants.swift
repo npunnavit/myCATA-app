@@ -12,7 +12,7 @@ import UIKit
 extension MyCATAModel {
     static let stopDepartureURL = "http://realtime.catabus.com/InfoPoint/rest/stopdepartures/get/"
     static let departureResultsCount = 3
-    static let useTestData = true
+    static let useTestData = false
 }
 
 extension RouteMapViewModel {

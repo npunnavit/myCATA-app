@@ -10,60 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyCATA/Model/MyCATAModel.swift"
-            timestampString = "534588378.997843"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
-            landmarkName = "createArrivalAlert(forRoute:atStop:withRemainingTime:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MyCATA.MyCATAModel.createArrivalAlert(forRoute: Swift.Int, atStop: Swift.Int, withRemainingTime: Swift.Double) -&gt; ()"
-                  moduleName = "MyCATA"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/NPunn/Documents/Fall%2017/CMPSC%20475/Final%20Project/final-project-npunnavit/MyCATA/Model/MyCATAModel.swift"
-                  timestampString = "534588379.111014"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "371"
-                  endingLineNumber = "371"
-                  offsetFromSymbolStart = "523">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Double) -&gt; () in MyCATA.MyCATAModel.createArrivalAlert(forRoute: Swift.Int, atStop: Swift.Int, withRemainingTime: Swift.Double) -&gt; ()"
-                  moduleName = "MyCATA"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/NPunn/Documents/Fall%2017/CMPSC%20475/Final%20Project/final-project-npunnavit/MyCATA/Model/MyCATAModel.swift"
-                  timestampString = "534588379.116685"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "372"
-                  endingLineNumber = "372"
-                  offsetFromSymbolStart = "50">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MyCATA/Model/MyCATAModel.swift"
-            timestampString = "534588379.187904"
+            timestampString = "534630444.737912"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "376"
             endingLineNumber = "376"
-            landmarkName = "scheduleBusArrivalNotification(routeName:stopName:timeIntervalTrigger:)"
+            landmarkName = "scheduleBusArrivalNotification(routeName:stopName:scheduledTime:travelTime:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

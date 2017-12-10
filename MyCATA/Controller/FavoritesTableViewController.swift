@@ -156,7 +156,11 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     }
     
     @objc func userNotificationScheduled(notification: Notification) {
+        let userInfo = notification.userInfo!
+        let title = userInfo["title"] as! String
+        let message = userInfo["message"] as! String
         
+        displayAlert(withTitle: title, message: message)
     }
     
     func displayAlert(withTitle title: String, message: String) {

@@ -384,7 +384,19 @@ extension MyCATAModel {
         content.sound = UNNotificationSound.default()
         
         // Configure the trigger
-//        let trigger = UNCalendarNotificationTrigger(
+        let triggerDate = scheduledTime - triggerTimeInterval
+        guard triggerDate > Date() else {
+            let center = NotificationCenter.default
+            let userInfo : [String: String] = [
+                "title": "Bus Arriving Soon",
+                "message": "Please proceed to the bus stop"
+            ]
+            center.post(name: Notification.Name.ArrivalNotificationScheduled, object: self, userInfo: userInfo)
+            return
+        }
+        let unitFlags : Set<Calendar.Component> = [.hour, .minute, .second, .day, .month, .year]
+        let triggerTime = Calendar.current.dateComponents(unitFlags, from: triggerDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTime, repeats: false)
         
         // Create teh request object
         let request = UNNotificationRequest(identifier: "Bus Arrival", content: content, trigger: trigger)
@@ -403,7 +415,7 @@ extension MyCATAModel {
             "title": "Reminder Set",
             "message": "You will be notified \(minuteTriggerTimeInterval) minutes prior to bus arrival"
         ]
-        center.post(name: Notification.Name.StopDepartureDataDownloaded, object: self, userInfo: userInfo)
+        center.post(name: Notification.Name.ArrivalNotificationScheduled, object: self, userInfo: userInfo)
     }
     
     func displayAlert(withTitle title: String, message: String) {
