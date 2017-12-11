@@ -14,6 +14,7 @@ class SearchTableViewController: UITableViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
     let myCATAModel = MyCATAModel.sharedInstance
+    let searchViewModel = SearchViewModel.sharedInstance
     
     var selectedCells = Set<IndexPath>()
 
@@ -25,12 +26,16 @@ class SearchTableViewController: UITableViewController {
         
         //register nib
         tableView.register(UINib(nibName: "RouteTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.routeCell)
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateDoneButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,12 +47,12 @@ class SearchTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return searchViewModel.numberOfSections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return myCATAModel.numberOfRoutes
+        return searchViewModel.numberOfRows(inSection: section)
     }
 
     
@@ -55,7 +60,7 @@ class SearchTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.routeCell, for: indexPath) as! RouteTableViewCell
         
         //configure cell
-        let routeDetail = myCATAModel.route(forIndexPath: indexPath)
+        let routeDetail = searchViewModel.route(forIndexPath: indexPath)
         let routeName = routeDetail.longName
         let routeIcon = myCATAModel.routeIconFor(route: routeDetail.routeId)
         cell.configureCell(routeName: routeName, routeIcon: routeIcon)
@@ -147,7 +152,7 @@ class SearchTableViewController: UITableViewController {
         case SegueIdentifiers.routeMapSegue:
             var routesId = [RouteID]()
             for indexPath in selectedCells {
-                let routeId = myCATAModel.route(forIndexPath: indexPath).routeId
+                let routeId = searchViewModel.route(forIndexPath: indexPath).routeId
                 routesId.append(routeId)
             }
             

@@ -12,6 +12,7 @@ class SearchResultsTableViewController: UITableViewController {
     
     let myCATAModel = MyCATAModel.sharedInstance
     let searchResultsModel = SearchResultsViewModel()
+    let searchViewModel = SearchViewModel.sharedInstance
     var routes : [RouteID]?
     var stop : StopID?
     var timer = Timer()
@@ -29,6 +30,11 @@ class SearchResultsTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "NextDepartureTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.nextDepartureCell)
         tableView.register(UINib(nibName: "NoDepartureTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.noDepartureCell)
         
+        //add navigation bar item
+        let createGroupButton = UIBarButtonItem(title: "Create Group", style: .plain, target: self, action: #selector(createRouteGroup))
+        self.navigationItem.rightBarButtonItem = createGroupButton
+        
+        //add notification observer
         let center = NotificationCenter.default
         center.addObserver(self, selector: #selector(dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: searchResultsModel)
         
@@ -174,7 +180,19 @@ class SearchResultsTableViewController: UITableViewController {
         alertController.addAction(action)
         self.present(alertController, animated: true, completion: nil)
     }
-
+    
+    //MARK: - Route Group Method
+    @objc func createRouteGroup() {
+        guard routes != nil else { return }
+        guard routes!.count > 0 else { return }
+        
+        searchViewModel.addRouteGroup(routes: routes!)
+    }
+    
+    @objc func removeRouteGroup() {
+        guard routes != nil else { return }
+        searchViewModel.removeRouteGroup(routes: routes!)
+    }
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
