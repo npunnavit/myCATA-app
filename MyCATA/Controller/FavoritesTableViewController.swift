@@ -38,8 +38,11 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
             myCATAModel.usersLocation = locationServices.location
         }
         
+        //register nib
         tableView.register(UINib(nibName: "DepartureTableViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: ReuseIdentifier.departureHeaderView)
-        
+        tableView.register(UINib(nibName: "NextDepartureTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.nextDepartureCell)
+        tableView.register(UINib(nibName: "NoDepartureTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.noDepartureCell)
+    
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Now Refreshing!")
         
         // Uncomment the following line to preserve selection between presentations
@@ -52,10 +55,12 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     override func viewWillAppear(_ animated: Bool) {
         forceUpdateDeparturesData()
         timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(forceUpdateDeparturesData), userInfo: nil, repeats: true)
+        NotificationCenter.default.addObserver(self, selector: #selector(FavoritesTableViewController.userNotificationScheduled(notification:)), name: NSNotification.Name.ArrivalNotificationScheduled, object: myCATAModel)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         timer.invalidate()
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.ArrivalNotificationScheduled, object: myCATAModel)
     }
 
     override func didReceiveMemoryWarning() {
@@ -110,26 +115,39 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
-        let departure = myCATAModel.departure(forIndexPath: indexPath)
-        let sdt = departure.scheduledDepartureTime!
-        let edt = departure.estimatedDepartureTime!
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm a"
-        
-        let scheduledTime = dateFormatter.string(from: sdt)
-        let estimatedTime = dateFormatter.string(from: edt)
-        let timeInterval = edt.timeIntervalSinceNow
-        let remainingTime = Int(timeInterval / Constants.secondsInMinute)
-        
-        let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
-        
         let section = indexPath.section
         let backgroundColor = myCATAModel.routeDetailFor(section: section).color.withAlphaComponent(FavoritesTableViewController.departureCellAlpha)
         
-        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
-        return cell
+        switch myCATAModel.departureType(forSection: indexPath.section) {
+        case .regular:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
+            let departure = myCATAModel.departure(forIndexPath: indexPath)
+            let sdt = departure.scheduledDepartureTime!
+            let edt = departure.estimatedDepartureTime!
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "hh:mm a"
+            
+            let scheduledTime = dateFormatter.string(from: sdt)
+            let estimatedTime = dateFormatter.string(from: edt)
+            let timeInterval = edt.timeIntervalSinceNow
+            let remainingTime = Int(timeInterval / Constants.secondsInMinute)
+            
+            let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
+            
+            cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
+            return cell
+        case .loop:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.nextDepartureCell, for: indexPath) as! NextDepartureTableViewCell
+            let headwayDeparture = myCATAModel.headwayDeparture(forIndexPath: indexPath)
+            cell.backgroundColor = backgroundColor
+            cell.nextDepartureLabel.text = headwayDeparture.nextDeparture
+            return cell
+        case .noDeparture:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.noDepartureCell, for: indexPath)
+            cell.backgroundColor = backgroundColor
+            return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -137,7 +155,9 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let alertAction = UITableViewRowAction(style: .default, title: "Alert", handler: { (action, indexPath) in
+        guard myCATAModel.departureType(forSection: indexPath.section) == .regular else { return [] }
+        
+        let alertAction = UITableViewRowAction(style: .normal, title: "Alert", handler: { (action, indexPath) in
             self.alertRowAction(action: action, indexPath: indexPath)
         })
         
@@ -226,6 +246,10 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
             assert(false, "Unhandled Segue")
         }
     }
-    
+}
 
+enum departureCellType : String {
+    case regular = "Regular"
+    case loop = "Loop"
+    case noDeparture = "No Departure"
 }

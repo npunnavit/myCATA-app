@@ -51,11 +51,14 @@ struct ReuseIdentifier {
     static let routeCell = "RouteCell"
     static let departureCell = "DepartureCell"
     static let departureHeaderView = "DepartureHeaderView"
+    static let noDepartureCell = "NoDepartureCell"
+    static let nextDepartureCell = "NextDepartureCell"
 }
 
 struct UserDefaultsKeys {
     static let firstLaunch = "FirstLaunch"
     static let favorites = "Favorites"
+    static let routeGroups = "RouteGroups"
 }
 
 struct SegueIdentifiers {

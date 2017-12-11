@@ -31,12 +31,30 @@ class SearchResultsViewModel {
     }
     
     func numberOfRow(inSection section: Int) -> Int {
+        switch departureType(forSection: section) {
+        case .regular:
+            if let routes = routes {
+                let routeId = routes[section]
+                return departuresFor(route: routeId).count
+            }
+        case .loop, .noDeparture:
+            return 1
+        }
+        return 0
+    }
+    
+    func departureType(forSection section: Int) -> departureCellType {
         if let routes = routes {
             let routeId = routes[section]
-            return departuresFor(route: routeId).count
-        } else {
-            return 0
+            if let routeDirection = routeStopDepartureFor(route: routeId) {
+                if routeDirection.direction == .loop {
+                    return .loop
+                } else {
+                    return .regular
+                }
+            }
         }
+        return .noDeparture
     }
     
     func departure(forIndexPath indexPath: IndexPath) -> Departure {
@@ -45,6 +63,14 @@ class SearchResultsViewModel {
         let routeId = routes![section]
         let departures = departuresFor(route: routeId)
         return departures[row]
+    }
+    
+    func headwayDeparture(forIndexPath indexPath: IndexPath) -> HeadwayDeparture {
+        let section = indexPath.section
+        let routeId = routes![section]
+        let routeDirection = routeStopDepartureFor(route: routeId)
+        let headwayDeparture = routeDirection?.headwayDepartures![0]
+        return headwayDeparture!
     }
     
     func routeDetailFor(section: Int) -> RouteDetail {
@@ -122,6 +148,7 @@ class SearchResultsViewModel {
             } else {
                 _stopDeparture = try decoder.decode([StopDeparture].self, from: testData)
             }
+            guard !_stopDeparture!.isEmpty else { return nil }
             return _stopDeparture![0]
         } catch let error as NSError {
             print("Unresolved Error \(String(describing: error)))" )
@@ -129,5 +156,16 @@ class SearchResultsViewModel {
         }
         
         return nil
+    }
+    
+    //MARK: - Create Alert
+    func createArrivalAlert(forIndexPath indexPath: IndexPath) {
+        let section = indexPath.section
+        let routeId = routes![section]
+        let stopId = stop!
+        let aDeparture = departure(forIndexPath: indexPath)
+        let scheduledTime = aDeparture.scheduledDepartureTime!
+        
+        myCATAModel.createArrivalAlert(forRoute: routeId, atStop: stopId, withDepartureTime: scheduledTime)
     }
 }

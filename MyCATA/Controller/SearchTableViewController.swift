@@ -21,7 +21,7 @@ class SearchTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "Search"
-        self.navigationItem.prompt = "Select up to 3 routes"
+        self.navigationItem.prompt = "Select up to 5 routes"
         
         //register nib
         tableView.register(UINib(nibName: "RouteTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.routeCell)
@@ -78,7 +78,7 @@ class SearchTableViewController: UITableViewController {
             if selectedCells.contains(indexPath) {
                 selectedCells.remove(indexPath)
                 cell.accessoryType = .none
-            } else {
+            } else if selectedCells.count < 5 {
                 selectedCells.insert(indexPath)
                 cell.accessoryType = .checkmark
             }

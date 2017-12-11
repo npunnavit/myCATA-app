@@ -45,17 +45,35 @@ struct RouteDirection : Codable {
     let departures : [Departure]?
     let direction : Direction
     let isDone : Bool
+    let headwayDepartures : [HeadwayDeparture]?
     
     enum CodingKeys : String, CodingKey {
         case routeId = "RouteId"
         case departures = "Departures"
         case direction = "Direction"
         case isDone = "IsDone"
+        case headwayDepartures = "HeadwayDepartures"
     }
     
     enum Direction : String, Codable {
         case outbound = "Outbound"
         case inbound = "Inbound"
         case loop = "Loop"
+    }
+}
+
+struct HeadwayDeparture : Codable {
+    let tripId : Int
+    let serviceDescription : String
+    let headwayIntervalScheduled : TimeInterval
+    let headwayIntervalTarget : TimeInterval
+    let nextDeparture : String
+    
+    enum CodingKeys : String, CodingKey {
+        case tripId = "TripId"
+        case serviceDescription = "ServiceDescription"
+        case headwayIntervalScheduled = "HeadwayIntervalScheduled"
+        case headwayIntervalTarget = "HeadwayIntervalTarget"
+        case nextDeparture = "NextDeparture"
     }
 }

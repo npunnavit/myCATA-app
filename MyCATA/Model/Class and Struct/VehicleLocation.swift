@@ -15,10 +15,10 @@ struct VehicleLocation : Codable {
     let blockFareboxId : Int
     let communicationStatus : String
     let destination : String
-    let deviation : Int
+    let deviation : Int?
     let direction : String
     let directionLong : String
-    let displayStatus : String
+    let displayStatus : String?
     let driverName : String
     let gpsStatus : Int
     let heading : Int

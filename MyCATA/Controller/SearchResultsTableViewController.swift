@@ -8,6 +8,12 @@
 
 import UIKit
 
+struct RouteGroup {
+    var groupId : Int
+    var groupName : String
+    var routes : [RouteID]
+}
+
 class SearchResultsTableViewController: UITableViewController {
     
     let myCATAModel = MyCATAModel.sharedInstance
@@ -26,6 +32,8 @@ class SearchResultsTableViewController: UITableViewController {
         //register nib
         tableView.register(UINib(nibName: "DepartureTableViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: ReuseIdentifier.departureHeaderView)
         tableView.register(UINib(nibName: "DepartureTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.departureCell)
+        tableView.register(UINib(nibName: "NextDepartureTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.nextDepartureCell)
+        tableView.register(UINib(nibName: "NoDepartureTableViewCell", bundle: nil), forCellReuseIdentifier: ReuseIdentifier.noDepartureCell)
         
         let center = NotificationCenter.default
         center.addObserver(self, selector: #selector(dataDownloaded(notification:)), name: NSNotification.Name.StopDepartureDataDownloaded, object: searchResultsModel)
@@ -40,10 +48,12 @@ class SearchResultsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         updateDepartureData()
         timer = Timer.scheduledTimer(timeInterval: Constants.TimeInterval.halfMinute, target: self, selector: #selector(updateDepartureData), userInfo: nil, repeats: true)
+        NotificationCenter.default.addObserver(self, selector: #selector(FavoritesTableViewController.userNotificationScheduled(notification:)), name: NSNotification.Name.ArrivalNotificationScheduled, object: myCATAModel)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         timer.invalidate()
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.ArrivalNotificationScheduled, object: myCATAModel)
     }
     
     @objc func dataDownloaded(notification: Notification) {
@@ -101,31 +111,76 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
-        let departure = searchResultsModel.departure(forIndexPath: indexPath)
-        let sdt = departure.scheduledDepartureTime!
-        let edt = departure.estimatedDepartureTime!
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm a"
-        
-        let scheduledTime = dateFormatter.string(from: sdt)
-        let estimatedTime = dateFormatter.string(from: edt)
-        let timeInterval = edt.timeIntervalSinceNow
-        let remainingTime = Int(timeInterval / Constants.secondsInMinute)
-        
-        let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
-        
         let section = indexPath.section
         let backgroundColor = searchResultsModel.routeDetailFor(section: section).color.withAlphaComponent(FavoritesTableViewController.departureCellAlpha)
         
-        cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
-        return cell
+        switch searchResultsModel.departureType(forSection: indexPath.section) {
+        case .regular:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
+            let departure = searchResultsModel.departure(forIndexPath: indexPath)
+            let sdt = departure.scheduledDepartureTime!
+            let edt = departure.estimatedDepartureTime!
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "hh:mm a"
+            
+            let scheduledTime = dateFormatter.string(from: sdt)
+            let estimatedTime = dateFormatter.string(from: edt)
+            let timeInterval = edt.timeIntervalSinceNow
+            let remainingTime = Int(timeInterval / Constants.secondsInMinute)
+            
+            let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
+            
+            cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
+            return cell
+        case .loop:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.nextDepartureCell, for: indexPath) as! NextDepartureTableViewCell
+            let headwayDeparture = searchResultsModel.headwayDeparture(forIndexPath: indexPath)
+            cell.backgroundColor = backgroundColor
+            cell.nextDepartureLabel.text = headwayDeparture.nextDeparture
+            return cell
+        case .noDeparture:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.noDepartureCell, for: indexPath)
+            cell.backgroundColor = backgroundColor
+            return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return FavoritesTableViewController.departureCellHeight
     }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard searchResultsModel.departureType(forSection: indexPath.section) == .regular else { return [] }
+        
+        let alertAction = UITableViewRowAction(style: .normal, title: "Alert", handler: { (action, indexPath) in
+            self.alertRowAction(action: action, indexPath: indexPath)
+        })
+        
+        return [alertAction]
+    }
+    
+    //MARK: - Table View Row Action Method
+    func alertRowAction(action: UITableViewRowAction, indexPath: IndexPath) {
+        searchResultsModel.createArrivalAlert(forIndexPath: indexPath)
+    }
+    
+    @objc func userNotificationScheduled(notification: Notification) {
+        let userInfo = notification.userInfo!
+        let title = userInfo["title"] as! String
+        let message = userInfo["message"] as! String
+        
+        displayAlert(withTitle: title, message: message)
+    }
+    
+    func displayAlert(withTitle title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Got it!", style: .default, handler: nil)
+        
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

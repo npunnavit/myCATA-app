@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults = UserDefaults.standard
         defaults.register(defaults: [UserDefaultsKeys.firstLaunch:true])
         defaults.register(defaults: [UserDefaultsKeys.favorites:[]])
+        defaults.register(defaults: [UserDefaultsKeys.routeGroups:[]])
         
         //Set up notification
         let center = UNUserNotificationCenter.current()

@@ -91,7 +91,7 @@ class RouteMapViewController: UIViewController {
             for routeId in routesId {
                 let routeDetail = myCATAModel.routeDetailFor(route: routeId)
                 
-                title.append(" \(routeDetail.shortName)")
+                title.append("-\(routeDetail.shortName)")
                 
                 if let routeTraceFilename = routeDetail.routeTraceFilename {
                     let urlString = RouteMapViewModel.kmlURL + routeTraceFilename
@@ -211,19 +211,13 @@ class RouteMapViewController: UIViewController {
     
     //MARK: - bring bus annotion to front/back
     func bringAllBusAnnotationsToFront() {
-//        for aBusAnnotation in allBusAnnotations() {
-//            if let anAnnotationView = mapView.view(for: aBusAnnotation) {
-//                anAnnotationView.superview?.bringSubview(toFront: anAnnotationView)
-//            }
-//        }
+        //depreciated method
+        //might consider working on it in the future so I'll leave it here
     }
     
     func sendAllBusAnnotationsToBack() {
-//        for aBusAnnotation in allBusAnnotations() {
-//            if let anAnnotationView = mapView.view(for: aBusAnnotation) {
-//                anAnnotationView.superview?.sendSubview(toBack: anAnnotationView)
-//            }
-//        }
+        //depreciated method
+        //might consider working on it in the future so I'll leave it here
     }
     
     //MARK: - show/hide stops

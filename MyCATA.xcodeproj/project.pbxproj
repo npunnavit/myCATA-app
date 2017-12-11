@@ -28,7 +28,10 @@
 		EA42D3D21FC16E12008C8CBF /* DepartureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */; };
 		EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */; };
 		EA42D3DC1FC18AA5008C8CBF /* DepartureTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */; };
+		EA572B101FDDE79600C58E4F /* NextDepartureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA572B0F1FDDE79600C58E4F /* NextDepartureTableViewCell.swift */; };
 		EA6536DA1FCDE64800562117 /* LocationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6536D91FCDE64800562117 /* LocationServices.swift */; };
+		EA751AEA1FDE050500F0F910 /* NextDepartureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA572B0E1FDDE67000C58E4F /* NextDepartureTableViewCell.xib */; };
+		EA751AEC1FDE082C00F0F910 /* NoDepartureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA751AEB1FDE082C00F0F910 /* NoDepartureTableViewCell.xib */; };
 		EA82CCC91FCCD71C00105E6A /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = EA82CCC81FCCD71C00105E6A /* data.json */; };
 		EA9244991FD0907E00DE02B4 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9244981FD0907E00DE02B4 /* SearchTableViewController.swift */; };
 		EA92449B1FD10AC700DE02B4 /* VehicleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92449A1FD10AC700DE02B4 /* VehicleLocation.swift */; };
@@ -81,8 +84,11 @@
 		EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
+		EA572B0E1FDDE67000C58E4F /* NextDepartureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NextDepartureTableViewCell.xib; path = "/Users/NPunn/Documents/Fall 17/CMPSC 475/Final Project/final-project-npunnavit/MyCATA/View/NextDepartureTableViewCell.xib"; sourceTree = "<absolute>"; };
+		EA572B0F1FDDE79600C58E4F /* NextDepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextDepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA6536D91FCDE64800562117 /* LocationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServices.swift; sourceTree = "<group>"; };
 		EA6536DB1FCDF01400562117 /* Kunkle Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Kunkle Location.gpx"; sourceTree = "<group>"; };
+		EA751AEB1FDE082C00F0F910 /* NoDepartureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoDepartureTableViewCell.xib; sourceTree = "<group>"; };
 		EA82CCC71FCCAB8600105E6A /* Westgate Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Westgate Location.gpx"; sourceTree = "<group>"; };
 		EA82CCC81FCCD71C00105E6A /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		EA9244981FD0907E00DE02B4 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
@@ -207,8 +213,11 @@
 		EA42D3B31FBA47A9008C8CBF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA572B0E1FDDE67000C58E4F /* NextDepartureTableViewCell.xib */,
+				EA572B0F1FDDE79600C58E4F /* NextDepartureTableViewCell.swift */,
 				EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */,
 				EA42D3951FBA4588008C8CBF /* Main.storyboard */,
+				EA751AEB1FDE082C00F0F910 /* NoDepartureTableViewCell.xib */,
 				EA92449C1FD354BB00DE02B4 /* DepartureTableViewCell.xib */,
 				EAFD37C61FDBC1B90022B8C9 /* RouteTableViewCell.xib */,
 				EAFD37C81FDBC2A30022B8C9 /* RouteTableViewCell.swift */,
@@ -344,8 +353,10 @@
 				EA42D39C1FBA4588008C8CBF /* LaunchScreen.storyboard in Resources */,
 				EA82CCC91FCCD71C00105E6A /* data.json in Resources */,
 				EA92449D1FD354BB00DE02B4 /* DepartureTableViewCell.xib in Resources */,
+				EA751AEA1FDE050500F0F910 /* NextDepartureTableViewCell.xib in Resources */,
 				EA42D3DA1FC189AA008C8CBF /* DepartureTableViewHeader.xib in Resources */,
 				EA42D3BC1FBA4902008C8CBF /* RouteData.json in Resources */,
+				EA751AEC1FDE082C00F0F910 /* NoDepartureTableViewCell.xib in Resources */,
 				EA42D3BB1FBA4902008C8CBF /* StopData.json in Resources */,
 				EAFD37C71FDBC1B90022B8C9 /* RouteTableViewCell.xib in Resources */,
 				EA42D3991FBA4588008C8CBF /* Assets.xcassets in Resources */,
@@ -436,6 +447,7 @@
 				EA42D3C21FBBBEDA008C8CBF /* RouteStop.swift in Sources */,
 				EAF06C151FC273AC00E1FE86 /* SettingsTableViewController.swift in Sources */,
 				EAFD37C91FDBC2A30022B8C9 /* RouteTableViewCell.swift in Sources */,
+				EA572B101FDDE79600C58E4F /* NextDepartureTableViewCell.swift in Sources */,
 				EAE0D72B1FC6433100615053 /* Date+extension.swift in Sources */,
 				EA6536DA1FCDE64800562117 /* LocationServices.swift in Sources */,
 				EA42D3D01FC155F2008C8CBF /* FavoritesTableViewController.swift in Sources */,

@@ -373,7 +373,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6uC-Os-Heg" id="E0i-1C-Ed8">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -389,7 +389,7 @@
                                 <action selector="cancelSelection:" destination="kH5-ud-dP4" id="p48-tQ-TfE"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="RYn-RI-9f1">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Done" id="RYn-RI-9f1">
                             <connections>
                                 <segue destination="hFh-qk-Ls5" kind="show" identifier="RouteMapSegue" id="KDu-2W-PG2"/>
                             </connections>
@@ -463,7 +463,7 @@
         <image name="settingsIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Rom-ky-06U"/>
+        <segue reference="KDu-2W-PG2"/>
         <segue reference="p7N-5x-h52"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -82,6 +82,8 @@ class MyCATAModel : NSObject {
         closestStopForRoute = [:]
         
         super.init()
+        
+        UNUserNotificationCenter.current().delegate = self
     }
     
     //MARK: - Support for RoutesTableView
@@ -291,11 +293,30 @@ extension MyCATAModel {
     
     func numberOfRow(inSection section: Int) -> Int {
         let routeId = favorites[section]
+        var departuresCount = 1
         if let closestStop = closestStopForRoute[routeId] {
-            return departuresFor(route: routeId, atStop: closestStop).count
-        } else {
-            return 0
+            departuresCount = departuresFor(route: routeId, atStop: closestStop).count
         }
+        
+        //if no departure, row will be for loop and no departuresm
+        if departuresCount == 0 {
+            departuresCount = 1
+        }
+        
+        return departuresCount
+    }
+    
+    func departureType(forSection section: Int) -> departureCellType {
+        let routeId = favorites[section]
+        if let closestStop = closestStopForRoute[routeId], let routeDirection = routeStopDepartureFor(route: routeId, atStop: closestStop) {
+            if routeDirection.direction == .loop {
+                return .loop
+            } else {
+                return .regular
+            }
+        }
+        
+        return .noDeparture
     }
     
     func departure(forIndexPath indexPath: IndexPath) -> Departure {
@@ -305,6 +326,15 @@ extension MyCATAModel {
         let closestStop = closestStopForRoute[routeId]!
         let departures = departuresFor(route: routeId, atStop: closestStop)
         return departures[row]
+    }
+    
+    func headwayDeparture(forIndexPath indexPath: IndexPath) -> HeadwayDeparture {
+        let section = indexPath.section
+        let routeId = favorites[section]
+        let closestStop = closestStopForRoute[routeId]!
+        let routeDirection = routeStopDepartureFor(route: routeId, atStop: closestStop)
+        let headwayDeparture = routeDirection?.headwayDepartures![0]
+        return headwayDeparture!
     }
     
     func routeDetailFor(section: Int) -> RouteDetail {
@@ -326,8 +356,8 @@ extension MyCATAModel {
     }
     
     func departuresFor(route routeId: RouteID, atStop stopId: StopID) -> [Departure] {
-        if let routeDirection = routeStopDepartureFor(route: routeId, atStop: stopId) {
-            return Array(routeDirection.departures!.prefix(MyCATAModel.departureResultsCount))
+        if let routeDirection = routeStopDepartureFor(route: routeId, atStop: stopId), let departures = routeDirection.departures {
+            return Array(departures.prefix(MyCATAModel.departureResultsCount))
         } else {
             return []
         }
@@ -380,7 +410,7 @@ extension MyCATAModel {
         // Create Content
         let content = UNMutableNotificationContent()
         content.title = NSString.localizedUserNotificationString(forKey: "\(routeName) Bus Arriving", arguments: nil)
-        content.body = NSString.localizedUserNotificationString(forKey: "at \(stopName) in \(triggerTimeInterval) minutes", arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: "at \(stopName) in \(minuteTriggerTimeInterval) minutes", arguments: nil)
         content.sound = UNNotificationSound.default()
         
         // Configure the trigger
@@ -399,14 +429,21 @@ extension MyCATAModel {
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTime, repeats: false)
         
         // Create teh request object
-        let request = UNNotificationRequest(identifier: "Bus Arrival", content: content, trigger: trigger)
+        let requestIdentifier = "\(routeName)\(stopName)\(scheduledTime)"
+        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
         
         // Schedule the request
         let userCenter = UNUserNotificationCenter.current()
-        userCenter.delegate = self
         userCenter.add(request) { (error : Error?) in
             if let theError = error {
                 print(theError.localizedDescription)
+            }
+        }
+        
+        userCenter.getPendingNotificationRequests { (requests) in
+            print(requests.count)
+            for request in requests {
+                print(request.identifier)
             }
         }
         
