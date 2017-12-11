@@ -8,12 +8,6 @@
 
 import UIKit
 
-struct RouteGroup {
-    var groupId : Int
-    var groupName : String
-    var routes : [RouteID]
-}
-
 class SearchResultsTableViewController: UITableViewController {
     
     let myCATAModel = MyCATAModel.sharedInstance
