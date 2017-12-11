@@ -84,7 +84,7 @@
 		EA42D3D11FC16E12008C8CBF /* DepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA42D3D91FC189AA008C8CBF /* DepartureTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepartureTableViewHeader.xib; sourceTree = "<group>"; };
 		EA42D3DB1FC18AA5008C8CBF /* DepartureTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureTableHeaderView.swift; sourceTree = "<group>"; };
-		EA572B0E1FDDE67000C58E4F /* NextDepartureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NextDepartureTableViewCell.xib; path = "/Users/NPunn/Documents/Fall 17/CMPSC 475/Final Project/final-project-npunnavit/MyCATA/View/NextDepartureTableViewCell.xib"; sourceTree = "<absolute>"; };
+		EA572B0E1FDDE67000C58E4F /* NextDepartureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextDepartureTableViewCell.xib; sourceTree = "<group>"; };
 		EA572B0F1FDDE79600C58E4F /* NextDepartureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextDepartureTableViewCell.swift; sourceTree = "<group>"; };
 		EA6536D91FCDE64800562117 /* LocationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServices.swift; sourceTree = "<group>"; };
 		EA6536DB1FCDF01400562117 /* Kunkle Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Kunkle Location.gpx"; sourceTree = "<group>"; };
