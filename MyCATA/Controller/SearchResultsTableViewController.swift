@@ -115,6 +115,7 @@ class SearchResultsTableViewController: UITableViewController {
         let backgroundColor = searchResultsModel.routeDetailFor(section: section).color.withAlphaComponent(FavoritesTableViewController.departureCellAlpha)
         
         switch searchResultsModel.departureType(forSection: indexPath.section) {
+            
         case .regular:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.departureCell, for: indexPath) as! DepartureTableViewCell
             let departure = searchResultsModel.departure(forIndexPath: indexPath)
@@ -127,18 +128,27 @@ class SearchResultsTableViewController: UITableViewController {
             let scheduledTime = dateFormatter.string(from: sdt)
             let estimatedTime = dateFormatter.string(from: edt)
             let timeInterval = edt.timeIntervalSinceNow
-            let remainingTime = Int(timeInterval / Constants.secondsInMinute)
+            let minuteRemainingTime = Int((timeInterval.truncatingRemainder(dividingBy: Constants.TimeInterval.anHour) /  Constants.secondsInMinute))
+            let hourRemainingTime = Int(timeInterval / Constants.TimeInterval.anHour)
+            var remainingTime : String
+            if hourRemainingTime > 0 {
+                remainingTime = "\(hourRemainingTime) hr \(minuteRemainingTime) mins"
+            } else {
+                remainingTime = "\(minuteRemainingTime) mins"
+            }
             
             let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
             
             cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
             return cell
+            
         case .loop:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.nextDepartureCell, for: indexPath) as! NextDepartureTableViewCell
             let headwayDeparture = searchResultsModel.headwayDeparture(forIndexPath: indexPath)
             cell.backgroundColor = backgroundColor
             cell.nextDepartureLabel.text = headwayDeparture.nextDeparture
             return cell
+            
         case .noDeparture:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.noDepartureCell, for: indexPath)
             cell.backgroundColor = backgroundColor

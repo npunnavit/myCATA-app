@@ -131,11 +131,18 @@ class FavoritesTableViewController: UITableViewController, DepartureTableHeaderV
             let scheduledTime = dateFormatter.string(from: sdt)
             let estimatedTime = dateFormatter.string(from: edt)
             let timeInterval = edt.timeIntervalSinceNow
-            let remainingTime = Int(timeInterval / Constants.secondsInMinute)
+            let minuteRemainingTime = Int((timeInterval.truncatingRemainder(dividingBy: Constants.TimeInterval.anHour) /  Constants.secondsInMinute))
+            let hourRemainingTime = Int(timeInterval / Constants.TimeInterval.anHour)
+            var remainingTime : String
+            if hourRemainingTime > 0 {
+                remainingTime = "\(hourRemainingTime) hr \(minuteRemainingTime) mins"
+            } else {
+                remainingTime = "\(minuteRemainingTime) mins"
+            }
             
             let isLate = edt > sdt && edt.timeIntervalSince(sdt) > Constants.secondsInMinute
             
-            cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: "\(remainingTime) mins", isLate: isLate, backgroundColor: backgroundColor)
+            cell.configureCell(scheduledTime: scheduledTime, estimatedTime: estimatedTime, remainingTime: remainingTime, isLate: isLate, backgroundColor: backgroundColor)
             return cell
         case .loop:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.nextDepartureCell, for: indexPath) as! NextDepartureTableViewCell

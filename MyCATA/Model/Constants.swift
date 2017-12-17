@@ -79,5 +79,6 @@ struct Constants {
     struct TimeInterval {
         static let aMinute = 60.0
         static let halfMinute = 30.0
+        static let anHour = 3600.0
     }
 }
